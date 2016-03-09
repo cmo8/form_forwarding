@@ -32,36 +32,36 @@ function uwpimagenow_admin_form() {
   $form[]['#markup'] = t('<th>&nbsp;</th>');
   $form[]['#markup'] = t('</thead>');
   $form[]['#markup'] = t('<tbody>');
-//  for($i=0; $i < len($portals); $i++){
-//    $row = 'portal-' . $i;
-//    $form[$row]['#markup'] = t('<tr id=portal-row-"' . $i . '" class="odd">');
-//    $form[$row]['#markup'] = t('<td class="in-row>');
-//    $form[$row]['#markup'] = t($i);
-//    $form[$row]['#markup'] = t('</td>');
-//    $form[$row]['#markup'] = t('<td class="in-drupal-form-id">');
+  for($i=0; $i < len($portals); $i++){
+    $row = 'portal-' . $i;
+    $form[$row]['#markup'] = t('<tr id=portal-row-"' . $i . '" class="odd">');
+    $form[$row]['#markup'] = t('<td class="in-row>');
+    $form[$row]['#markup'] = t($i);
+    $form[$row]['#markup'] = t('</td>');
+    $form[$row]['#markup'] = t('<td class="in-drupal-form-id">');
 //    $form[$row]['#markup'] = t($portals[$i]->fid);
-//    $form[$row]['#markup'] = t('</td>');
-//    $form[$row]['#markup'] = t('<td class="in-description>');
+    $form[$row]['#markup'] = t('</td>');
+    $form[$row]['#markup'] = t('<td class="in-description>');
 //    $form[$row]['#markup'] = t($portals[$i]->description);
-//    $form[$row]['#markup'] = t('</td>');
-//    $form[$row]['#markup'] = t('<td class="in-edit>');
-//    $form[$row]['btnedit'] = array(
-//      '#type' => 'button',
-//      '#value' => t('Edit'),
-//      '#description' => t('Edit Portal'),
-//      '#name' => 'edit_portal',
-//    );
-//    $form[$row]['#markup'] = t('</td>');
-//    $form[$row]['#markup'] = t('<td class="in-delete>');
-//    $form[$row]['btndelete'] = array(
-//      '#type' => 'button',
-//      '#value' => t('Delet'),
-//      '#description' => t('Delete Link'),
-//      '#name' => 'delete_portal',
-//    );
-//    $form[$row]['#markup'] = t('</td>');
-//    $form[$row]['#markup'] = t('</tr >');
-//  }
+    $form[$row]['#markup'] = t('</td>');
+    $form[$row]['#markup'] = t('<td class="in-edit>');
+    $form[$row]['btnedit'] = array(
+      '#type' => 'button',
+      '#value' => t('Edit'),
+      '#description' => t('Edit Portal'),
+      '#name' => 'edit_portal',
+    );
+    $form[$row]['#markup'] = t('</td>');
+    $form[$row]['#markup'] = t('<td class="in-delete>');
+    $form[$row]['btndelete'] = array(
+      '#type' => 'button',
+      '#value' => t('Delet'),
+      '#description' => t('Delete Link'),
+      '#name' => 'delete_portal',
+    );
+    $form[$row]['#markup'] = t('</td>');
+    $form[$row]['#markup'] = t('</tr >');
+  }
   $form[]['#markup'] = t('</tbody>');
   $form[]['#markup'] = t('</table>');
   return $form;
