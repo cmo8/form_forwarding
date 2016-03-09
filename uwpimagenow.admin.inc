@@ -54,7 +54,7 @@ function uwpimagenow_admin_form() {
       '#type' => 'button',
       '#value' => t('Edit'),
       '#description' => t('Edit Portal'),
-      '#name' => 'edit_portal',
+      '#name' => 'edit_portal_' . strval($i),
     );
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-delete">');
@@ -62,7 +62,7 @@ function uwpimagenow_admin_form() {
       '#type' => 'button',
       '#value' => t('Delet'),
       '#description' => t('Delete Link'),
-      '#name' => 'delete_portal',
+      '#name' => 'delete_portal_' . strval($i),
     );
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('</tr>');
