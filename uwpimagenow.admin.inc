@@ -41,13 +41,13 @@ function uwpimagenow_admin_form() {
     dsm($row);
     $form[]['#markup'] = t('<tr id=portal-row-"' . strval($i) . '" class="odd">');
     $form[]['#markup'] = t('<td class="in-row">');
-    $form[$row]['#markup'] = t($i);
+    $form[]['#markup'] = t($i);
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-drupal-form-id">');
-    $form[$row]['#markup'] = t($portals[$i]['fid']);
+    $form[]['#markup'] = t($portals[$i]['fid']);
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-description">');
-    $form[$row]['#markup'] = t($portals[$i]['description']);
+    $form[]['#markup'] = t($portals[$i]['description']);
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-edit">');
     $form[$row]['btnedit'] = array(
