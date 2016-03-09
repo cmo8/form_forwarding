@@ -28,9 +28,10 @@ function uwpimagenow_admin_form() {
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Index</th>');
-  $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-  $form[]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-  $form[]['#markup'] = t('<th>&nbsp;</th>');
+  $form[]['#markup'] = t('<th>Drupal Form ID</th>');
+  $form[]['#markup'] = t('<th>Description</th>');
+  $form[]['#markup'] = t('<th>&nbsp</th>');
+  $form[]['#markup'] = t('<th>&nbsp</th>');
   $form[]['#markup'] = t('</thead>');
   $form[]['#markup'] = t('<tbody>');
   for($i=0; $i < count($portals); $i++){
