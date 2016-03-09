@@ -32,7 +32,7 @@ function uwpimagenow_admin_form() {
   $form[]['#markup'] = t('<th>&nbsp;</th>');
   $form[]['#markup'] = t('</thead>');
   $form[]['#markup'] = t('<tbody>');
-  for($i=0; $i < strlen($portals); $i++){
+  for($i=0; $i < count($portals); $i++){
     dsm($portals->$i);
     $row = 'portal-' . strval($i);
     $form[$row]['#markup'] = t('<tr id=portal-row-"' . $i . '" class="odd">');
