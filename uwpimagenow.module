@@ -15,7 +15,7 @@ function uwpimagenow_menu() {
     'description' => 'Connect Drupal webforms to the ImageNow system. Tom Click Here!!!',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('uwpimagenow_admin'),
-    'access arguments' => array('administer imagenow'),
+    'access arguments' => array('administer uwpimagenow'),
     'file' => 'uwpimagenow.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );

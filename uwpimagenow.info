@@ -3,5 +3,4 @@ description = Connects a Drupal webform to an ImageNow system
 package = UW-Platteville Modules
 core = 7.x
 version = 7.x-1.0
-dependencies[] = file
 configure = admin/config/uwp-imagenow
