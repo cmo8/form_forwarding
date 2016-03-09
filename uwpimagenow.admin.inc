@@ -38,6 +38,7 @@ function uwpimagenow_admin_form() {
     dsm($i);
     dsm($portals[$i]);
     $row = 'portal-' . strval($i);
+    dsm($row);
     $form[$row]['#markup'] = t('<tr id=portal-row-"' . strval($i) . '" class="odd">');
     $form[$row]['#markup'] = t('<td class="in-row>');
     $form[$row]['#markup'] = t($i);
