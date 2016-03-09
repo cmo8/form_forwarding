@@ -27,6 +27,7 @@ function uwpimagenow_admin_form() {
   dsm($portals);
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
+  $form[]['#markup'] = t('<th>Index</th>');
   $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
   $form[]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
   $form[]['#markup'] = t('<th>&nbsp;</th>');
@@ -40,10 +41,10 @@ function uwpimagenow_admin_form() {
     $form[$row]['#markup'] = t($i);
     $form[$row]['#markup'] = t('</td>');
     $form[$row]['#markup'] = t('<td class="in-drupal-form-id">');
-//    $form[$row]['#markup'] = t($portals[$i]->fid);
+    $form[$row]['#markup'] = t($portals[$i]->fid);
     $form[$row]['#markup'] = t('</td>');
     $form[$row]['#markup'] = t('<td class="in-description>');
-//    $form[$row]['#markup'] = t($portals[$i]->description);
+    $form[$row]['#markup'] = t($portals[$i]->description);
     $form[$row]['#markup'] = t('</td>');
     $form[$row]['#markup'] = t('<td class="in-edit>');
     $form[$row]['btnedit'] = array(
