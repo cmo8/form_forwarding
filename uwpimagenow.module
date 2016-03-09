@@ -16,7 +16,7 @@ function uwpimagenow_menu() {
     'description' => 'Connect Drupal webforms to the ImageNow system. Tom Click Here!!!',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('uwpimagenow_admin_form'),
-    'access arguments' => array('administer uwpimagenow'),
+    'access arguments' => array('access content'),
     'file' => 'uwpimagenow.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
@@ -44,7 +44,7 @@ function uwpimagenow_menu() {
 function uwpimagenow_permission() {
   return array(
     'administer uwpimagenow' => array(
-      'title' => t('Administer ImageNow configuration'),
+      'title' => t('Administer ImageNow Portal Control'),
       'description' => t('Access to ImageNow configuration'),
     ),
   );
