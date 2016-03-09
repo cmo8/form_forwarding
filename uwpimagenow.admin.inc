@@ -23,7 +23,7 @@ function uwpimagenow_admin() {
     '#description' => t('Add a new Potal'),
     '#name' => 'add_drupal_to_imagenow_portal',
   );
-  $portals = _get_drupal_to_imagenow_portals();
+  $portals = [];//_get_drupal_to_imagenow_portals();
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
@@ -63,7 +63,6 @@ function uwpimagenow_admin() {
   }
   $form[]['#markup'] = t('</tbody>');
   $form[]['#markup'] = t('</table>');
-  
   return $form;
 }
 
