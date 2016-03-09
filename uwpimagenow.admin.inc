@@ -23,7 +23,7 @@ function uwpimagenow_admin_form() {
     '#description' => t('Add a new Potal'),
     '#name' => 'add_drupal_to_imagenow_portal',
   );
-  $portals = [];//_get_drupal_to_imagenow_portals();
+  $portals = _get_drupal_to_imagenow_portals();
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
@@ -80,26 +80,26 @@ function uwpimagenow_admin_form() {
 /**
  * Get the drupal to imagenow portals.
  */
-//function _get_drupal_to_imagenow_portals() {
-//  $portals = [];
-//  $row1 = [];
-//  $row1['fid'] = 123455;
-//  $row1['description'] = 'Test 1';
-//  $row2 = [];
-//  $row2['fid'] = 123457;
-//  $row2['description'] = 'Test 2';
-//  $row3 = [];
-//  $row3['fid'] = 123458;
-//  $row3['description'] = 'Test 3';
-//  $row4 = [];
-//  $row4['fid'] = 123459;
-//  $row4['description'] = 'Test 4';
-//  $portals[] = $row1;
-//  $portals[] = $row2;
-//  $portals[] = $row3;
-//  $portals[] = $row4;
-//    
-////TODO: Select from Table
-//  
-//  return $portals;
-//}
+function _get_drupal_to_imagenow_portals() {
+  $portals = [];
+  $row1 = [];
+  $row1['fid'] = 123455;
+  $row1['description'] = 'Test 1';
+  $row2 = [];
+  $row2['fid'] = 123457;
+  $row2['description'] = 'Test 2';
+  $row3 = [];
+  $row3['fid'] = 123458;
+  $row3['description'] = 'Test 3';
+  $row4 = [];
+  $row4['fid'] = 123459;
+  $row4['description'] = 'Test 4';
+  $portals[] = $row1;
+  $portals[] = $row2;
+  $portals[] = $row3;
+  $portals[] = $row4;
+    
+//TODO: Select from Table
+  
+  return $portals;
+}
