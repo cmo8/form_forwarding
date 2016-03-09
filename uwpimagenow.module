@@ -10,7 +10,7 @@
  * Implementation of the hook_menu()
  */
 function uwpimagenow_menu() {
-  $items['admin/config/uwplatteville/imagenow'] = array(
+  $items['admin/config/uwp-imagenow'] = array(
     'title' => 'UW-Platteville ImageNow',
     'description' => 'Connect Drupal webforms to the ImageNow system. Tom Click Here!!!',
     'page callback' => 'drupal_get_form',
