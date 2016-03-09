@@ -1,0 +1,63 @@
+<?php
+
+/**
+ * @file 
+ * This Connects a Drupal webform to an ImageNow system
+ * @author Stephen Corcoran
+ */
+
+/**
+ * Implementation of the hook_menu()
+ */
+function uwpimagenow_menu() {
+  $items['admin/config/uwplatteville/imagenow'] = array(
+    'title' => 'UW-Platteville ImageNow',
+    'description' => 'Connect Drupal webforms to the ImageNow system. Tom Click Here!!!',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('uwpimagenow_admin'),
+    'access arguments' => array('administer imagenow'),
+    'file' => 'uwpimagenow.admin.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
+  
+  return $items;
+}
+
+/**
+ * Implementation of the hook_theme()
+ */
+//function uwpimagenow_theme() {
+//  return array(
+//    'uwpimagenow_admin' => array(
+//      'path' => drupal_get_path('module', 'uwpimagenow') . '/theme',
+//      'template' => 'uwpimagenow-admin',
+//      'arguments' => array('form' => NULL),
+//      'render element' => 'form',
+//    ),
+//  );
+//}
+
+/**
+ * Implementation of hook_permission
+ */
+function uwpimagenow_permission() {
+  return array(
+    'administer uwpimagenow' => array(
+      'title' => t('Administer ImageNow configuration'),
+      'description' => t('Access to ImageNow configuration'),
+    ),
+  );
+}
+
+/**
+ * Implementation of hook_form_submit.
+ * 
+ * Take the ImageNow forms that pass validation
+ * and submit them to imagenow system.
+ * 
+ * @param type $form_id
+ * @param type $form_state
+ */
+//function uwpimagenow_form_submit($form_id, $form_state){
+//  
+//}
