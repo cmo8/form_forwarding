@@ -41,13 +41,13 @@ function uwpimagenow_admin_form() {
     dsm($row);
     $form[]['#markup'] = t('<tr id=portal-row-"' . strval($i) . '" class="odd">');
     $form[]['#markup'] = t('<td class="in-row>');
-    $form[]['#markup'] = t($i);
+    $form[$row]['#markup'] = t($i);
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-drupal-form-id">');
-    $form[]['#markup'] = t($portals[$i]['fid']);
+    $form[$row]['#markup'] = t($portals[$i]['fid']);
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-description>');
-    $form[]['#markup'] = t($portals[$i]['description']);
+    $form[$row]['#markup'] = t($portals[$i]['description']);
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-edit>');
     $form[$row]['btnedit'] = array(
@@ -65,7 +65,7 @@ function uwpimagenow_admin_form() {
       '#name' => 'delete_portal',
     );
     $form[]['#markup'] = t('</td>');
-    $form[]['#markup'] = t('</tr >');
+    $form[]['#markup'] = t('</tr>');
   }
   $form[]['#markup'] = t('</tbody>');
   $form[]['#markup'] = t('</table>');
