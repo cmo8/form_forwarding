@@ -11,7 +11,7 @@
  */
 function uwpimagenow_menu() {
   $items = [];
-  $items['admin/config/uwp-imagenow'] = array(
+  $items['admin/config/uwplatteville/uwp-imagenow'] = array(
     'title' => 'UW-Platteville ImageNow',
     'description' => 'Connect Drupal webforms to the ImageNow system. Tom Click Here!!!',
     'page callback' => 'drupal_get_form',
