@@ -25,7 +25,7 @@ function uwpimagenow_portal_admin() {
     '#type' => 'textfield',
     '#title' => t('Drupal Node ID'),
     '#required' => TRUE,
-    '#default' => $portal_config['fid'],
+    '#default_value' => $portal_config['fid'],
     '#rules' => array(
       array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
     ),
@@ -40,14 +40,14 @@ function uwpimagenow_portal_admin() {
     '#type' => 'textfield',
     '#title' => t('Description'),
     '#required' => TRUE,
-    '#default' => $portal_config['description'],
+    '#default_value' => $portal_config['description'],
   );
   
    $form['submitionurl'] = array(
     '#type' => 'textfield',
     '#title' => t('ImageNow Submition URL'),
     '#required' => TRUE,
-    '#default' => $portal_config['imagenow_url'],
+    '#default_value' => $portal_config['imagenow_url'],
     '#rules' => array(
       'url',
     ),
