@@ -15,7 +15,7 @@ function uwpimagenow_portal_admin() {
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
 
   $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
-  //$form[]['#markup'] = t('<p></p>');
+  $form[]['#markup'] = t(request_path());
 
   $form['drupalnid'] = array(
     '#type' => 'textfield',
