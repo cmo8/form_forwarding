@@ -72,7 +72,7 @@ function uwpimagenow_portal_admin() {
         '#title' => t('Drupal Form Select'),
         '#multiple' => false,
         '#options' => $form_elements, //TODO: Need to set
-        '#default_value' => $category[$connections[$i]['drupal_element']],
+        '#default_value' => $portal_config['connections'][$i]['drupal_element'],
       );
       $form[$connection][]['#markup'] = t('</td>');
       $form[$connection][]['#markup'] = t('<td>');
@@ -172,6 +172,24 @@ function _get_drupal_form_elements($nid) {
     $elements[$element->cid] = $element->form_key;
   }
   return $elements;
+}
+
+/**
+ * Get the drupal to imagenow portals.
+ */
+function _get_drupal_form_element_cid($nid, $form_key) {
+  $result = db_select('webform_component', 'components')
+    ->fields('components', array('cid'))
+    ->condition('nid', $nid, '=')
+    ->condition('form_key', $form_key, '=')
+    ->orderBy('cid', 'ASC')
+    ->execute();
+  // Organize portal elements
+  dsm($result);
+  foreach ($result as $element) {
+    return $element->cid;
+  }
+  return null;
 }
 
 function _get_portal_connections($inid){
