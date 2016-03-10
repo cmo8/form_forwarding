@@ -8,7 +8,7 @@
  * Implements hook_schema().
  */
 function uwpimagenow_schema() {
-  $schema['uwpimagenowportals'] = array(
+  $schema['uwpimagenow_portals'] = array(
     'description' => 'A list of all the drupal forms that submit to an ImageNow script',
     'fields' => array(
       'inid' => array(
@@ -44,7 +44,7 @@ function uwpimagenow_schema() {
     ),
     'primary key' => array('inid'),
   );
-  $schema['uwpimagenowportalconnections'] = array(
+  $schema['uwpimagenow_portal_connections'] = array(
     'description' => 'The connections between a form element and an ImageNow field',
     'fields' => array(
       'eid' => array(
