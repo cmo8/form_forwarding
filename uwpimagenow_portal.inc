@@ -157,7 +157,7 @@ function connection_add($form, &$form_state) {
   $drupal_element_key = $form_state['value']['drupal-element'];
   $imagenow_element_key = $form_state['value']['imagenow-key'];
   // Insert new connection
-  $eid = db_insert('uwpimagenow_connection')
+  $eid = db_insert('uwpimagenow_connections')
       ->fields(
         array(
           'init' => $portal_id,
