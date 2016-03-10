@@ -1,0 +1,85 @@
+<?php
+
+/* 
+ * UWP ImageNow install file
+ */
+
+/**
+ * Implements hook_schema().
+ */
+function uwpimagenow_schema() {
+  $schema['uwpimagenow_portals'] = array(
+    'description' => 'A list of all the drupal forms that submit to an ImageNow script',
+    'fields' => array(
+      'inid' => array(
+        'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'drupal_nid' => array(
+        'description' => 'The node id of the page the webform is on.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'description' => array(
+        'description' => 'Describe the portal.',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'imagenow_submission_url' => array(
+        'description' => 'The URL for the ImageNow submission',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'date' => array(
+        'description' => 'The date which the search was done',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array(
+      'inid'
+    ),
+  );
+  $schema['uwpimagenow_portal_connections'] = array(
+    'description' => 'The connections between a form element and an ImageNow field',
+    'fields' => array(
+      'eid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'inid' => array(
+        'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'drupal_element_key' => array(
+        'description' => 'Drupal webform element key',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+      'imagenow_element_key' => array(
+        'description' => 'ImageNow element key',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('eid'),
+    'foreign keys' => array(
+      'inid' => array(
+        'table' => 'uwpimagenow_portals',
+        'columns' => array('inid' => 'inid'),
+      ),
+    ),
+  );
+  return $schema;
+}
