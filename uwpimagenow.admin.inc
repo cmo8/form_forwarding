@@ -22,6 +22,7 @@ function uwpimagenow_admin_settings() {
     '#value' => t('+ Add'),
     '#description' => t('Add a new Potal'),
     '#name' => 'add_drupal_to_imagenow_portal',
+    '#submit' => array('uwpimagenow_admin_save'),
   );
   $portals = _get_drupal_to_imagenow_portals();
   #dsm($portals);
@@ -78,7 +79,7 @@ function uwpimagenow_admin_settings() {
  * @param type $form
  * @param type $form_state
  */
-function uwpimagenow_form_save($form, &$form_state) {
+function uwpimagenow_admin_save($form, &$form_state) {
   dsm($form);
   dsm($form_state);
 }
