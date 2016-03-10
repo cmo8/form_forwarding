@@ -151,10 +151,10 @@ function connection_delete($form, &$form_state) {
 }
 
 function connection_add($form, &$form_state) {
-  
-  dsm($form_state->value);
+  dsm($form_state);
+  dsm($form_state['value']);
   $portal_id = end(explode('/', request_path()));
-  $drupal_element_key = $form_state->value['drupal-element'];
+  $drupal_element_key = $form_state['value']['drupal-element'];
   dsm($drupal_element_key);
   $imagenow_element_key = $form_state['value']['imagenow-key'];
   dsm($imagenow_element_key);
