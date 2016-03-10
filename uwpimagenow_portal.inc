@@ -53,81 +53,84 @@ function uwpimagenow_portal_admin() {
     ),
   );
   
-  $connections = _get_drupal_to_imagenow_connections();
-  $form[]['#markup'] = t('<table id="portal-table">');
-  $form[]['#markup'] = t('<thead>');
-  $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-  $form[]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-  $form[]['#markup'] = t('<th>&nbsp;</th>');
-  $form[]['#markup'] = t('</thead>');
-  $form[]['#markup'] = t('<tbody>');
-  for($i=0; $i < count($connections); $i++){
-    $connection = 'connection-' . strval($i);
-    $form[$connection][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
-    $form[$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-    $form[$connection][]['drupal-form-element'] = array(
+  if($portal_id != 'new'){
+    $form_elements = _get_drupal_form_elements($portal_config['fid']);
+    $form[]['#markup'] = t('<table id="portal-table">');
+    $form[]['#markup'] = t('<thead>');
+    $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form[]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form[]['#markup'] = t('<th>&nbsp;</th>');
+    $form[]['#markup'] = t('</thead>');
+    $form[]['#markup'] = t('<tbody>');
+
+    for($i=0; $i < count($portal_config['connections']); $i++){
+      $connection = 'connection-' . strval($i);
+      $form[$connection][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
+      $form[$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
+      $form[$connection][]['drupal-form-element'] = array(
+        '#type' => 'select',
+        '#title' => t('Drupal Form Select'),
+        '#multiple' => false,
+        '#options' => $form_elements, //TODO: Need to set
+        '#default_value' => $category[$connections[$i]['drupal_element']],
+      );
+      $form[$connection][]['#markup'] = t('</td>');
+      $form[$connection][]['#markup'] = t('<td>');
+      $form[$connection][]['imagenow-key'] = array(
+        '#title' => t('ImageNow Key'),
+        '#description' => t('Key as set in ImageNow'),
+        '#type' => 'textfield',
+        '#required' => false,
+        '#default_value' => $portal_config['connections'][$i]['imagenow_key'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form[$connection][]['#markup'] = t('</td>');
+      $form[$connection][]['#markup'] = t('<td>');
+      $form[$connection][]['btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete Link'),
+        '#name' => 'delete_link',
+        '#submit' => array('connection_delete'),
+      );
+      $form[$connection][]['#markup'] = t('</td>');
+      $form[$connection][]['#markup'] = t('</tr >');
+    }
+    $form['new-link'][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
+    $form['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['new-link']['drupal-element'] = array(
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
-      '#options' => array($connections[$i]['drupal_element'],'- Select -'), //TODO: Need to set
+      '#options' => $form_elements, //TODO: Need to set
     );
-    $form[$connection][]['#markup'] = t('</td>');
-    $form[$connection][]['#markup'] = t('<td>');
-    $form[$connection][]['imagenow-key'] = array(
+    $form['new-link'][]['#markup'] = t('</td>');
+    $form['new-link'][]['#markup'] = t('<td>');
+    $form['new-link']['imagenow-key'] = array(
       '#title' => t('ImageNow Key'),
       '#description' => t('Key as set in ImageNow'),
-      '#type' => 'textfield',
+     '#type' => 'textfield',
       '#required' => false,
-      '#default_value' => $connections[$i]['imagenow_key'],
       //'#rules' => array(
       //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-      //),
     );
-    $form[$connection][]['#markup'] = t('</td>');
-    $form[$connection][]['#markup'] = t('<td>');
-    $form[$connection][]['btndelete'] = array(
+    $form['new-link'][]['#markup'] = t('</td>');
+    $form['new-link'][]['#markup'] = t('<td>');
+    $form['new-link']['btnadd'] = array(
       '#type' => 'submit',
-      '#value' => t('Delet'),
-      '#description' => t('Delete Link'),
-      '#name' => 'delete_link',
-      '#submit' => array('connection_delete'),
+      '#value' => t('Add'),
+      '#description' => t('Add Link'),
+      '#name' => 'add_link',
+      '#submit' => array('connection_add'),
     );
-    $form[$connection][]['#markup'] = t('</td>');
-    $form[$connection][]['#markup'] = t('</tr >');
+    $form['new-link'][]['#markup'] = t('</td>');
+    $form['new-link'][]['#markup'] = t('</tr >');
+
+    $form[]['#markup'] = t('</tbody>');
+    $form[]['#markup'] = t('</table>');
   }
-  $form['new-link'][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
-  $form['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
-  $form['new-link']['drupal-element'] = array(
-    '#type' => 'select',
-    '#title' => t('Drupal Form Select'),
-    '#multiple' => false,
-    '#options' => $opt, //TODO: Need to set
-  );
-  $form['new-link'][]['#markup'] = t('</td>');
-  $form['new-link'][]['#markup'] = t('<td>');
-  $form['new-link']['imagenow-key'] = array(
-    '#title' => t('ImageNow Key'),
-    '#description' => t('Key as set in ImageNow'),
-   '#type' => 'textfield',
-    '#required' => false,
-    //'#rules' => array(
-    //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-  );
-  $form['new-link'][]['#markup'] = t('</td>');
-  $form['new-link'][]['#markup'] = t('<td>');
-  $form['new-link']['btnadd'] = array(
-    '#type' => 'submit',
-    '#value' => t('Add'),
-    '#description' => t('Add Link'),
-    '#name' => 'add_link',
-    '#submit' => array('connection_add'),
-  );
-  $form['new-link'][]['#markup'] = t('</td>');
-  $form['new-link'][]['#markup'] = t('</tr >');
-
-  $form[]['#markup'] = t('</tbody>');
-  $form[]['#markup'] = t('</table>');
-
   $form['btnSavePortal'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
@@ -157,34 +160,29 @@ function update_drupal_form_elements() {
 /**
  * Get the drupal to imagenow portals.
  */
-function _get_drupal_to_imagenow_connections() {
-  $connections = [];
-  $row1 = [];
-  $row1['drupal_element'] = 'name';
-  $row1['imagenow_key'] = 'IM_Name_ld';
-  $row2 = [];
-  $row2['drupal_element'] = 'birthday';
-  $row2['imagenow_key'] = 'IM_Birthday_ld';
-  $row3 = [];
-  $row3['drupal_element'] = 'address';
-  $row3['imagenow_key'] = 'IM_Address_ld';
-  $connections[] = $row1;
-  $connections[] = $row2;
-  $connections[] = $row3;
-  //TODO: Select from Table
-  
-  return $connections;
+function _get_drupal_form_elements($nid) {
+  $elements['select'] = ' - Select- ';
+  $result = db_select('webform_component', 'components')
+    ->fields('components', array('cid', 'form_key'))
+    ->condition('nid', $nid, '=')
+    ->orderBy('cid', 'ASC')
+    ->execute();
+  // Organize portal elements
+  foreach ($result as $element) {
+    $elements[$element->cid] = $element->form_key;
+  }
+  return $elements;
 }
 
 function _get_portal_connections($inid){
   $portal_connections = [];
-     // Get the portals from the Database
+  // Get the connections from the Database
   $result = db_select('uwpimagenow_connections', 'connections')
     ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
     ->condition('inid', $inid, '=')
     ->orderBy('eid', 'ASC')
     ->execute();
-  // Organize portal elements
+  // Organize connection elements
   foreach ($result as $row) {
     $row1 = [];
     $row1['eid'] = $row->eid;
