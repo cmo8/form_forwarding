@@ -24,7 +24,7 @@ function uwpimagenow_admin_form() {
     '#name' => 'add_drupal_to_imagenow_portal',
   );
   $portals = _get_drupal_to_imagenow_portals();
-  dsm($portals);
+  #dsm($portals);
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Index</th>');
@@ -35,10 +35,10 @@ function uwpimagenow_admin_form() {
   $form[]['#markup'] = t('</thead>');
   $form[]['#markup'] = t('<tbody>');
   for($i=0; $i < count($portals); $i++){
-    dsm($i);
-    dsm($portals[$i]);
+    #dsm($i);
+    #dsm($portals[$i]);
     $row = 'portal-' . strval($i);
-    dsm($row);
+    #dsm($row);
     $form[]['#markup'] = t('<tr id=portal-row-"' . strval($i) . '" class="odd">');
     $form[]['#markup'] = t('<td class="in-row">');
     $form[]['#markup'] = t(strval($i));
