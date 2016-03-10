@@ -12,7 +12,7 @@
 function uwpimagenow_admin_form() {
   $form = array();
   //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
-  //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
+  $form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow_admin.js';
 
   $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not weary it is all magic..</p>');
@@ -78,10 +78,10 @@ function uwpimagenow_admin_form() {
  * @param type $form
  * @param type $form_state
  */
-//function uwpimagenow_admin_submit($form, &$form_state) {
-//  dsm($form);
-//  dsm($form_state);
-//}
+function uwpimagenow_admin_submit($form, &$form_state) {
+  dsm($form);
+  dsm($form_state);
+}
 
 /**
  * Get the drupal to imagenow portals.
