@@ -17,27 +17,27 @@ function uwpimagenow_portal_admin() {
   $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
   $form[]['#markup'] = t('<p></p>');
 
-  $form['drupalnid'] = array(
+  $form[]['drupalnid'] = array(
     '#type' => 'textField',
     '#title' => t('Drupal Node ID'),
     '#required' => TRUE,
     '#rules' => array(
       array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
     ),
-    '#ajax' => array(
-      'callback' => 'update_drupal_form_elements',
-      'wrapper' => 'poll-choices',
-      'method' => 'replace',
-    ),
+    //'#ajax' => array(
+    //  'callback' => 'update_drupal_form_elements',
+    //  'wrapper' => 'poll-choices',
+    //  'method' => 'replace',
+    //),
   );
   
-  $form['description'] = array(
+  $form[]['description'] = array(
     '#type' => 'textField',
     '#title' => t('Description'),
     '#required' => TRUE,
   );
   
-   $form['submitionurl'] = array(
+   $form[]['submitionurl'] = array(
     '#type' => 'textField',
     '#title' => t('ImageNow Submition URL'),
     '#required' => TRUE,
