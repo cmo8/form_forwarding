@@ -12,8 +12,8 @@
 function uwpimagenow_portal_admin() {
   $portal_id = end(explode('/', request_path()));
   $portal_config = _get_portal_config($portal_id);
-  dsm($portal_id);
-  dsm($portal_config);
+  #dsm($portal_id);
+  #dsm($portal_config);
   $form = array();
   //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
@@ -187,7 +187,7 @@ function _get_drupal_form_element_cid($nid, $form_key) {
     ->orderBy('cid', 'ASC')
     ->execute();
   // Organize portal elements
-  dsm($result);
+  //dsm($result);
   foreach ($result as $element) {
     return $element->cid;
   }
@@ -222,7 +222,7 @@ function _get_portal_config($pid) {
     ->orderBy('inid', 'ASC')
     ->execute();
   // Organize portal elements
-  dsm($result);
+  #dsm($result);
   foreach ($result as $row) {
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
