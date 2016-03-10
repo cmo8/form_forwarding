@@ -18,7 +18,7 @@ function uwpimagenow_admin_settings() {
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not weary it is all magic..</p>');
   
   $portals = _get_drupal_to_imagenow_portals();
-  #dsm($portals);
+  dsm($portals);
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Index</th>');
@@ -111,7 +111,7 @@ function _get_drupal_to_imagenow_portals() {
     $row1 = [];
     $row1['inid'] = $row->inid;
     $row1['fid'] = $row->drupal_nid;
-    $opt['description'] = $row->description;
+    $row1['description'] = $row->description;
     $portals[] = $row1;
   }
   return $portals;
