@@ -9,7 +9,7 @@
 /**
  * ImageNow Admin Page. Builds the form for the user to use.
  */
-function phonebook_department_load() {
+function uwpimagenow_details_admin() {
   $form = array();
   //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
@@ -102,7 +102,7 @@ function phonebook_department_load() {
 /**
  * Get the drupal to imagenow portals.
  */
-function _get_drupal_to_imagenow_portals() {
+function _get_drupal_to_imagenow_portal() {
   $portals = [];
   
   //TODO: Select from Table
