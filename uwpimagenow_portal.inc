@@ -205,13 +205,11 @@ function _get_portal_config($pid) {
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
-    $row1 = [];
-    $row1['inid'] = $row->inid;
-    $row1['fid'] = $row->drupal_nid;
-    $row1['description'] = $row->description;
-    $row1['imagenow_url'] = $row->imagenow_submission_url;
-    $row1['connections'] = _get_portal_connections($row->inid);
-    $portal_config[] = $row1;
+    $portal_config['inid'] = $row->inid;
+    $portal_config['fid'] = $row->drupal_nid;
+    $portal_config['description'] = $row->description;
+    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
+    $portal_config['connections'] = _get_portal_connections($row->inid);
   }
   return $portal_config;
 }
