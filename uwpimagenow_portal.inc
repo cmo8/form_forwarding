@@ -81,7 +81,7 @@ function uwpimagenow_portal_admin() {
         '#type' => 'textfield',
         '#title' => t('ImageNow Key'),
         '#title_display' => 'invisible',
-        '#description' => t('Key as set in ImageNow'),
+        #'#description' => t('Key as set in ImageNow'),
         '#required' => false,
         '#default_value' => $portal_config['connections'][$i]['iek'],
         //'#rules' => array(
