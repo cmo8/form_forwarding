@@ -18,7 +18,7 @@ function uwpimagenow_admin_settings() {
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not weary it is all magic..</p>');
   
   $form['btnAddNewPortal'] = array(
-    '#type' => 'button',
+    '#type' => 'submit',
     '#value' => t('+ Add'),
     '#description' => t('Add a new Potal'),
     '#name' => 'add_drupal_to_imagenow_portal',
