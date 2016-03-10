@@ -152,6 +152,8 @@ function connection_delete($form, &$form_state) {
 
 function connection_add($form, &$form_state) {
   drupal_set_message(t("Add New Connection."));
+  dsm($form);
+  dsm($form_state);
 }
 
 function update_drupal_form_elements() {
