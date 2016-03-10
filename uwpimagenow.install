@@ -42,9 +42,7 @@ function uwpimagenow_schema() {
         'not null' => TRUE,
       ),
     ),
-    'primary key' => array(
-      'inid'
-    ),
+    'primary key' => array('inid'),
   );
   $schema['uwpimagenowportalconnections'] = array(
     'description' => 'The connections between a form element and an ImageNow field',
@@ -56,7 +54,7 @@ function uwpimagenow_schema() {
       ),
       'inid' => array(
         'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
-        'type' => 'serial',
+        'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
