@@ -15,7 +15,7 @@ function uwpimagenow_menu() {
     'title' => 'UW-Platteville ImageNow',
     'description' => 'Connect Drupal webforms to the ImageNow system. Tom Click Here!!!',
     'page callback' => 'drupal_get_form',
-    'page arguments' => array('uwpimagenow_admin_form'),
+    'page arguments' => array('uwpimagenow_admin_settings'),
     'access arguments' => array('administer uwpimagenow'),
     'file' => 'uwpimagenow.admin.inc',
     'type' => MENU_NORMAL_ITEM,

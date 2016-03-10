@@ -9,7 +9,7 @@
 /**
  * ImageNow Admin Page. Builds the form for the user to use.
  */
-function uwpimagenow_admin_form() {
+function uwpimagenow_admin_settings() {
   $form = array();
   //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
   $form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow_admin.js';
@@ -78,7 +78,7 @@ function uwpimagenow_admin_form() {
  * @param type $form
  * @param type $form_state
  */
-function uwpimagenow_admin_form_form_submit($form, &$form_state) {
+function uwpimagenow_save($form, &$form_state) {
   dsm($form);
   dsm($form_state);
 }
