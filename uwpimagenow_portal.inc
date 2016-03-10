@@ -152,11 +152,11 @@ function connection_delete($form, &$form_state) {
 
 function connection_add($form, &$form_state) {
   dsm($form_state);
-  dsm($form_state['value']);
+  dsm($form_state['values']);
   $portal_id = end(explode('/', request_path()));
-  $drupal_element_key = $form_state['value']['drupal-element'];
+  $drupal_element_key = $form_state['values']['drupal-element'];
   dsm($drupal_element_key);
-  $imagenow_element_key = $form_state['value']['imagenow-key'];
+  $imagenow_element_key = $form_state['values']['imagenow-key'];
   dsm($imagenow_element_key);
   // Insert new connection
   $eid = db_insert('uwpimagenow_connections')
