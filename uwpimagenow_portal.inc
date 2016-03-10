@@ -70,6 +70,7 @@ function uwpimagenow_portal_admin() {
       $form[$connection][]['drupal-form-element'] = array(
         '#type' => 'select',
         '#title' => t('Drupal Form Select'),
+        '#title_display' => 'invisible',
         '#multiple' => false,
         '#options' => $form_elements, //TODO: Need to set
         '#default_value' => $portal_config['connections'][$i]['dek'],
@@ -77,9 +78,10 @@ function uwpimagenow_portal_admin() {
       $form[$connection][]['#markup'] = t('</td>');
       $form[$connection][]['#markup'] = t('<td>');
       $form[$connection][]['imagenow-key'] = array(
-        '#title' => t('ImageNow Key'),
-        '#description' => t('Key as set in ImageNow'),
         '#type' => 'textfield',
+        '#title' => t('ImageNow Key'),
+        '#title_display' => 'invisible',
+        '#description' => t('Key as set in ImageNow'),
         '#required' => false,
         '#default_value' => $portal_config['connections'][$i]['iek'],
         //'#rules' => array(
