@@ -31,37 +31,37 @@ function uwpimagenow_admin_settings() {
   for($i=0; $i < count($portals); $i++){
     #dsm($i);
     #dsm($portals[$i]);
-    $row = 'portal-' . strval($i);
+    $row = 'portal-' . $portals[$i]['inid'];
     #dsm($row);
-    $form[]['#markup'] = t('<tr id=portal-row-"' . strval($i) . '" class="odd">');
-    $form[]['#markup'] = t('<td class="in-row">');
-    $form[]['#markup'] = t(strval($i));
-    $form[]['#markup'] = t('</td>');
-    $form[]['#markup'] = t('<td class="in-drupal-form-id">');
-    $form[]['#markup'] = t($portals[$i]['fid']);
-    $form[]['#markup'] = t('</td>');
-    $form[]['#markup'] = t('<td class="in-description">');
-    $form[]['#markup'] = t($portals[$i]['description']);
-    $form[]['#markup'] = t('</td>');
-    $form[]['#markup'] = t('<td class="in-edit">');
-    $form[]['btnedit'] = array(
+    $form[$row][]['#markup'] = t('<tr id=portal-row-"' . $portals[$i]['inid'] . '" class="odd">');
+    $form[$row][]['#markup'] = t('<td class="in-row">');
+    $form[$row][]['#markup'] = t($portals[$i]['inid']);
+    $form[$row][]['#markup'] = t('</td>');
+    $form[$row][]['#markup'] = t('<td class="in-drupal-form-id">');
+    $form[$row][]['#markup'] = t($portals[$i]['fid']);
+    $form[$row][]['#markup'] = t('</td>');
+    $form[$row][]['#markup'] = t('<td class="in-description">');
+    $form[$row][]['#markup'] = t($portals[$i]['description']);
+    $form[$row][]['#markup'] = t('</td>');
+    $form[$row][]['#markup'] = t('<td class="in-edit">');
+    $form[$row][]['btnedit'] = array(
       '#type' => 'submit',
       '#value' => t('Edit'),
       '#description' => t('Edit Portal'),
-      '#name' => 'edit_portal_' . strval($i),
+      '#name' => 'edit_portal_' . $portals[$i]['inid'],
       '#submit' => array('uwpimagenow_admin_save'),
     );
-    $form[]['#markup'] = t('</td>');
-    $form[]['#markup'] = t('<td class="in-delete">');
-    $form[]['btndelete'] = array(
+    $form[$row][]['#markup'] = t('</td>');
+    $form[$row][]['#markup'] = t('<td class="in-delete">');
+    $form[$row][]['btndelete'] = array(
       '#type' => 'submit',
       '#value' => t('Delet'),
       '#description' => t('Delete Link'),
-      '#name' => 'delete_portal_' . strval($i),
+      '#name' => 'delete_portal_' . $portals[$i]['inid'],
       '#submit' => array('uwpimagenow_admin_save'),
     );
-    $form[]['#markup'] = t('</td>');
-    $form[]['#markup'] = t('</tr>');
+    $form[$row][]['#markup'] = t('</td>');
+    $form[$row][]['#markup'] = t('</tr>');
   }
   $form[]['#markup'] = t('</tbody>');
   $form[]['#markup'] = t('</table>');
