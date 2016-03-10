@@ -160,7 +160,7 @@ function connection_add($form, &$form_state) {
   $eid = db_insert('uwpimagenow_connections')
       ->fields(
         array(
-          'init' => $portal_id,
+          'inid' => $portal_id,
           'drupal_element_key' => $drupal_element_key,
           'imagenow_element_key' => $imagenow_element_key,
         )
