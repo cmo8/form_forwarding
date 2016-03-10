@@ -58,30 +58,30 @@ function uwpimagenow_portal_admin() {
 //  }
   $form['new-link']['#markup'] = t('<tr id=portal-row-"' . i . '" class="odd">');
   $form['new-link']['#markup'] = t('<td class="c-select">');
-  $form['new-link']['drupal-element'] = array(
-    '#type' => 'select',
-    '#title' => t('Drupal Form Select'),
-    '#multiple' => false,
-    '#options' => $opt, //TODO: Need to set
-  );
-  $form['new-link']['#markup'] = t('</td>');
-  $form['new-link']['#markup'] = t('<td>');
-  $form['new-link']['imagenow-key'] = array(
-    '#title' => t('ImageNow Key'),
-    '#description' => t('Key as set in ImageNow'),
-    '#type' => 'textfield',
-    '#required' => false,
-    //'#rules' => array(
-    //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-  );
-  $form['new-link']['#markup'] = t('</td>');
-  $form['new-link']['#markup'] = t('<td>');
-  $form['new-link']['btnadd'] = array(
-    '#type' => 'button',
-    '#value' => t('Add'),
-    '#description' => t('Add Link'),
-    '#name' => 'add_link',
-  );
+//  $form['new-link']['drupal-element'] = array(
+//    '#type' => 'select',
+//    '#title' => t('Drupal Form Select'),
+//    '#multiple' => false,
+//    '#options' => $opt, //TODO: Need to set
+//  );
+//  $form['new-link']['#markup'] = t('</td>');
+//  $form['new-link']['#markup'] = t('<td>');
+//  $form['new-link']['imagenow-key'] = array(
+//    '#title' => t('ImageNow Key'),
+//    '#description' => t('Key as set in ImageNow'),
+//    '#type' => 'textfield',
+//    '#required' => false,
+//    //'#rules' => array(
+//    //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+//  );
+//  $form['new-link']['#markup'] = t('</td>');
+//  $form['new-link']['#markup'] = t('<td>');
+//  $form['new-link']['btnadd'] = array(
+//    '#type' => 'button',
+//    '#value' => t('Add'),
+//    '#description' => t('Add Link'),
+//    '#name' => 'add_link',
+//  );
   $form['new-link']['#markup'] = t('</td>');
   $form['new-link']['#markup'] = t('</tr >');
 
