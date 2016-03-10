@@ -151,9 +151,22 @@ function connection_delete($form, &$form_state) {
 }
 
 function connection_add($form, &$form_state) {
-  drupal_set_message(t("Add New Connection."));
-  dsm($form);
+  
   dsm($form_state);
+  $portal_id = end(explode('/', request_path()));
+  $drupal_element_key = $form_state['value']['drupal-element'];
+  $imagenow_element_key = $form_state['value']['imagenow-key'];
+  // Insert new connection
+  $eid = db_insert('uwpimagenow_connection')
+      ->fields(
+        array(
+          'init' => $portal_id,
+          'drupal_element_key' => $drupal_element_key,
+          'imagenow_element_key' => $imagenow_element_key,
+        )
+      )
+      ->execute();
+  drupal_set_message(t("Add New Connection."));
 }
 
 function update_drupal_form_elements() {
