@@ -71,7 +71,7 @@ function uwpimagenow_portal_admin() {
       '#description' => t('Key as set in ImageNow'),
       '#type' => 'textfield',
       '#required' => false,
-      '#default_value' => $connection[$i]['imagenow_key']
+      '#default_value' => $connection[$i]['imagenow_key'],
       //'#rules' => array(
       //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
       //),
