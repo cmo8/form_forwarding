@@ -65,14 +65,14 @@ function uwpimagenow_portal_admin() {
 
     for($i=0; $i < count($portal_config['connections']); $i++){
       $connection = 'connection-' . strval($i);
-      $form[$connection][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
+      $form[$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
       $form[$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
       $form[$connection][]['drupal-form-element'] = array(
         '#type' => 'select',
         '#title' => t('Drupal Form Select'),
         '#multiple' => false,
         '#options' => $form_elements, //TODO: Need to set
-        '#default_value' => $portal_config['connections'][$i]['drupal_element'],
+        '#default_value' => $portal_config['connections'][$i]['dek'],
       );
       $form[$connection][]['#markup'] = t('</td>');
       $form[$connection][]['#markup'] = t('<td>');
@@ -81,7 +81,7 @@ function uwpimagenow_portal_admin() {
         '#description' => t('Key as set in ImageNow'),
         '#type' => 'textfield',
         '#required' => false,
-        '#default_value' => $portal_config['connections'][$i]['imagenow_key'],
+        '#default_value' => $portal_config['connections'][$i]['iek'],
         //'#rules' => array(
         //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
         //),
@@ -151,13 +151,9 @@ function connection_delete($form, &$form_state) {
 }
 
 function connection_add($form, &$form_state) {
-  dsm($form_state);
-  dsm($form_state['values']);
   $portal_id = end(explode('/', request_path()));
   $drupal_element_key = $form_state['values']['drupal-element'];
-  dsm($drupal_element_key);
   $imagenow_element_key = $form_state['values']['imagenow-key'];
-  dsm($imagenow_element_key);
   // Insert new connection
   $eid = db_insert('uwpimagenow_connections')
       ->fields(
@@ -175,7 +171,7 @@ function update_drupal_form_elements() {
   
 }
 /**
- * Get the drupal to imagenow portals.
+ * 
  */
 function _get_drupal_form_elements($nid) {
   $elements['select'] = ' - Select- ';
@@ -192,7 +188,7 @@ function _get_drupal_form_elements($nid) {
 }
 
 /**
- * Get the drupal to imagenow portals.
+ * Not Used
  */
 function _get_drupal_form_element_cid($nid, $form_key) {
   $result = db_select('webform_component', 'components')
