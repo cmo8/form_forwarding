@@ -80,8 +80,9 @@ function uwpimagenow_admin_settings() {
  * @param type $form_state
  */
 function uwpimagenow_admin_save($form, &$form_state) {
-  dsm($form);
-  dsm($form_state);
+  if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
+    drupal_set_message(t('Add was clicked.'));
+  }
 }
 
 /**
