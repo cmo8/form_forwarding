@@ -17,13 +17,6 @@ function uwpimagenow_admin_settings() {
   $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not weary it is all magic..</p>');
   
-  $form['btnAddNewPortal'] = array(
-    '#type' => 'submit',
-    '#value' => t('+ Add'),
-    '#description' => t('Add a new Potal'),
-    '#name' => 'add_drupal_to_imagenow_portal',
-    '#submit' => array('uwpimagenow_admin_save'),
-  );
   $portals = _get_drupal_to_imagenow_portals();
   #dsm($portals);
   $form[]['#markup'] = t('<table id="portal-table">');
@@ -70,6 +63,13 @@ function uwpimagenow_admin_settings() {
   }
   $form[]['#markup'] = t('</tbody>');
   $form[]['#markup'] = t('</table>');
+  $form['btnAddNewPortal'] = array(
+    '#type' => 'submit',
+    '#value' => t('+ Add'),
+    '#description' => t('Add a new Potal'),
+    '#name' => 'add_drupal_to_imagenow_portal',
+    '#submit' => array('uwpimagenow_admin_save'),
+  );
   return $form;
 }
 
