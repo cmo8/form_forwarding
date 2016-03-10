@@ -20,7 +20,15 @@ function uwpimagenow_menu() {
     'file' => 'uwpimagenow.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
-  
+  $items['admin/config/uwplatteville/imagenow/portal'] = array(
+    'title' => 'UW-Platteville ImageNow Portal',
+    'description' => 'Portal Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('uwpimagenow_portal_admin'),
+    'access arguments' => array('administer uwpimagenow'),
+    'file' => 'uwpimagenow_portal.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
   return $items;
 }
 
