@@ -62,7 +62,7 @@ function uwpimagenow_portal_admin() {
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
-      '#options' => array($connection[$i]['drupal_element'],'- Select -'), //TODO: Need to set
+      '#options' => array("${$connection[$i]['drupal_element']}",'- Select -'), //TODO: Need to set
     );
     $form[$connection][]['#markup'] = t('</td>');
     $form[$connection][]['#markup'] = t('<td>');
@@ -71,7 +71,7 @@ function uwpimagenow_portal_admin() {
       '#description' => t('Key as set in ImageNow'),
       '#type' => 'textfield',
       '#required' => false,
-      '#default_value' => $connection[$i]['imagenow_key'],
+      '#default_value' => "${$connection[$i]['imagenow_key']}",
       //'#rules' => array(
       //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
       //),
