@@ -78,7 +78,7 @@ function uwpimagenow_admin_form() {
  * @param type $form
  * @param type $form_state
  */
-function uwpimagenow_admin_submit($form, &$form_state) {
+function uwpimagenow_admin_form_submit($form, &$form_state) {
   dsm($form);
   dsm($form_state);
 }
