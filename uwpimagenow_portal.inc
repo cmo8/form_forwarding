@@ -11,7 +11,9 @@
  */
 function uwpimagenow_portal_admin() {
   $portal_id = end(explode('/', request_path()));
+  $portal_config = _get_portal_config($portal_id);
   dsm($portal_id);
+  dsm($portal_config);
   $form = array();
   //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
@@ -169,4 +171,44 @@ function _get_drupal_to_imagenow_connections() {
   //TODO: Select from Table
   
   return $connections;
+}
+
+function _get_portal_connections($inid){
+  $portal_connections = [];
+     // Get the portals from the Database
+  $result = db_select('uwpimagenow_portal_connections', 'connections')
+    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
+    ->condition('inid', $inid, '=')
+    ->orderBy('eid', 'ASC')
+    ->execute();
+  // Organize portal elements
+  foreach ($result as $row) {
+    $row1 = [];
+    $row1['eid'] = $row->eid;
+    $row1['dek'] = $row->drupal_element_key;
+    $row1['iek'] = $row->imagenow_element_key;
+    $portal_connections[] = $row1;
+  }
+  return $portal_connections;
+}
+
+function _get_portal_config($pid) {
+  $portal_config = [];
+  // Get the portals from the Database
+  $result = db_select('uwpimagenow_portals', 'portals')
+    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
+    ->condition('inid', $pid, '=')
+    ->orderBy('inid', 'ASC')
+    ->execute();
+  // Organize portal elements
+  foreach ($result as $row) {
+    $row1 = [];
+    $row1['inid'] = $row->inid;
+    $row1['fid'] = $row->drupal_nid;
+    $row1['description'] = $row->description;
+    $row1['imagenow_url'] = $row->imagenow_submission_url;
+    $row1['connections'] = _get_portal_connections($row->inid);
+    $portal_config[] = $row1;
+  }
+  return $portal_config;
 }
