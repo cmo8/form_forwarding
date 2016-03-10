@@ -10,11 +10,13 @@
  * ImageNow Admin Page. Builds the form for the user to use.
  */
 function uwpimagenow_portal_admin() {
+  $portal_id = end(explode('/', request_path()));
+  dsm($portal_id);
   $form = array();
   //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
 
-  $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
+  $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
   $form[]['#markup'] = t(request_path());
 
   $form['drupalnid'] = array(
