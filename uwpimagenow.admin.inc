@@ -83,12 +83,12 @@ function uwpimagenow_admin_settings() {
  */
 function uwpimagenow_admin_save($form, &$form_state) {
   if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
-    drupal_goto('admin/config/uwplatteville/imagenow/portal');
+    drupal_goto('admin/config/uwplatteville/imagenow/portal/new');
   }
   $count = 4;// _get_drupal_to_imagenow_portal_count();
   for($i = 0; $i < $count; $i++) {
     if ($form_state['clicked_button']['#name'] == 'edit_portal_' . strval($i)) {
-      drupal_goto('admin/config/uwplatteville/imagenow/portal?pid=' . strval($i));
+      drupal_goto('admin/config/uwplatteville/imagenow/portal/' . strval($i));
     }
     if ($form_state['clicked_button']['#name'] == 'delete_portal_' . strval($i)) {
       drupal_set_message(t('Delete Portal ' . strval($i)));
