@@ -44,7 +44,8 @@ function uwpimagenow_schema() {
     ),
     'primary key' => array('inid'),
   );
-  $schema['uwpimagenow_portal_connections'] = array(
+  
+  $schema['uwpimagenow_connections'] = array(
     'description' => 'The connections between a form element and an ImageNow field',
     'fields' => array(
       'eid' => array(
