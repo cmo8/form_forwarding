@@ -176,7 +176,7 @@ function _get_drupal_to_imagenow_connections() {
 function _get_portal_connections($inid){
   $portal_connections = [];
      // Get the portals from the Database
-  $result = db_select('uwpimagenow_portal_connections', 'connections')
+  $result = db_select('uwpimagenow_portals_connections', 'connections')
     ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
     ->condition('inid', $inid, '=')
     ->orderBy('eid', 'ASC')
