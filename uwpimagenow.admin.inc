@@ -45,7 +45,7 @@ function uwpimagenow_admin_settings() {
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-edit">');
     $form[]['btnedit'] = array(
-      '#type' => 'button',
+      '#type' => 'submit',
       '#value' => t('Edit'),
       '#description' => t('Edit Portal'),
       '#name' => 'edit_portal_' . strval($i),
@@ -53,7 +53,7 @@ function uwpimagenow_admin_settings() {
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-delete">');
     $form[]['btndelete'] = array(
-      '#type' => 'button',
+      '#type' => 'submit',
       '#value' => t('Delet'),
       '#description' => t('Delete Link'),
       '#name' => 'delete_portal_' . strval($i),
