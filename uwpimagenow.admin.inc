@@ -49,6 +49,7 @@ function uwpimagenow_admin_settings() {
       '#value' => t('Edit'),
       '#description' => t('Edit Portal'),
       '#name' => 'edit_portal_' . strval($i),
+      '#submit' => array('uwpimagenow_admin_save'),
     );
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('<td class="in-delete">');
@@ -57,6 +58,7 @@ function uwpimagenow_admin_settings() {
       '#value' => t('Delet'),
       '#description' => t('Delete Link'),
       '#name' => 'delete_portal_' . strval($i),
+      '#submit' => array('uwpimagenow_admin_save'),
     );
     $form[]['#markup'] = t('</td>');
     $form[]['#markup'] = t('</tr>');
