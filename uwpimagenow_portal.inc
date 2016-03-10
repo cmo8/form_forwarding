@@ -196,7 +196,7 @@ function _get_portal_connections($inid){
 }
 
 function _get_portal_config($pid) {
-  $portal_config = [];
+  $portal_config = null;
   // Get the portals from the Database
   $result = db_select('uwpimagenow_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
@@ -204,6 +204,7 @@ function _get_portal_config($pid) {
     ->orderBy('inid', 'ASC')
     ->execute();
   // Organize portal elements
+  dsm($result);
   foreach ($result as $row) {
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
