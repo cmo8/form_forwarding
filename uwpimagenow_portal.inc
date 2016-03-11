@@ -67,7 +67,7 @@ function uwpimagenow_portal_admin() {
       $connection = 'connection-' . strval($i);
       $form[$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
       $form[$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-      $form[$connection]['drupal-form-element'] = array(
+      $form[$connection . '-drupal-form-element'] = array(
         '#type' => 'select',
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
@@ -77,7 +77,7 @@ function uwpimagenow_portal_admin() {
       );
       $form[$connection][]['#markup'] = t('</td>');
       $form[$connection][]['#markup'] = t('<td>');
-      $form[$connection]['imagenow-key'] = array(
+      $form[$connection . '-imagenow-key'] = array(
         '#type' => 'textfield',
         '#title' => t('ImageNow Key'),
         '#title_display' => 'invisible',
@@ -90,7 +90,7 @@ function uwpimagenow_portal_admin() {
       );
       $form[$connection][]['#markup'] = t('</td>');
       $form[$connection][]['#markup'] = t('<td>');
-      $form[$connection]['btndelete'] = array(
+      $form[$connection . '-btndelete'] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
