@@ -66,8 +66,17 @@ function uwpimagenow_portal_admin() {
     for($i=0; $i < count($portal_config['connections']); $i++){
       $connection = 'connection-' . strval($i);
       $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#default_value' => $portal_config['connections'][$i]['eid'],
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-      $form['connections'][$connection]['drupal-form-element-c' . strval($i)] = array(
+      $form['connections'][$connection]['c' . strval($i) . '-drupal-form-element'] = array(
         '#type' => 'select',
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
@@ -77,7 +86,7 @@ function uwpimagenow_portal_admin() {
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['imagenow-key-c' . strval($i)] = array(
+      $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
         '#type' => 'textfield',
         '#title' => t('ImageNow Key'),
         '#title_display' => 'invisible',
@@ -90,7 +99,7 @@ function uwpimagenow_portal_admin() {
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['btndelete-c' . strval($i)] = array(
+      $form['connections'][$connection]['c' . strval($i) . '-btndelete'] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
@@ -159,13 +168,43 @@ function portal_save($form, &$form_state) {
           'drupal_nid' => $drupal_nid,
           'description' => $description,
           'imagenow_submission_url' => $imagenow_url,
-          'date' => time(),
+          'date' => REQUEST_TIME,
         )
       )
       ->execute();
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
   } else {
+    $update_portal = db_update('uwpimagenow_portals')
+      ->condition('inid', $portal_id, '=')
+      ->fields(
+        array(
+          'drupal_nid' => $drupal_nid,
+          'description' => $description,
+          'imagenow_submission_url' => $imagenow_url,
+        )
+      )
+      ->execute();
+
+    $index = 0;
+    $drupal_form_element = $form_state['values']['drupal-form-element-c' . strval($index)];
+    while($drupal_form_element != NULL){
+      $imagenow_key = $form_state['values']['imagenow-key-c' . strval($index)];
+      
+      $update_connection = db_update('uwpimagenow_connections')
+        ->condition('inid', $portal_id, '=')
+        ->fields(
+          array(
+            'drupal_nid' => $drupal_nid,
+            'description' => $description,
+            'imagenow_submission_url' => $imagenow_url,
+          )
+        )
+        ->execute();
+      
+      $index++;
+      $drupal_form_element = $form_state['values']['drupal-form-element-c' . strval($index)];
+    }
     drupal_set_message(t("Portal had been reconfigured"));
   }
   // redirect to the specific portal
