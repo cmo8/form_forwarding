@@ -164,7 +164,7 @@ function portal_save($form, &$form_state) {
       )
       ->execute();
     drupal_set_message(t("New Portal Saved"));
-    drupal_goto('/admin/config/uwplatteville/imagenow/portal' . strval($eid));
+    drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
   } else {
     drupal_set_message(t("Portal had been reconfigured"));
   }
