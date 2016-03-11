@@ -153,7 +153,7 @@ function portal_save($form, &$form_state) {
   $imagenow_url = $form_state['values']['submitionurl'];
 
   if($portal_id == 'new'){
-    $eid = db_insert('uwpimagenow_connections')
+    $eid = db_insert('uwpimagenow_portals')
       ->fields(
         array(
           'drupal_nid' => $drupal_nid,
