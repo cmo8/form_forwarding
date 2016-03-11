@@ -55,19 +55,19 @@ function uwpimagenow_portal_admin() {
   
   if($portal_id != 'new'){
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
-    $form[]['#markup'] = t('<table id="portal-table">');
-    $form[]['#markup'] = t('<thead>');
-    $form[]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-    $form[]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-    $form[]['#markup'] = t('<th>&nbsp;</th>');
-    $form[]['#markup'] = t('</thead>');
-    $form[]['#markup'] = t('<tbody>');
+    $form['connections'][]['#markup'] = t('<table id="portal-table">');
+    $form['connections'][]['#markup'] = t('<thead>');
+    $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['connections'][]['#markup'] = t('</thead>');
+    $form['connections'][]['#markup'] = t('<tbody>');
 
     for($i=0; $i < count($portal_config['connections']); $i++){
       $connection = 'connection-' . strval($i);
-      $form[$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
-      $form[$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-      $form[$connection . '-drupal-form-element'] = array(
+      $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
+      $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
+      $form['connections'][$connection . '-drupal-form-element'] = array(
         '#type' => 'select',
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
@@ -75,9 +75,9 @@ function uwpimagenow_portal_admin() {
         '#options' => $form_elements, //TODO: Need to set
         '#default_value' => $portal_config['connections'][$i]['dek'],
       );
-      $form[$connection][]['#markup'] = t('</td>');
-      $form[$connection][]['#markup'] = t('<td>');
-      $form[$connection . '-imagenow-key'] = array(
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection . '-imagenow-key'] = array(
         '#type' => 'textfield',
         '#title' => t('ImageNow Key'),
         '#title_display' => 'invisible',
@@ -88,17 +88,17 @@ function uwpimagenow_portal_admin() {
         //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
         //),
       );
-      $form[$connection][]['#markup'] = t('</td>');
-      $form[$connection][]['#markup'] = t('<td>');
-      $form[$connection . '-btndelete'] = array(
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection . '-btndelete'] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
         '#name' => 'delete_link',
         '#submit' => array('connection_delete'),
       );
-      $form[$connection][]['#markup'] = t('</td>');
-      $form[$connection][]['#markup'] = t('</tr >');
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('</tr >');
     }
     $form['new-link'][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
     $form['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
