@@ -73,6 +73,7 @@ function uwpimagenow_portal_admin() {
         '#title' => t('ID'),
         '#title_display' => 'invisible',
         '#required' => true,
+        '#disabled' => true,
         '#default_value' => $portal_config['connections'][$i]['eid'],
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
@@ -189,12 +190,14 @@ function portal_save($form, &$form_state) {
       ->execute();
 
     $index = 0;
-    $drupal_form_element = $form_state['values']['drupal-form-element-c' . strval($index)];
+    $eid = $form_state['values']['c' . strval($i) . '-eid'];
+    
     while($drupal_form_element != NULL){
-      $imagenow_key = $form_state['values']['imagenow-key-c' . strval($index)];
+      $drupal_form_element = $form_state['values']['c' . strval($i) . 'drupal-form-element'];
+      $imagenow_key = $form_state['values']['c' . strval($i) . 'imagenow-key'];
       
       $update_connection = db_update('uwpimagenow_connections')
-        ->condition('inid', $portal_id, '=')
+        ->condition('eid', $eid, '=')
         ->fields(
           array(
             'drupal_nid' => $drupal_nid,
