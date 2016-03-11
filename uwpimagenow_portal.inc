@@ -15,7 +15,7 @@ function uwpimagenow_portal_admin() {
   #dsm($portal_id);
   #dsm($portal_config);
   $form = array();
-  //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
+  $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
 
   $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
@@ -57,6 +57,7 @@ function uwpimagenow_portal_admin() {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
     $form['connections'][]['#markup'] = t('<table id="portal-table">');
     $form['connections'][]['#markup'] = t('<thead>');
+    $form['connections'][]['#markup'] = t('<th>ID</th>');
     $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
     $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
     $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
@@ -66,7 +67,7 @@ function uwpimagenow_portal_admin() {
     for($i=0; $i < count($portal_config['connections']); $i++){
       $connection = 'connection-' . strval($i);
       $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
-      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection][]['#markup'] = t('<td class="connection-id">');
       $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
         '#type' => 'textfield',
         '#title' => t('ID'),
@@ -111,6 +112,7 @@ function uwpimagenow_portal_admin() {
     }
     $form['connections']['new-link'][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
     $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['connections']['new-link'][]['#markup'] = t('<td class="connection-id"></td>');
     $form['connections']['new-link']['drupal-element'] = array(
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
