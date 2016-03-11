@@ -67,7 +67,7 @@ function uwpimagenow_portal_admin() {
       $connection = 'connection-' . strval($i);
       $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
       $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-      $form['connections'][$connection]['-drupal-form-element'] = array(
+      $form['connections'][$connection]['drupal-form-element-c' . strval($i)] = array(
         '#type' => 'select',
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
@@ -77,7 +77,7 @@ function uwpimagenow_portal_admin() {
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['-imagenow-key'] = array(
+      $form['connections'][$connection]['imagenow-key-c' . strval($i)] = array(
         '#type' => 'textfield',
         '#title' => t('ImageNow Key'),
         '#title_display' => 'invisible',
@@ -90,7 +90,7 @@ function uwpimagenow_portal_admin() {
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['-btndelete'] = array(
+      $form['connections'][$connection]['btndelete-c' . strval($i)] = array(
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
