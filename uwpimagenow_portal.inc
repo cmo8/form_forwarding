@@ -147,16 +147,27 @@ function uwpimagenow_portal_admin() {
 function portal_save($form, &$form_state) {
   dsm($form_state);
   $portal_id = end(explode('/', request_path()));
+  
+  $drupal_nid = $form_state['values']['drupalnid'];
+  $description = $form_state['values']['description'];
+  $imagenow_url = $form_state['values']['submitionurl'];
+
   if($portal_id == 'new'){
+    $eid = db_insert('uwpimagenow_connections')
+      ->fields(
+        array(
+          'drupal_nid' => $drupal_nid,
+          'description' => $description,
+          'imagenow_submission_url' => $imagenow_url,
+          'date' => time(),
+        )
+      )
+      ->execute();
     drupal_set_message(t("New Portal Saved"));
+    drupal_goto('/admin/config/uwplatteville/imagenow/portal' . strval($eid));
   } else {
     drupal_set_message(t("Portal had been reconfigured"));
   }
-  // Insert in the portal table
-  //$drupal_nid = $form_state['values']['drupal-element'];
-  //$description = $form_state['values']['description'];
-  //$imagenow_url = $form_state['values']['imagenow-key'];
-  
   // redirect to the specific portal
   
   
