@@ -145,7 +145,22 @@ function uwpimagenow_portal_admin() {
 }
 
 function portal_save($form, &$form_state) {
-  drupal_set_message(t("Save Portal"));
+  dsm($form_state);
+  $portal_id = end(explode('/', request_path()));
+  if($portal_id == 'new'){
+    drupal_set_message(t("New Portal Saved"));
+  } else {
+    drupal_set_message(t("Portal had been reconfigured"));
+  }
+  // Insert in the portal table
+  //$drupal_nid = $form_state['values']['drupal-element'];
+  //$description = $form_state['values']['description'];
+  //$imagenow_url = $form_state['values']['imagenow-key'];
+  
+  // redirect to the specific portal
+  
+  
+  
 }
 
 function connection_delete($form, &$form_state) {
