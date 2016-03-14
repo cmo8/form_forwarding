@@ -157,7 +157,7 @@ function uwpimagenow_portal_admin() {
 }
 
 function portal_save($form, &$form_state) {
-  dsm($form_state);
+  //dsm($form_state);
   $portal_id = end(explode('/', request_path()));
   
   $drupal_nid = $form_state['values']['drupalnid'];
@@ -191,12 +191,12 @@ function portal_save($form, &$form_state) {
 
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
-    dsm("eid: " . $eid);
+    //dsm("eid: " . $eid);
     while($eid != NULL){
       $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
       $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
-      dsm("drupal_form_element: " . $drupal_form_element);
-      dsm("imagenow_key: " . $imagenow_key);
+      //dsm("drupal_form_element: " . $drupal_form_element);
+      //dsm("imagenow_key: " . $imagenow_key);
       $update_connection = db_update('uwpimagenow_connections')
         ->condition('eid', $eid, '=')
         ->fields(
@@ -209,6 +209,7 @@ function portal_save($form, &$form_state) {
       
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
+      //dsm("eid: " . $eid);
     }
     drupal_set_message(t("Portal had been reconfigured"));
   }
@@ -219,7 +220,9 @@ function portal_save($form, &$form_state) {
 }
 
 function connection_delete($form, &$form_state) {
+  dsm($form_state);
   drupal_set_message(t("Delete Connection"));
+  
 }
 
 function connection_add($form, &$form_state) {
