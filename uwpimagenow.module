@@ -68,6 +68,7 @@ function uwpimagenow_permission() {
  * @param type $form_state
  */
 function uwpimagenow_form_submit($form_id, $form_state){
+  dsm("Test uwpimagenow");
   dsm($form_state);
 }
 
@@ -83,15 +84,27 @@ function uwpimagenow_form_alter(&$form_id, $form_state) {
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
 
-  /**switch ($form_id) {
-
-    case 'node_article_form':      // New article nodes.
-    case 'node_article_edit_form': // Existing article nodes.
-
-      // Attach our custom submit handler.
-      $form['actions']['publish']['#submit'][] = 'my_module_node_article_form_submit';
-      break;
-
+  if(_is_imagenow_form($form_id['details']['nid']['#value'])){
+    $form_id['actions']['publish']['#submit'][] = 'uwpimagenow_form_submit';
   }
-  */
+}
+
+function _is_imagenow_form($nid){
+  $dbNids = NULL;
+  // Get the portals from the Database
+  $result = db_select('uwpimagenow_portals', 'portals')
+    ->fields('portals', array('drupal_nid'))
+    ->orderBy('inid', 'ASC')
+    ->execute();
+  // Organize portal elements
+  foreach ($result as $row) {
+    $dbNids[] = $row->drupal_nid;
+  }
+  
+  for($i = 0; $i < count($dbNids); $i++){
+    if($nid == $dbNids[$i]){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
