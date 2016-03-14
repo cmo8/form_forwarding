@@ -105,7 +105,7 @@ function uwpimagenow_portal_admin() {
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
-        '#name' => 'delete_link',
+        '#name' => strval($i) . 'delete_link',
         '#submit' => array('connection_delete'),
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
@@ -222,7 +222,7 @@ function portal_save($form, &$form_state) {
 function connection_delete($form, &$form_state) {
   dsm($form_state);
   drupal_set_message(t("Delete Connection"));
-  dsm($form_state['clicked_button']['#id']);
+  dsm($form_state['clicked_button']['#name']);
   
 }
 
