@@ -191,7 +191,7 @@ function portal_save($form, &$form_state) {
 
     $index = 0;
     $eid = $form_state['values']['c' . strval($i) . '-eid'];
-    
+    dsm($eid);
     while($drupal_form_element != NULL){
       $drupal_form_element = $form_state['values']['c' . strval($i) . 'drupal-form-element'];
       $imagenow_key = $form_state['values']['c' . strval($i) . 'imagenow-key'];
@@ -200,9 +200,8 @@ function portal_save($form, &$form_state) {
         ->condition('eid', $eid, '=')
         ->fields(
           array(
-            'drupal_nid' => $drupal_nid,
-            'description' => $description,
-            'imagenow_submission_url' => $imagenow_url,
+            'drupal_element_key' => $drupal_form_element,
+            'imagenow_element_key' => $imagenow_key,
           )
         )
         ->execute();
