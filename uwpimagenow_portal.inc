@@ -105,7 +105,7 @@ function uwpimagenow_portal_admin() {
         '#type' => 'submit',
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
-        '#name' => strval($i) . 'delete_link',
+        '#name' => strval($i) . '_delete_link',
         '#submit' => array('connection_delete'),
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
@@ -223,7 +223,10 @@ function connection_delete($form, &$form_state) {
   dsm($form_state);
   drupal_set_message(t("Delete Connection"));
   dsm($form_state['clicked_button']['#name']);
-  
+  $index = $form_state['clicked_button']['#name'][0];
+  dsm($index);
+  $eid = $form_state['values']['c' . strval($index) . '-eid'];
+  dsm("eid: " . $eid);
 }
 
 function connection_add($form, &$form_state) {
@@ -241,10 +244,6 @@ function connection_add($form, &$form_state) {
       )
       ->execute();
   drupal_set_message(t("Add New Connection."));
-}
-
-function update_drupal_form_elements() {
-  
 }
 /**
  * 
