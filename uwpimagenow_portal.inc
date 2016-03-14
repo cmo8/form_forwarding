@@ -220,13 +220,16 @@ function portal_save($form, &$form_state) {
 }
 
 function connection_delete($form, &$form_state) {
-  dsm($form_state);
-  drupal_set_message(t("Delete Connection"));
-  dsm($form_state['clicked_button']['#name']);
+  //dsm($form_state);
+  //dsm($form_state['clicked_button']['#name']);
   $index = $form_state['clicked_button']['#name'][0];
-  dsm($index);
+  //dsm($index);
   $eid = $form_state['values']['c' . strval($index) . '-eid'];
-  dsm("eid: " . $eid);
+  //dsm("eid: " . $eid);
+  $num_deleted = db_delete('uwpimagenow_connections')
+    ->condition('eid', $eid, '=')
+    ->execute();
+  drupal_set_message(t("Delete Connection"));
 }
 
 function connection_add($form, &$form_state) {
