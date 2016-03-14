@@ -191,11 +191,12 @@ function portal_save($form, &$form_state) {
 
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
-    dsm($eid);
+    dsm("eid: " . $eid);
     while($eid != NULL){
       $drupal_form_element = $form_state['values']['c' . strval($index) . 'drupal-form-element'];
       $imagenow_key = $form_state['values']['c' . strval($index) . 'imagenow-key'];
-      
+      dsm("drupal_form_element: " . $drupal_form_element);
+      dsm("imagenow_key: " . $imagenow_key);
       $update_connection = db_update('uwpimagenow_connections')
         ->condition('eid', $eid, '=')
         ->fields(
