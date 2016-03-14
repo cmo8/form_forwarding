@@ -77,8 +77,8 @@ function uwpimagenow_form_submit($form_id, $form_state){
 function uwpimagenow_form_alter(&$form, $form_state) {
 
   // Use this to reveal the form id.
-  drupal_set_message($form_state);
-  drupal_set_message($form);
+  dsm($form_state);
+  dsm($form);
 
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
