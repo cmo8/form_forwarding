@@ -190,11 +190,11 @@ function portal_save($form, &$form_state) {
       ->execute();
 
     $index = 0;
-    $eid = $form_state['values']['c' . strval($i) . '-eid'];
+    $eid = $form_state['values']['c' . strval($index) . '-eid'];
     dsm($eid);
     while($eid != NULL){
-      $drupal_form_element = $form_state['values']['c' . strval($i) . 'drupal-form-element'];
-      $imagenow_key = $form_state['values']['c' . strval($i) . 'imagenow-key'];
+      $drupal_form_element = $form_state['values']['c' . strval($index) . 'drupal-form-element'];
+      $imagenow_key = $form_state['values']['c' . strval($index) . 'imagenow-key'];
       
       $update_connection = db_update('uwpimagenow_connections')
         ->condition('eid', $eid, '=')
@@ -207,7 +207,7 @@ function portal_save($form, &$form_state) {
         ->execute();
       
       $index++;
-      $eid = $form_state['values']['c' . strval($i) . '-eid'];
+      $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
     drupal_set_message(t("Portal had been reconfigured"));
   }
