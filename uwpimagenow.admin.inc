@@ -111,10 +111,11 @@ function portal_delete($form, &$form_state) {
   $eids = _get_portal_connections($portal_id);
   dsm($eids);
   foreach($eids as $eid){
-    $foo = db_delete('uwpimagenow_connections')
-      ->condition('eid', $eid['eid'], '=')
-      ->execute();
-    dam($foo);
+    dsm($eid);
+//    $foo = db_delete('uwpimagenow_connections')
+//      ->condition('eid', $eid['eid'], '=')
+//      ->execute();
+//    dam($foo);
   }
 //  db_delete('uwpimagenow_portals')
 //    ->condition('inid', $portal_id, '=')
