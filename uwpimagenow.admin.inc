@@ -98,7 +98,8 @@ function uwpimagenow_admin_save($form, &$form_state) {
 
 function portal_delete($form, &$form_state) {
   dsm($form_state);
-  dsm(explode('_', $form_state['clicked_button']['#name'])[-1]);
+  $tmp = explode('_', $form_state['clicked_button']['#name']);
+  dsm($tmp[count($tmp) - 1]);
   
 //  $eids = _get_portal_connections($portal_id);
 //  for($i = 0; $i < count($eids); $i++){
