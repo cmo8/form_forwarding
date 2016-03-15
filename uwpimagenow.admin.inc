@@ -82,17 +82,20 @@ function uwpimagenow_admin_settings() {
  * @param type $form_state
  */
 function uwpimagenow_admin_save($form, &$form_state) {
+  dsm($form);
+  dsm($form_state);
   if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
     drupal_goto('admin/config/uwplatteville/imagenow/portal/new');
   }
-  $count = _get_drupal_to_imagenow_portal_count();
-  for($i = 0; $i < $count; $i++) {
-    if ($form_state['clicked_button']['#name'] == 'edit_portal_' . strval($i)) {
-      drupal_goto('admin/config/uwplatteville/imagenow/portal/' . strval($i));
+  //$count = _get_drupal_to_imagenow_portal_count();
+  $portals = _get_drupal_to_imagenow_portals();
+  for($i = 0; $i < count($portals); $i++) {
+    if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]) {
+      drupal_goto('admin/config/uwplatteville/imagenow/portal/' . $portals[$i]);
     }
-    if ($form_state['clicked_button']['#name'] == 'delete_portal_' . strval($i)) {
+    if ($form_state['clicked_button']['#name'] == 'delete_portal_' . $portals[$i]) {
       portal_delete($form, $form_state);
-      drupal_set_message(t('Delete Portal ' . strval($i)));
+      drupal_set_message(t('Delete Portal ' . $portals[$i]));
     }
   }
 }
