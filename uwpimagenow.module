@@ -74,22 +74,22 @@ function uwpimagenow_form_submit($form_id, $form_state){
 }
 
 function _is_imagenow_form($nid){
-  $dbNids = NULL;
-  // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('drupal_nid'))
-    ->orderBy('inid', 'ASC')
-    ->execute();
-  // Organize portal elements
-  foreach ($result as $row) {
-    $dbNids[] = $row->drupal_nid;
-  }
-  dsm($dbNids);
-  for($i = 0; $i < count($dbNids); $i++){
-    if($nid == $dbNids[$i]){
-      return TRUE;
-    }
-  }
+//  $dbNids = NULL;
+//  // Get the portals from the Database
+//  $result = db_select('uwpimagenow_portals', 'portals')
+//    ->fields('portals', array('drupal_nid'))
+//    ->orderBy('inid', 'ASC')
+//    ->execute();
+//  // Organize portal elements
+//  foreach ($result as $row) {
+//    $dbNids[] = $row->drupal_nid;
+//  }
+//  dsm($dbNids);
+//  for($i = 0; $i < count($dbNids); $i++){
+//    if($nid == $dbNids[$i]){
+//      return TRUE;
+//    }
+//  }
   return FALSE;
 }
 
