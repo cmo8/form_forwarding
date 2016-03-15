@@ -111,15 +111,13 @@ function portal_delete($form, &$form_state) {
   dsm($eids);
   foreach($eids as $eid){
     dsm($eid);
-    $f = db_delete('uwpimagenow_connections')
+    db_delete('uwpimagenow_connections')
       ->condition('eid', $eid['eid'], '=')
       ->execute();
-    dms($f);
   }
-  $r = db_delete('uwpimagenow_portals')
+  db_delete('uwpimagenow_portals')
     ->condition('inid', $portal_id, '=')
     ->execute();
-  dsm($r);
   drupal_set_message(t("Portal had been warped beyond repair"));
 }
 
