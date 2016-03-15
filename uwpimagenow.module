@@ -103,8 +103,8 @@ function _submit_to_imagenow(&$form_state) {
  */
 function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) return;
-  dpm("Test uwpimagenow");
-  dpm($form_state);
+  //dpm("Test uwpimagenow");
+  //dpm($form_state);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
@@ -133,18 +133,18 @@ function _is_imagenow_form($nid) {
 function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
 
   // Use this to reveal the form id.
-  dsm($form_state);
-  dsm($form);
-  dsm($form_id);
-  dsm($form['details']['nid']['#value']);
+  //dsm($form_state);
+  //dsm($form);
+  //dsm($form_id);
+  //dsm($form['details']['nid']['#value']);
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
   $index = $form['details']['nid']['#value'];
   $tmp = _is_imagenow_form($index);
   if ($tmp == TRUE) {
-    dsm("Is an ImageNow Form");
+  //  dsm("Is an ImageNow Form");
     $form['#validate'][] = 'uwpimagenow_form_validate';
-    dsm($form['#validate']);
+  //  dsm($form['#validate']);
     //$form_id['actions']['publish']['#submit'][] = 'uwpimagenow_form_alter';
   }
 }
