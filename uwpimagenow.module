@@ -70,6 +70,7 @@ function uwpimagenow_permission() {
 function uwpimagenow_form_submit($form_id, $form_state){
   dsm("Test uwpimagenow");
   dsm($form_state);
+  watchdog("CMO-php", 'Test uwpimagenow');
 }
 
 /**
