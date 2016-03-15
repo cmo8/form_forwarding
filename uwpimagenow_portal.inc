@@ -19,7 +19,7 @@ function uwpimagenow_portal_admin() {
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
 
   $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
-  $form[]['#markup'] = t(request_path());
+  //$form[]['#markup'] = t(request_path());
 
   $form['drupalnid'] = array(
     '#type' => 'textfield',
