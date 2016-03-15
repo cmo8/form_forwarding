@@ -45,7 +45,7 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_state) {
-  $form_element_submissions = $form_state[];
+  $form_element_submissions = $form_state;
   //create array of data to be posted
   $post_data['firstName'] = 'Name';
   $post_data['action'] = 'Register';
