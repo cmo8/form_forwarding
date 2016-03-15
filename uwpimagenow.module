@@ -58,6 +58,40 @@ function uwpimagenow_permission() {
   );
 }
 
+function _submit_to_imagenow(&$form_state) {
+  //create array of data to be posted
+  $post_data['firstName'] = 'Name';
+  $post_data['action'] = 'Register';
+
+//traverse array and prepare data for posting (key1=value1)
+  foreach ($post_data as $key => $value) {
+    $post_items[] = $key . '=' . $value;
+  }
+
+//create the final string to be posted using implode()
+  $post_string = implode('&', $post_items);
+
+//we also need to add a question mark at the beginning of the string
+  $post_string = '?' . $post_string;
+
+//we are going to need the length of the data string
+  $data_length = strlen($post_string);
+
+//let's open the connection
+  $connection = fsockopen('www.domainname.com', 80);
+
+//sending the data
+  fputs($connection, "POST  /target_url.php  HTTP/1.1\r\n");
+  fputs($connection, "Host:  www.domainname.com \r\n");
+  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
+  fputs($connection, "Content-Length: $data_length\r\n");
+  fputs($connection, "Connection: close\r\n\r\n");
+  fputs($connection, $post_string);
+
+//closing the connection
+  fclose($connection);
+}
+
 /**
  * Implementation of hook_form_submit.
  * 
@@ -67,13 +101,14 @@ function uwpimagenow_permission() {
  * @param type $form_id
  * @param type $form_state
  */
-function uwpimagenow_form_submit($form_id, $form_state){
-  dsm("Test uwpimagenow");
-  dsm($form_state);
+function uwpimagenow_form_validate($form, &$form_state) {
+  if (form_get_errors()) return;
+  dpm("Test uwpimagenow");
+  dpm($form_state);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
-function _is_imagenow_form($nid){
+function _is_imagenow_form($nid) {
   $dbNids = NULL;
   // Get the portals from the Database
   $result = db_select('uwpimagenow_portals', 'portals')
@@ -84,8 +119,8 @@ function _is_imagenow_form($nid){
   foreach ($result as $row) {
     $dbNids[] = $row->drupal_nid;
   }
-  for($i = 0; $i < count($dbNids); $i++){
-    if($nid == $dbNids[$i]){
+  for ($i = 0; $i < count($dbNids); $i++) {
+    if ($nid == $dbNids[$i]) {
       return TRUE;
     }
   }
@@ -95,7 +130,7 @@ function _is_imagenow_form($nid){
 /**
  * Implements hook_form_alter().
  */
-function uwpimagenow_form_alter(&$form, $form_state) {
+function uwpimagenow_form_alter(&$form, &$form_state) {
 
   // Use this to reveal the form id.
   dsm($form_state);
@@ -104,11 +139,10 @@ function uwpimagenow_form_alter(&$form, $form_state) {
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
   $tmp = _is_imagenow_form($form['details']['nid']['#value']);
-  if($tmp == TRUE){
+  if ($tmp == TRUE) {
     dsm("Is an ImageNow Form");
-    $form['#validate'][] = 'uwpimagenow_form_submit';
+    $form['#validate'][] = 'uwpimagenow_form_validate';
     dsm($form['#validate']);
     //$form_id['actions']['publish']['#submit'][] = 'uwpimagenow_form_alter';
   }
 }
-
