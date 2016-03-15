@@ -58,7 +58,7 @@ function uwpimagenow_admin_settings() {
       '#value' => t('Delet'),
       '#description' => t('Delete Link'),
       '#name' => 'delete_portal_' . $portals[$i]['inid'],
-      '#submit' => array('uwpimagenow_admin_save'),
+      '#submit' => array('portal_delete'),
     );
     $form[$row][]['#markup'] = t('</td>');
     $form[$row][]['#markup'] = t('</tr>');
@@ -96,6 +96,21 @@ function uwpimagenow_admin_save($form, &$form_state) {
   }
 }
 
+function portal_delete($form, &$form_state) {
+  //dsm($form_state);
+  $portal_id = end(explode('/', request_path()));
+  
+  $eids = _get_portal_connections($portal_id);
+  for($i = 0; $i < count($eids); $i++){
+    db_delete('uwpimagenow_connections')
+      ->condition('eid', $eids[$i]['eid'], '=')
+      ->execute();
+  }
+  db_delete('uwpimagenow_portals')
+    ->condition('inid', $portal_id, '=')
+    ->execute();
+  drupal_set_message(t("Portal had been warped beyond repair"));
+}
 /**
  * Get the drupal to imagenow portals.
  */

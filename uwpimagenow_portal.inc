@@ -214,9 +214,6 @@ function portal_save($form, &$form_state) {
     drupal_set_message(t("Portal had been reconfigured"));
   }
   // redirect to the specific portal
-  
-  
-  
 }
 
 function connection_delete($form, &$form_state) {
