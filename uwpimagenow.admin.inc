@@ -58,7 +58,7 @@ function uwpimagenow_admin_settings() {
       '#value' => t('Delete'),
       '#description' => t('Delete Link'),
       '#name' => 'delete_portal_' . $portals[$i]['inid'],
-      '#submit' => array('portal_delete'),
+      '#submit' => array('uwpimagenow_admin_save'),
     );
     $form[$row][]['#markup'] = t('</td>');
     $form[$row][]['#markup'] = t('</tr>');
@@ -91,6 +91,7 @@ function uwpimagenow_admin_save($form, &$form_state) {
       drupal_goto('admin/config/uwplatteville/imagenow/portal/' . strval($i));
     }
     if ($form_state['clicked_button']['#name'] == 'delete_portal_' . strval($i)) {
+      portal_delete($form, $form_state);
       drupal_set_message(t('Delete Portal ' . strval($i)));
     }
   }
