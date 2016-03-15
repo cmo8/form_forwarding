@@ -104,7 +104,7 @@ function _is_imagenow_form($nid){
   foreach ($result as $row) {
     $dbNids[] = $row->drupal_nid;
   }
-  
+  dsm($dbNids);
   for($i = 0; $i < count($dbNids); $i++){
     if($nid == $dbNids[$i]){
       return TRUE;
