@@ -104,8 +104,8 @@ function portal_delete($form, &$form_state) {
   dsm($form_state);
   $tmp = explode('_', $form_state['clicked_button']['#name']);
   dsm($tmp);
-//  $index = count($tmp) - 1;
-//  dsm($index);
+  $index = count($tmp) - 1;
+  dsm($index);
 //  $portal_id = $tmp[$index];
 //  dsm($portal_id);
 //  $eids = _get_portal_connections($portal_id);
