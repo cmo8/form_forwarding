@@ -44,9 +44,15 @@ function uwpimagenow_permission() {
   );
 }
 
-function _submit_to_imagenow(&$form_state) {
-  $form_element_submissions = $form_state;
+function _submit_to_imagenow(&$form_values, $nid) {
+  $portal = _get_portal_config($nid);
+  $pConnections = _get_portal_connections($portal['inid']);
   //create array of data to be posted
+  $post_data = NULL;
+  for($i = 0; $i < count($pConnections); $i++){
+    $post_data[$pConnections['iek']] = 'Name';
+  }
+  
   $post_data['firstName'] = 'Name';
   $post_data['action'] = 'Register';
 
@@ -92,6 +98,9 @@ function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) return;
   //dpm("Test uwpimagenow");
   dpm($form_state);
+  $index = $form_state['values']['details']['nid'];
+  $nid = _is_imagenow_form($index);
+  //_submit_to_imagenow($form_state['values'], $nid);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
@@ -108,10 +117,10 @@ function _is_imagenow_form($nid) {
   }
   for ($i = 0; $i < count($dbNids); $i++) {
     if ($nid == $dbNids[$i]) {
-      return TRUE;
+      return $dbNids[$i];
     }
   }
-  return FALSE;
+  return NULL;
 }
 
 /**
@@ -120,7 +129,7 @@ function _is_imagenow_form($nid) {
 function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   $index = $form['details']['nid']['#value'];
   $tmp = _is_imagenow_form($index);
-  if ($tmp == TRUE) {
+  if ($tmp != NULL) {
     $form['#validate'][] = 'uwpimagenow_form_validate';
   }
 }

@@ -19,8 +19,8 @@ function uwpimagenow_schema() {
       ),
       'drupal_nid' => array(
         'description' => 'The node id of the page the webform is on.',
-        'type' => 'int',
-        'unsigned' => TRUE,
+        'type' => 'varchar',
+        'length' => 255,
         'not null' => TRUE,
       ),
       'description' => array(

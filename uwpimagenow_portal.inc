@@ -257,7 +257,7 @@ function _get_drupal_form_elements($nid) {
     ->execute();
   // Organize portal elements
   foreach ($result as $element) {
-    $elements[$element->cid] = $element->form_key;
+    $elements[$element->form_key] = $element->form_key;
   }
   return $elements;
 }
