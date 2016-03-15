@@ -85,7 +85,7 @@ function uwpimagenow_admin_save($form, &$form_state) {
   if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
     drupal_goto('admin/config/uwplatteville/imagenow/portal/new');
   }
-  $count = 4;// _get_drupal_to_imagenow_portal_count();
+  $count = _get_drupal_to_imagenow_portal_count();
   for($i = 0; $i < $count; $i++) {
     if ($form_state['clicked_button']['#name'] == 'edit_portal_' . strval($i)) {
       drupal_goto('admin/config/uwplatteville/imagenow/portal/' . strval($i));
@@ -97,18 +97,18 @@ function uwpimagenow_admin_save($form, &$form_state) {
 }
 
 function portal_delete($form, &$form_state) {
-  //dsm($form_state);
-  $portal_id = end(explode('/', request_path()));
+  dsm($form_state);
   
-  $eids = _get_portal_connections($portal_id);
-  for($i = 0; $i < count($eids); $i++){
-    db_delete('uwpimagenow_connections')
-      ->condition('eid', $eids[$i]['eid'], '=')
-      ->execute();
-  }
-  db_delete('uwpimagenow_portals')
-    ->condition('inid', $portal_id, '=')
-    ->execute();
+  
+//  $eids = _get_portal_connections($portal_id);
+//  for($i = 0; $i < count($eids); $i++){
+//    db_delete('uwpimagenow_connections')
+//      ->condition('eid', $eids[$i]['eid'], '=')
+//      ->execute();
+//  }
+//  db_delete('uwpimagenow_portals')
+//    ->condition('inid', $portal_id, '=')
+//    ->execute();
   drupal_set_message(t("Portal had been warped beyond repair"));
 }
 /**
@@ -130,4 +130,8 @@ function _get_drupal_to_imagenow_portals() {
     $portals[] = $row1;
   }
   return $portals;
+}
+
+function _get_drupal_to_imagenow_portal_count(){
+  return count(_get_drupal_to_imagenow_portals());
 }
