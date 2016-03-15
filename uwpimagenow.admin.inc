@@ -86,7 +86,6 @@ function uwpimagenow_admin_save($form, &$form_state) {
   if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
     drupal_goto('admin/config/uwplatteville/imagenow/portal/new');
   }
-  //$count = _get_drupal_to_imagenow_portal_count();
   $portals = _get_drupal_to_imagenow_portals();
   for($i = 0; $i < count($portals); $i++) {
     if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]['inid']) {
@@ -106,11 +105,11 @@ function portal_delete($form, &$form_state) {
   $index = count($tmp) - 1;
   //dsm($index);
   $portal_id = $tmp[$index];
-  dsm($portal_id);
+  //dsm($portal_id);
   $eids = _get_portal_connections($portal_id);
-  dsm($eids);
+  //dsm($eids);
   foreach($eids as $eid){
-    dsm($eid);
+    //dsm($eid);
     db_delete('uwpimagenow_connections')
       ->condition('eid', $eid['eid'], '=')
       ->execute();
@@ -159,8 +158,4 @@ function _get_drupal_to_imagenow_portals() {
     $portals[] = $row1;
   }
   return $portals;
-}
-
-function _get_drupal_to_imagenow_portal_count(){
-  return count(_get_drupal_to_imagenow_portals());
 }
