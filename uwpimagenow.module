@@ -139,7 +139,8 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   dsm($form['details']['nid']['#value']);
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
-  $tmp = _is_imagenow_form($form['details']['nid']['#value']);
+  $index = $form['details']['nid']['#value'];
+  $tmp = _is_imagenow_form($index);
   if ($tmp == TRUE) {
     dsm("Is an ImageNow Form");
     $form['#validate'][] = 'uwpimagenow_form_validate';
