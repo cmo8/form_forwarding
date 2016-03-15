@@ -87,6 +87,7 @@ function uwpimagenow_form_alter(&$form_id, $form_state) {
   if(_is_imagenow_form($form_id['details']['nid']['#value'])){
     dsm("Is an ImageNow Form");
     $form['#validate'][] = 'uwpimagenow_form_submit';
+    dsm($form['#validate']);
     //$form_id['actions']['publish']['#submit'][] = 'uwpimagenow_form_alter';
   }
 }
