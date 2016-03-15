@@ -46,15 +46,11 @@ function uwpimagenow_permission() {
 
 function _submit_to_imagenow(&$form_values, $nid) {
   $portal = _get_portal_config($nid);
-  $pConnections = _get_portal_connections($portal['inid']);
   //create array of data to be posted
   $post_data = NULL;
-  for($i = 0; $i < count($pConnections); $i++){
-    $post_data[$pConnections['iek']] = 'Name';
+  for($i = 0; $i < count($portal['connections']); $i++){
+    $post_data[$portal['connections']['iek']] = $form_values['submitted'][$portal['connections']['dek']];
   }
-  
-  $post_data['firstName'] = 'Name';
-  $post_data['action'] = 'Register';
 
 //traverse array and prepare data for posting (key1=value1)
   foreach ($post_data as $key => $value) {
@@ -71,11 +67,11 @@ function _submit_to_imagenow(&$form_values, $nid) {
   $data_length = strlen($post_string);
 
 //let's open the connection
-  $connection = fsockopen('www.domainname.com', 80);
+  $connection = fsockopen($portal['imagenow_url'], 80);
 
 //sending the data
   fputs($connection, "POST  /target_url.php  HTTP/1.1\r\n");
-  fputs($connection, "Host:  www.domainname.com \r\n");
+  fputs($connection, "Host:  " . $portal['imagenow_url'] ." \r\n");
   fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
   fputs($connection, "Content-Length: $data_length\r\n");
   fputs($connection, "Connection: close\r\n\r\n");

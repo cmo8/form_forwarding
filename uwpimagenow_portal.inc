@@ -57,7 +57,7 @@ function uwpimagenow_portal_admin() {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
     $form['connections'][]['#markup'] = t('<table id="portal-table">');
     $form['connections'][]['#markup'] = t('<thead>');
-    $form['connections'][]['#markup'] = t('<th>ID</th>');
+    $form['connections'][]['#markup'] = t('<th class="connection-id">ID</th>');
     $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
     $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
     $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
