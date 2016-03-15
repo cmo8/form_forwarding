@@ -100,6 +100,7 @@ function uwpimagenow_form_alter(&$form, $form_state, $form_id) {
   // Use this to reveal the form id.
   dsm($form_state);
   dsm($form_id);
+  dsm($form);
   dsm($form['details']['nid']['#value']);
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
