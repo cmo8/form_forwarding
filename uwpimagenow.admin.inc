@@ -99,17 +99,17 @@ function uwpimagenow_admin_save($form, &$form_state) {
 function portal_delete($form, &$form_state) {
   dsm($form_state);
   $tmp = explode('_', $form_state['clicked_button']['#name']);
-  dsm($tmp[count($tmp) - 1]);
-  
-//  $eids = _get_portal_connections($portal_id);
-//  for($i = 0; $i < count($eids); $i++){
-//    db_delete('uwpimagenow_connections')
-//      ->condition('eid', $eids[$i]['eid'], '=')
-//      ->execute();
-//  }
-//  db_delete('uwpimagenow_portals')
-//    ->condition('inid', $portal_id, '=')
-//    ->execute();
+
+  $portal_id = $tmp[count($tmp) - 1];
+  $eids = _get_portal_connections($portal_id);
+  for($i = 0; $i < count($eids); $i++){
+    db_delete('uwpimagenow_connections')
+      ->condition('eid', $eids[$i]['eid'], '=')
+      ->execute();
+  }
+  db_delete('uwpimagenow_portals')
+    ->condition('inid', $portal_id, '=')
+    ->execute();
   drupal_set_message(t("Portal had been warped beyond repair"));
 }
 /**
