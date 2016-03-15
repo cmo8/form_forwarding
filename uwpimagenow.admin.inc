@@ -90,12 +90,12 @@ function uwpimagenow_admin_save($form, &$form_state) {
   //$count = _get_drupal_to_imagenow_portal_count();
   $portals = _get_drupal_to_imagenow_portals();
   for($i = 0; $i < count($portals); $i++) {
-    if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]) {
-      drupal_goto('admin/config/uwplatteville/imagenow/portal/' . $portals[$i]);
+    if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]['inid']) {
+      drupal_goto('admin/config/uwplatteville/imagenow/portal/' . $portals[$i]['inid']);
     }
-    if ($form_state['clicked_button']['#name'] == 'delete_portal_' . $portals[$i]) {
+    if ($form_state['clicked_button']['#name'] == 'delete_portal_' . $portals[$i]['inid']) {
       portal_delete($form, $form_state);
-      drupal_set_message(t('Delete Portal ' . $portals[$i]));
+      drupal_set_message(t('Delete Portal ' . $portals[$i]['inid']));
     }
   }
 }
