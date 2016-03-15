@@ -33,20 +33,6 @@ function uwpimagenow_menu() {
 }
 
 /**
- * Implementation of the hook_theme()
- */
-//function uwpimagenow_theme() {
-//  return array(
-//    'uwpimagenow_admin' => array(
-//      'path' => drupal_get_path('module', 'uwpimagenow') . '/theme',
-//      'template' => 'uwpimagenow-admin',
-//      'arguments' => array('form' => NULL),
-//      'render element' => 'form',
-//    ),
-//  );
-//}
-
-/**
  * Implementation of hook_permission
  */
 function uwpimagenow_permission() {
@@ -59,6 +45,7 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_state) {
+  $form_element_submissions = $form_state[];
   //create array of data to be posted
   $post_data['firstName'] = 'Name';
   $post_data['action'] = 'Register';
@@ -104,7 +91,7 @@ function _submit_to_imagenow(&$form_state) {
 function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) return;
   //dpm("Test uwpimagenow");
-  //dpm($form_state);
+  dpm($form_state);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
@@ -131,20 +118,9 @@ function _is_imagenow_form($nid) {
  * Implements hook_form_alter().
  */
 function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
-
-  // Use this to reveal the form id.
-  //dsm($form_state);
-  //dsm($form);
-  //dsm($form_id);
-  //dsm($form['details']['nid']['#value']);
-  // Use this with the devel module to inspect the button action(s).
-  //kint($form['actions']);
   $index = $form['details']['nid']['#value'];
   $tmp = _is_imagenow_form($index);
   if ($tmp == TRUE) {
-  //  dsm("Is an ImageNow Form");
     $form['#validate'][] = 'uwpimagenow_form_validate';
-  //  dsm($form['#validate']);
-    //$form_id['actions']['publish']['#submit'][] = 'uwpimagenow_form_alter';
   }
 }
