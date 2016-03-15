@@ -55,7 +55,7 @@ function uwpimagenow_admin_settings() {
     $form[$row][]['#markup'] = t('<td class="in-delete">');
     $form[$row][]['btndelete'] = array(
       '#type' => 'submit',
-      '#value' => t('Delet'),
+      '#value' => t('Delete'),
       '#description' => t('Delete Link'),
       '#name' => 'delete_portal_' . $portals[$i]['inid'],
       '#submit' => array('portal_delete'),
@@ -98,7 +98,7 @@ function uwpimagenow_admin_save($form, &$form_state) {
 
 function portal_delete($form, &$form_state) {
   dsm($form_state);
-  
+  dsm(explode('_', $form_state['clicked_button']['#name'])[-1]);
   
 //  $eids = _get_portal_connections($portal_id);
 //  for($i = 0; $i < count($eids); $i++){
