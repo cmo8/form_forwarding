@@ -95,7 +95,7 @@ function _is_imagenow_form($nid){
 /**
  * Implements hook_form_alter().
  */
-function uwpimagenow_form_alter(&$form_id, $form_state) {
+function uwpimagenow_form_alter(&$form_id, $form_state, $form_id) {
 
   // Use this to reveal the form id.
   dsm($form_state);
