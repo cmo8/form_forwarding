@@ -95,12 +95,12 @@ function _is_imagenow_form($nid){
 /**
  * Implements hook_form_alter().
  */
-function uwpimagenow_form_alter(&$form_id, $form_state, $form_id) {
+function uwpimagenow_form_alter(&$form, $form_state, $form_id) {
 
   // Use this to reveal the form id.
   dsm($form_state);
   dsm($form_id);
-  dsm($form_id['details']['nid']['#value']);
+  dsm($form['details']['nid']['#value']);
   // Use this with the devel module to inspect the button action(s).
   //kint($form['actions']);
   $tmp = _is_imagenow_form($form_id['details']['nid']['#value']);
