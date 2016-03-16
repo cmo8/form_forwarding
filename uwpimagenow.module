@@ -166,8 +166,6 @@ function _get_portal_config($cmo, $pid_flag) {
   // Organize portal elements
   
   foreach ($result as $row) {
-    dsm("Adding Rows");
-    dsm($row);
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
     $portal_config['description'] = $row->description;
