@@ -153,7 +153,7 @@ function _get_portal_connections($inid) {
   return $portal_connections;
 }
 
-function _get_portal_config($value, $pid_flag) {
+function _get_portal_config(&$value, &$pid_flag) {
   dsm($value);
   dsm($pid_flag);
   $portal_config = null;
