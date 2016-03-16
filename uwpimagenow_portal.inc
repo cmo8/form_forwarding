@@ -11,7 +11,7 @@
  */
 function uwpimagenow_portal_admin() {
   $portal_id = end(explode('/', request_path()));
-  $portal_config = _get_portal_config($portal_id);
+  $portal_config = _get_portal_config_admin($portal_id);
   #dsm($portal_id);
   #dsm($portal_config);
   $form = array();
@@ -299,22 +299,22 @@ function _get_portal_connections_inid($inid){
   return $portal_connections;
 }
 
-//function _get_portal_config($pid) {
-//  $portal_config = null;
-//  // Get the portals from the Database
-//  $result = db_select('uwpimagenow_portals', 'portals')
-//    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
-//    ->condition('inid', $pid, '=')
-//    ->orderBy('inid', 'ASC')
-//    ->execute();
-//  // Organize portal elements
-//  #dsm($result);
-//  foreach ($result as $row) {
-//    $portal_config['inid'] = $row->inid;
-//    $portal_config['fid'] = $row->drupal_nid;
-//    $portal_config['description'] = $row->description;
-//    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
-//    $portal_config['connections'] = _get_portal_connections_inid($row->inid);
-//  }
-//  return $portal_config;
-//}
+function _get_portal_config_admin($pid) {
+  $portal_config = null;
+  // Get the portals from the Database
+  $result = db_select('uwpimagenow_portals', 'portals')
+    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
+    ->condition('inid', $pid, '=')
+    ->orderBy('inid', 'ASC')
+    ->execute();
+  // Organize portal elements
+  #dsm($result);
+  foreach ($result as $row) {
+    $portal_config['inid'] = $row->inid;
+    $portal_config['fid'] = $row->drupal_nid;
+    $portal_config['description'] = $row->description;
+    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
+    $portal_config['connections'] = _get_portal_connections_inid($row->inid);
+  }
+  return $portal_config;
+}
