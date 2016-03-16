@@ -94,7 +94,7 @@ function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors())
     return;
 
-  $portal = _get_portal_config($form_values['details']['nid']);
+  $portal = _get_portal_config($form_state['values']['details']['nid']);
   dpm($portal);
   //dpm("Test uwpimagenow");
   //dpm($form_state);
