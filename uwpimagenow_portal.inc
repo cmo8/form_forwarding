@@ -280,24 +280,24 @@ function _get_drupal_form_element_cid($nid, $form_key) {
   return null;
 }
 
-function _get_portal_connections_inid($inid){
-  $portal_connections = [];
-  // Get the connections from the Database
-  $result = db_select('uwpimagenow_connections', 'connections')
-    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
-    ->condition('inid', $inid, '=')
-    ->orderBy('eid', 'ASC')
-    ->execute();
-  // Organize connection elements
-  foreach ($result as $row) {
-    $row1 = [];
-    $row1['eid'] = $row->eid;
-    $row1['dek'] = $row->drupal_element_key;
-    $row1['iek'] = $row->imagenow_element_key;
-    $portal_connections[] = $row1;
-  }
-  return $portal_connections;
-}
+//function _get_portal_connections_inid($inid){
+//  $portal_connections = [];
+//  // Get the connections from the Database
+//  $result = db_select('uwpimagenow_connections', 'connections')
+//    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
+//    ->condition('inid', $inid, '=')
+//    ->orderBy('eid', 'ASC')
+//    ->execute();
+//  // Organize connection elements
+//  foreach ($result as $row) {
+//    $row1 = [];
+//    $row1['eid'] = $row->eid;
+//    $row1['dek'] = $row->drupal_element_key;
+//    $row1['iek'] = $row->imagenow_element_key;
+//    $portal_connections[] = $row1;
+//  }
+//  return $portal_connections;
+//}
 
 function _get_portal_config_admin($pid) {
   $portal_config = null;
