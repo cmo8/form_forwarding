@@ -154,16 +154,12 @@ function _get_portal_connections($inid) {
 }
 
 function _get_portal_config($cmo, $pid_flag) {
-  dsm($cmo);
-  dsm($pid_flag);
   $portal_config = null;
   $sqlQuery = db_select('uwpimagenow_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'));
   if($pid_flag){
-    dsm("in if");
     $sqlQuery->condition('inid', $cmo, '=');
   } else {
-    dsm("in else");
     $sqlQuery->condition('drupal_nid', $cmo, '=');
   }
   $result = $sqlQuery->orderBy('inid', 'ASC')->execute();
@@ -178,7 +174,6 @@ function _get_portal_config($cmo, $pid_flag) {
     $portal_config['imagenow_url'] = $row->imagenow_submission_url;
     $portal_config['connections'] = _get_portal_connections($row->inid);
   }
-  dsm($portal_config);
   return $portal_config;
 }
 
