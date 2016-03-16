@@ -104,7 +104,7 @@ function uwpimagenow_portal_admin() {
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('</tr >');
     }
-    $form['connections']['new-link'][]['#markup'] = t('<tr id=connection-row-"' . i . '" class="odd">');
+    $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
     $form['connections']['new-link'][]['#markup'] = t('<td class="connection-id"></td>');
     $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
     $form['connections']['new-link']['drupal-element'] = array(
