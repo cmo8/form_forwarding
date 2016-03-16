@@ -170,7 +170,9 @@ function _get_portal_config($value, $pid_flag) {
   $result->orderBy('inid', 'ASC');
   $result->execute();
   // Organize portal elements
+  dsm($result);
   foreach ($result as $row) {
+    dsm($row);
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
     $portal_config['description'] = $row->description;
