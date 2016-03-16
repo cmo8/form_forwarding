@@ -50,7 +50,7 @@ function _submit_to_imagenow(&$form_values) {
   //create array of data to be posted
   $post_data = NULL;
   for($i = 0; $i < count($portal['connections']); $i++){
-    $post_data[$portal['connections']['iek']] = $form_values['submitted'][$portal['connections']['dek']];
+    $post_data[$portal['connections'][$i]['iek']] = $form_values['submitted'][$portal['connections'][$i]['dek']];
   }
   dpm($post_data);
 //traverse array and prepare data for posting (key1=value1)
