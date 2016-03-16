@@ -11,7 +11,8 @@
  */
 function uwpimagenow_portal_admin() {
   $path_url = request_path();
-  $portal_id = end(explode('/', $path_url));
+  $path_explode = explode('/', $path_url);
+  $portal_id = end($path_explode);
   $portal_config = _get_portal_config($portal_id, TRUE);
 
   $form = array();
