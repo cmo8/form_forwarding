@@ -45,27 +45,28 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_values) {
+  $portal = _get_portal_config($form_state['values']['details']['nid']);
+  dpm($portal);
+  //create array of data to be posted
+  $post_data = NULL;
+  for($i = 0; $i < count($portal['connections']); $i++){
+    $post_data[$portal['connections']['iek']] = $form_values['submitted'][$portal['connections']['dek']];
+  }
 
-//  //create array of data to be posted
-//  $post_data = NULL;
-//  for($i = 0; $i < count($portal['connections']); $i++){
-//    $post_data[$portal['connections']['iek']] = $form_values['submitted'][$portal['connections']['dek']];
-//  }
-//
-////traverse array and prepare data for posting (key1=value1)
-//  foreach ($post_data as $key => $value) {
-//    $post_items[] = $key . '=' . $value;
-//  }
-//  watchdog("CMO-PHP", $post_items);
-////create the final string to be posted using implode()
-//  $post_string = implode('&', $post_items);
-//
-////we also need to add a question mark at the beginning of the string
-//  $post_string = '?' . $post_string;
-//  watchdog("CMO-PHP", $post_string);
-////we are going to need the length of the data string
-//  $data_length = strlen($post_string);
-//
+//traverse array and prepare data for posting (key1=value1)
+  foreach ($post_data as $key => $value) {
+    $post_items[] = $key . '=' . $value;
+  }
+  watchdog("CMO-PHP", $post_items);
+//create the final string to be posted using implode()
+  $post_string = implode('&', $post_items);
+
+//we also need to add a question mark at the beginning of the string
+  $post_string = '?' . $post_string;
+  watchdog("CMO-PHP", $post_string);
+//we are going to need the length of the data string
+  $data_length = strlen($post_string);
+
 ////let's open the connection
 //  $connection = fsockopen($portal['imagenow_url'], 80);
 //
@@ -91,15 +92,10 @@ function _submit_to_imagenow(&$form_values) {
  * @param type $form_state
  */
 function uwpimagenow_form_validate($form, &$form_state) {
-  if (form_get_errors())
+  if (form_get_errors()){
     return;
-  dpm($form_state['values']['details']['nid']);
-  $portal = _get_portal_config($form_state['values']['details']['nid']);
-  dpm($portal);
-  //dpm("Test uwpimagenow");
-  //dpm($form_state);
-  //$index = $form_state['values']['details']['nid'];
-  //_submit_to_imagenow($form_state['values']);
+  }
+  _submit_to_imagenow($form_state['values']);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
@@ -133,7 +129,7 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
-function _get_portal_connections($inid){
+function _get_portal_connections($inid) {
   $portal_connections = [];
   // Get the connections from the Database
   $result = db_select('uwpimagenow_connections', 'connections')
