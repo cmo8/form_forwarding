@@ -44,46 +44,46 @@ function uwpimagenow_permission() {
   );
 }
 
-//function _submit_to_imagenow(&$form_values) {
-//  dpm($form_values);
-//  $portal = _get_portal_config($form_values['details']['nid']);
-//  dpm($portal);
-//  //create array of data to be posted
-//  $submitted_values = array();
-//  _get_subbmitted_values($submitted_values, $form_values['submitted']);
-//  $post_data = NULL;
-//  for($i = 0; $i < count($portal['connections']); $i++){
-//    $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
-//  }
-//  dpm($post_data);
-////traverse array and prepare data for posting (key1=value1)
-//  foreach ($post_data as $key => $value) {
-//    $post_items[] = $key . '=' . $value;
-//  }
-//  dpm($post_items);
-////create the final string to be posted using implode()
-//  $post_string = implode('&', $post_items);
-//
-////we also need to add a question mark at the beginning of the string
-//  $post_string = '?' . $post_string;
-//  dpm($post_string);
-////we are going to need the length of the data string
-//  $data_length = strlen($post_string);
-//
-////let's open the connection
-//  $connection = fsockopen($portal['imagenow_url'], 80);
-//
-////sending the data
-//  fputs($connection, "POST  /target_url.php  HTTP/1.1\r\n");
-//  fputs($connection, "Host:  " . $portal['imagenow_url'] ." \r\n");
-//  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
-//  fputs($connection, "Content-Length: $data_length\r\n");
-//  fputs($connection, "Connection: close\r\n\r\n");
-//  fputs($connection, $post_string);
-//
-////closing the connection
-//  fclose($connection);
-//}
+function _submit_to_imagenow(&$form_values) {
+  dpm($form_values);
+  $portal = _get_portal_config_nid($form_values['details']['nid']);
+  dpm($portal);
+  //create array of data to be posted
+  $submitted_values = array();
+  _get_subbmitted_values($submitted_values, $form_values['submitted']);
+  $post_data = NULL;
+  for($i = 0; $i < count($portal['connections']); $i++){
+    $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
+  }
+  dpm($post_data);
+//traverse array and prepare data for posting (key1=value1)
+  foreach ($post_data as $key => $value) {
+    $post_items[] = $key . '=' . $value;
+  }
+  dpm($post_items);
+//create the final string to be posted using implode()
+  $post_string = implode('&', $post_items);
+
+//we also need to add a question mark at the beginning of the string
+  $post_string = '?' . $post_string;
+  dpm($post_string);
+//we are going to need the length of the data string
+  $data_length = strlen($post_string);
+
+//let's open the connection
+  $connection = fsockopen($portal['imagenow_url'], 80);
+
+//sending the data
+  fputs($connection, "POST  /target_url.php  HTTP/1.1\r\n");
+  fputs($connection, "Host:  " . $portal['imagenow_url'] ." \r\n");
+  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
+  fputs($connection, "Content-Length: $data_length\r\n");
+  fputs($connection, "Connection: close\r\n\r\n");
+  fputs($connection, $post_string);
+
+//closing the connection
+  fclose($connection);
+}
 
 /**
  * Implementation of hook_form_submit.
@@ -151,7 +151,7 @@ function _get_portal_connections($inid) {
   return $portal_connections;
 }
 
-function _get_portal_config($nid) {
+function _get_portal_config_nid($nid) {
   $portal_config = null;
   // Get the portals from the Database
   $result = db_select('uwpimagenow_portals', 'portals')
