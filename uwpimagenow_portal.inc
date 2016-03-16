@@ -18,8 +18,12 @@ function uwpimagenow_portal_admin() {
   $form = array();
   $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
-
-  $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
+  if ($portal_id != 'new' && $portal_id != 'portal') {
+    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
+  }
+  else {
+    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
+  }
 
   $form['drupalnid'] = array(
     '#type' => 'textfield',
@@ -30,15 +34,15 @@ function uwpimagenow_portal_admin() {
       array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
     ),
   );
-  
+
   $form['description'] = array(
     '#type' => 'textfield',
     '#title' => t('Description'),
     '#required' => TRUE,
     '#default_value' => $portal_config['description'],
   );
-  
-   $form['submitionurl'] = array(
+
+  $form['submitionurl'] = array(
     '#type' => 'textfield',
     '#title' => t('ImageNow Submition URL'),
     '#required' => TRUE,
@@ -47,8 +51,8 @@ function uwpimagenow_portal_admin() {
       'url',
     ),
   );
-  
-  if($portal_id != 'new' && $portal_id != 'portal'){
+
+  if ($portal_id != 'new' && $portal_id != 'portal') {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
     $form['connections'][]['#markup'] = t('<table id="portal-table">');
     $form['connections'][]['#markup'] = t('<thead>');
@@ -59,7 +63,7 @@ function uwpimagenow_portal_admin() {
     $form['connections'][]['#markup'] = t('</thead>');
     $form['connections'][]['#markup'] = t('<tbody>');
 
-    for($i=0; $i < count($portal_config['connections']); $i++){
+    for ($i = 0; $i < count($portal_config['connections']); $i++) {
       $connection = 'connection-' . strval($i);
       $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
       $form['connections'][$connection][]['#markup'] = t('<td class="connection-id">');
@@ -120,7 +124,7 @@ function uwpimagenow_portal_admin() {
     $form['connections']['new-link']['imagenow-key'] = array(
       '#title' => t('ImageNow Key'),
       '#description' => t('Key as set in ImageNow'),
-     '#type' => 'textfield',
+      '#type' => 'textfield',
       '#required' => false,
       //'#rules' => array(
       //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
@@ -147,18 +151,18 @@ function uwpimagenow_portal_admin() {
     '#name' => 'save_portal',
     '#submit' => array('portal_save'),
   );
-  
+
   return $form;
 }
 
 function portal_save($form, &$form_state) {
   $portal_id = end(explode('/', request_path()));
-  
+
   $drupal_nid = $form_state['values']['drupalnid'];
   $description = $form_state['values']['description'];
   $imagenow_url = $form_state['values']['submitionurl'];
 
-  if($portal_id == 'new'){
+  if ($portal_id == 'new') {
     $eid = db_insert('uwpimagenow_portals')
       ->fields(
         array(
@@ -171,7 +175,8 @@ function portal_save($form, &$form_state) {
       ->execute();
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
-  } else {
+  }
+  else {
     $update_portal = db_update('uwpimagenow_portals')
       ->condition('inid', $portal_id, '=')
       ->fields(
@@ -185,7 +190,7 @@ function portal_save($form, &$form_state) {
 
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
-    while($eid != NULL){
+    while ($eid != NULL) {
       $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
       $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
       $update_connection = db_update('uwpimagenow_connections')
@@ -197,7 +202,7 @@ function portal_save($form, &$form_state) {
           )
         )
         ->execute();
-      
+
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
@@ -221,16 +226,17 @@ function connection_add($form, &$form_state) {
   $imagenow_element_key = $form_state['values']['imagenow-key'];
   // Insert new connection
   $eid = db_insert('uwpimagenow_connections')
-      ->fields(
-        array(
-          'inid' => $portal_id,
-          'drupal_element_key' => $drupal_element_key,
-          'imagenow_element_key' => $imagenow_element_key,
-        )
+    ->fields(
+      array(
+        'inid' => $portal_id,
+        'drupal_element_key' => $drupal_element_key,
+        'imagenow_element_key' => $imagenow_element_key,
       )
-      ->execute();
+    )
+    ->execute();
   drupal_set_message(t("Add New Connection."));
 }
+
 /**
  * 
  */
