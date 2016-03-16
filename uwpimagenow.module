@@ -96,7 +96,7 @@ function uwpimagenow_form_validate($form, &$form_state) {
   //dpm("Test uwpimagenow");
   //dpm($form_state);
   //$index = $form_state['values']['details']['nid'];
-  _submit_to_imagenow($form_state['values']);
+  //_submit_to_imagenow($form_state['values']);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
