@@ -157,7 +157,7 @@ function _get_portal_config($nid) {
   // Get the portals from the Database
   $result = db_select('uwpimagenow_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
-    ->condition('fid', $nid, '=')
+    ->condition('drupal_nid', $nid, '=')
     ->orderBy('inid', 'ASC')
     ->execute();
   // Organize portal elements
