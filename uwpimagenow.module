@@ -157,25 +157,23 @@ function _get_portal_config(&$value, &$pid_flag) {
   dsm($value);
   dsm($pid_flag);
   $portal_config = null;
-  // Get the portals from the Database
-  $result = NULL;
+  $result = db_select('uwpimagenow_portals', 'portals');
   if($pid_flag){
     dsm("in if");
-    $result = db_select('uwpimagenow_portals', 'portals')
-      ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
+    $result->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
       ->condition('inid', $value, '=')
       ->orderBy('inid', 'ASC');
   } else {
     dsm("in else");
-    $result = db_select('uwpimagenow_portals', 'portals')
-      ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
+    $result->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
       ->condition('drupal_nid', $value, '=')
       ->orderBy('inid', 'ASC');
   }
   $result->execute();
   // Organize portal elements
-  dsm($result);
+  
   foreach ($result as $row) {
+    dsm("Adding Rows");
     dsm($row);
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
