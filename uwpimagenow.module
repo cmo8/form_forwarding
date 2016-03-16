@@ -45,7 +45,7 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_values) {
-  dpm($form_values);
+  watchdog("CMO-PHP", $form_values);
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
 //  dpm($portal);
   //create array of data to be posted
@@ -85,10 +85,10 @@ function _submit_to_imagenow(&$form_values) {
 
 //perform our request
   $result = curl_exec($curl_connection);
-  dpm($result);
+  watchdog("CMO-PHP", $result);
 //show information regarding the request
-  dpm(curl_getinfo($curl_connection));
-  dpm(curl_errno($curl_connection) . '-' . curl_error($curl_connection));
+  watchdog("CMO-PHP", curl_getinfo($curl_connection));
+  watchdog("CMO-PHP", curl_errno($curl_connection) . '-' . curl_error($curl_connection));
 
 //close the connection
   curl_close($curl_connection);
@@ -107,7 +107,7 @@ function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) {
     return;
   }
-  dpm("Submitting...");
+  watchdog("CMO_PHP", "Submitting...");
   _submit_to_imagenow($form_state['values']);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
