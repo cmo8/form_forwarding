@@ -48,7 +48,7 @@ function uwpimagenow_portal_admin() {
     ),
   );
   
-  if($portal_id != 'new'){
+  if($portal_id != 'new' || $portal_id != 'portal'){
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
     $form['connections'][]['#markup'] = t('<table id="portal-table">');
     $form['connections'][]['#markup'] = t('<thead>');
