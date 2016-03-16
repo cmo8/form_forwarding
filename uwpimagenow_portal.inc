@@ -280,7 +280,7 @@ function _get_drupal_form_element_cid($nid, $form_key) {
   return null;
 }
 
-function _get_portal_connections($inid){
+function _get_portal_connections_inid($inid){
   $portal_connections = [];
   // Get the connections from the Database
   $result = db_select('uwpimagenow_connections', 'connections')
@@ -299,22 +299,22 @@ function _get_portal_connections($inid){
   return $portal_connections;
 }
 
-function _get_portal_config($pid) {
-  $portal_config = null;
-  // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
-    ->condition('inid', $pid, '=')
-    ->orderBy('inid', 'ASC')
-    ->execute();
-  // Organize portal elements
-  #dsm($result);
-  foreach ($result as $row) {
-    $portal_config['inid'] = $row->inid;
-    $portal_config['fid'] = $row->drupal_nid;
-    $portal_config['description'] = $row->description;
-    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
-    $portal_config['connections'] = _get_portal_connections($row->inid);
-  }
-  return $portal_config;
-}
+//function _get_portal_config($pid) {
+//  $portal_config = null;
+//  // Get the portals from the Database
+//  $result = db_select('uwpimagenow_portals', 'portals')
+//    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
+//    ->condition('inid', $pid, '=')
+//    ->orderBy('inid', 'ASC')
+//    ->execute();
+//  // Organize portal elements
+//  #dsm($result);
+//  foreach ($result as $row) {
+//    $portal_config['inid'] = $row->inid;
+//    $portal_config['fid'] = $row->drupal_nid;
+//    $portal_config['description'] = $row->description;
+//    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
+//    $portal_config['connections'] = _get_portal_connections_inid($row->inid);
+//  }
+//  return $portal_config;
+//}
