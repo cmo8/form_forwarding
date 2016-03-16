@@ -138,6 +138,7 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   if (!empty($form['nid'])) {
     $tmp = _is_imagenow_form($form['nid']['#value']);
     if ($tmp != NULL) {
+      dsm("ImageNow Form");
       $form['#validate'][] = 'uwpimagenow_form_validate';
     }
   }
