@@ -52,7 +52,7 @@ function _submit_to_imagenow(&$form_values) {
   $submitted_values = array();
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
   $post_data = NULL;
-  for($i = 0; $i < count($portal['connections']); $i++){
+  for ($i = 0; $i < count($portal['connections']); $i++) {
     $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
   }
 //  dpm($post_data);
@@ -70,19 +70,28 @@ function _submit_to_imagenow(&$form_values) {
 //we are going to need the length of the data string
   $data_length = strlen($post_string);
 
-//let's open the connection
-  $connection = fsockopen($portal['imagenow_url'], 80);
+  //create cURL connection
+  $curl_connection = curl_init($portal['imagenow_url']);
 
-//sending the data
-  fputs($connection, "POST  /target_url.php  HTTP/1.1\r\n");
-  fputs($connection, "Host:  " . $portal['imagenow_url'] ." \r\n");
-  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
-  fputs($connection, "Content-Length: $data_length\r\n");
-  fputs($connection, "Connection: close\r\n\r\n");
-  fputs($connection, $post_string);
+//set options
+  curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
+  curl_setopt($curl_connection, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+  curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($curl_connection, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
 
-//closing the connection
-  fclose($connection);
+//set data to be posted
+  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
+
+//perform our request
+  $result = curl_exec($curl_connection);
+  dpm($result);
+//show information regarding the request
+  dpm(curl_getinfo($curl_connection));
+  dpm(curl_errno($curl_connection) . '-' . curl_error($curl_connection));
+
+//close the connection
+  curl_close($curl_connection);
 }
 
 /**
@@ -157,14 +166,15 @@ function _get_portal_config($cmo, $pid_flag) {
   $portal_config = null;
   $sqlQuery = db_select('uwpimagenow_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'));
-  if($pid_flag){
+  if ($pid_flag) {
     $sqlQuery->condition('inid', $cmo, '=');
-  } else {
+  }
+  else {
     $sqlQuery->condition('drupal_nid', $cmo, '=');
   }
   $result = $sqlQuery->orderBy('inid', 'ASC')->execute();
   // Organize portal elements
-  
+
   foreach ($result as $row) {
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
