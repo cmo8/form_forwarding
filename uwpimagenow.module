@@ -135,6 +135,7 @@ function _is_imagenow_form($nid) {
  * Implements hook_form_alter().
  */
 function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
+  dsm($form['nid']);
   if (!empty($form['nid'])) {
     $tmp = _is_imagenow_form($form['nid']['#value']);
     if ($tmp != NULL) {
