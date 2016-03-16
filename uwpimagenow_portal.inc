@@ -10,7 +10,8 @@
  * ImageNow Admin Page. Builds the form for the user to use.
  */
 function uwpimagenow_portal_admin() {
-  $portal_id = end(explode('/', request_path()));
+  $path_url = request_path();
+  $portal_id = end(explode('/', $path_url));
   $portal_config = _get_portal_config($portal_id, TRUE);
 
   $form = array();
