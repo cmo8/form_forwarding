@@ -45,8 +45,7 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_values) {
-//  $portal = _get_portal_config($form_values['details']['nid']);
-//  dpm($portal);
+
 //  //create array of data to be posted
 //  $post_data = NULL;
 //  for($i = 0; $i < count($portal['connections']); $i++){
@@ -92,7 +91,11 @@ function _submit_to_imagenow(&$form_values) {
  * @param type $form_state
  */
 function uwpimagenow_form_validate($form, &$form_state) {
-  if (form_get_errors()) return;
+  if (form_get_errors())
+    return;
+
+  $portal = _get_portal_config($form_values['details']['nid']);
+  dpm($portal);
   //dpm("Test uwpimagenow");
   //dpm($form_state);
   //$index = $form_state['values']['details']['nid'];
