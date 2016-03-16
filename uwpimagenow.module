@@ -46,7 +46,7 @@ function uwpimagenow_permission() {
 
 function _submit_to_imagenow(&$form_values) {
 //  dpm($form_values);
-//  $portal = _get_portal_config_nid($form_values['details']['nid']);
+//  $portal = _get_portal_config_nid_($form_values['details']['nid']);
 //  dpm($portal);
 //  //create array of data to be posted
 //  $submitted_values = array();
@@ -153,7 +153,7 @@ function _get_portal_connections($inid) {
   return $portal_connections;
 }
 
-function _get_portal_config_nid($nid) {
+function _get_portal_config_nid_($nid) {
 //  $portal_config = null;
 //  // Get the portals from the Database
 //  $result = db_select('uwpimagenow_portals', 'portals')
