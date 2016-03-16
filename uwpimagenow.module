@@ -95,7 +95,7 @@ function _submit_to_imagenow(&$form_values) {
  * @param type $form_state
  */
 function uwpimagenow_form_validate($form, &$form_state) {
-  if (form_get_errors()){
+  if (form_get_errors()) {
     return;
   }
 //  _submit_to_imagenow($form_state['values']);
@@ -125,14 +125,20 @@ function _is_imagenow_form($nid) {
  * Implements hook_form_alter().
  */
 function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
-  $index = $form['details']['nid']['#value'];
+  if (!empty($form['nid'])) {
+    $index = $form['nid']['#value'];
+  }
+  else {
+    $node = 0;
+  }
+  //$index = $form['details']['nid']['#value'];
   $tmp = _is_imagenow_form($index);
   if ($tmp != NULL) {
     $form['#validate'][] = 'uwpimagenow_form_validate';
   }
 }
 
-//function _get_portal_connections($inid) {
+function _get_portal_connections($inid) {
 //  $portal_connections = [];
 //  // Get the connections from the Database
 //  $result = db_select('uwpimagenow_connections', 'connections')
@@ -149,7 +155,7 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
 //    $portal_connections[] = $row1;
 //  }
 //  return $portal_connections;
-//}
+}
 
 //function _get_portal_config_nid($nid) {
 //  $portal_config = null;
@@ -171,11 +177,12 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
 //  return $portal_config;
 //}
 
-function _get_subbmitted_values(&$flat_array, $array_in){
-  foreach($array_in as $key => $value){
-    if(is_array($value) == false){
-      $flat_array[$key] =$value;
-    } else {
+function _get_subbmitted_values(&$flat_array, $array_in) {
+  foreach ($array_in as $key => $value) {
+    if (is_array($value) == false) {
+      $flat_array[$key] = $value;
+    }
+    else {
       _get_subbmitted_values($flat_array, $value);
     }
   }
