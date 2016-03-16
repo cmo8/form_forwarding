@@ -153,7 +153,7 @@ function _get_portal_connections($inid) {
   return $portal_connections;
 }
 
-function _get_portal_config_nid_($nid) {
+function _portal_cmo($inNid) {
 //  $portal_config = null;
 //  // Get the portals from the Database
 //  $result = db_select('uwpimagenow_portals', 'portals')
