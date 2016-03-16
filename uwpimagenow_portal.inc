@@ -314,7 +314,7 @@ function _get_portal_config_admin($pid) {
     $portal_config['fid'] = $row->drupal_nid;
     $portal_config['description'] = $row->description;
     $portal_config['imagenow_url'] = $row->imagenow_submission_url;
-    $portal_config['connections'] = _get_portal_connections_inid($row->inid);
+    $portal_config['connections'] = _get_portal_connections($row->inid);
   }
   return $portal_config;
 }
