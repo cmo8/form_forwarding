@@ -45,7 +45,7 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_values) {
-  $portal = _get_portal_config($form_state['values']['details']['nid']);
+  $portal = _get_portal_config($form_values['details']['nid']);
   dpm($portal);
   //create array of data to be posted
   $post_data = NULL;
