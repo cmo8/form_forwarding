@@ -177,6 +177,7 @@ function _get_portal_config($value, $pid_flag) {
     $portal_config['imagenow_url'] = $row->imagenow_submission_url;
     $portal_config['connections'] = _get_portal_connections($row->inid);
   }
+  dsm($portal_config);
   return $portal_config;
 }
 
