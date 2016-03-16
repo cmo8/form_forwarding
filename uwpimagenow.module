@@ -134,7 +134,7 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   //$index = $form['details']['nid']['#value'];
 }
 
-function _get_portal_connections($inid) {
+//function _get_portal_connections($inid) {
 //  $portal_connections = [];
 //  // Get the connections from the Database
 //  $result = db_select('uwpimagenow_connections', 'connections')
@@ -151,7 +151,7 @@ function _get_portal_connections($inid) {
 //    $portal_connections[] = $row1;
 //  }
 //  return $portal_connections;
-}
+//}
 
 //function _get_portal_config_nid($nid) {
 //  $portal_config = null;
