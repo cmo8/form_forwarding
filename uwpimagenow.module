@@ -159,9 +159,9 @@ function _get_portal_config($value, $pid_flag) {
   $result = db_select('uwpimagenow_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'));
   if($pid_flag == TRUE){
-    $result->condition('inid', $pid, '=');
+    $result->condition('inid', $value, '=');
   } else {
-    $result->condition('drupal_nid', $nid, '=');
+    $result->condition('drupal_nid', $value, '=');
   }
   $result->orderBy('inid', 'ASC')
     ->execute();
