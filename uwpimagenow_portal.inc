@@ -11,15 +11,13 @@
  */
 function uwpimagenow_portal_admin() {
   $portal_id = end(explode('/', request_path()));
-  $portal_config = _get_portal_config_admin($portal_id);
-  #dsm($portal_id);
-  #dsm($portal_config);
+  $portal_config = _get_portal_config($portal_id, TRUE);
+
   $form = array();
   $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
 
   $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
-  //$form[]['#markup'] = t(request_path());
 
   $form['drupalnid'] = array(
     '#type' => 'textfield',
@@ -29,11 +27,6 @@ function uwpimagenow_portal_admin() {
     '#rules' => array(
       array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
     ),
-    //'#ajax' => array(
-    //  'callback' => 'update_drupal_form_elements',
-    //  'wrapper' => 'poll-choices',
-    //  'method' => 'replace',
-    //),
   );
   
   $form['description'] = array(
@@ -157,7 +150,6 @@ function uwpimagenow_portal_admin() {
 }
 
 function portal_save($form, &$form_state) {
-  //dsm($form_state);
   $portal_id = end(explode('/', request_path()));
   
   $drupal_nid = $form_state['values']['drupalnid'];
@@ -191,12 +183,9 @@ function portal_save($form, &$form_state) {
 
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
-    //dsm("eid: " . $eid);
     while($eid != NULL){
       $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
       $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
-      //dsm("drupal_form_element: " . $drupal_form_element);
-      //dsm("imagenow_key: " . $imagenow_key);
       $update_connection = db_update('uwpimagenow_connections')
         ->condition('eid', $eid, '=')
         ->fields(
@@ -209,7 +198,6 @@ function portal_save($form, &$form_state) {
       
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
-      //dsm("eid: " . $eid);
     }
     drupal_set_message(t("Portal had been reconfigured"));
   }
@@ -217,12 +205,8 @@ function portal_save($form, &$form_state) {
 }
 
 function connection_delete($form, &$form_state) {
-  //dsm($form_state);
-  //dsm($form_state['clicked_button']['#name']);
   $index = $form_state['clicked_button']['#name'][0];
-  //dsm($index);
   $eid = $form_state['values']['c' . strval($index) . '-eid'];
-  //dsm("eid: " . $eid);
   $num_deleted = db_delete('uwpimagenow_connections')
     ->condition('eid', $eid, '=')
     ->execute();
@@ -248,7 +232,7 @@ function connection_add($form, &$form_state) {
 /**
  * 
  */
-function _get_drupal_form_elements($nid) {
+function _get_drupal_form_elements(&$nid) {
   $elements['select'] = ' - Select- ';
   $result = db_select('webform_component', 'components')
     ->fields('components', array('cid', 'form_key'))
@@ -265,7 +249,7 @@ function _get_drupal_form_elements($nid) {
 /**
  * Not Used
  */
-function _get_drupal_form_element_cid($nid, $form_key) {
+function _get_drupal_form_element_cid(&$nid, &$form_key) {
   $result = db_select('webform_component', 'components')
     ->fields('components', array('cid'))
     ->condition('nid', $nid, '=')
@@ -273,48 +257,8 @@ function _get_drupal_form_element_cid($nid, $form_key) {
     ->orderBy('cid', 'ASC')
     ->execute();
   // Organize portal elements
-  //dsm($result);
   foreach ($result as $element) {
     return $element->cid;
   }
   return null;
-}
-
-//function _get_portal_connections_inid($inid){
-//  $portal_connections = [];
-//  // Get the connections from the Database
-//  $result = db_select('uwpimagenow_connections', 'connections')
-//    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
-//    ->condition('inid', $inid, '=')
-//    ->orderBy('eid', 'ASC')
-//    ->execute();
-//  // Organize connection elements
-//  foreach ($result as $row) {
-//    $row1 = [];
-//    $row1['eid'] = $row->eid;
-//    $row1['dek'] = $row->drupal_element_key;
-//    $row1['iek'] = $row->imagenow_element_key;
-//    $portal_connections[] = $row1;
-//  }
-//  return $portal_connections;
-//}
-
-function _get_portal_config_admin($pid) {
-  $portal_config = null;
-  // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'))
-    ->condition('inid', $pid, '=')
-    ->orderBy('inid', 'ASC')
-    ->execute();
-  // Organize portal elements
-  #dsm($result);
-  foreach ($result as $row) {
-    $portal_config['inid'] = $row->inid;
-    $portal_config['fid'] = $row->drupal_nid;
-    $portal_config['description'] = $row->description;
-    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
-    $portal_config['connections'] = _get_portal_connections($row->inid);
-  }
-  return $portal_config;
 }

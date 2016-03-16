@@ -17,7 +17,6 @@ function uwpimagenow_admin_settings() {
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not weary it is all magic..</p>');
   
   $portals = _get_drupal_to_imagenow_portals();
-  #dsm($portals);
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Index</th>');
@@ -28,10 +27,7 @@ function uwpimagenow_admin_settings() {
   $form[]['#markup'] = t('</thead>');
   $form[]['#markup'] = t('<tbody>');
   for($i=0; $i < count($portals); $i++){
-    #dsm($i);
-    #dsm($portals[$i]);
     $row = 'portal-' . $portals[$i]['inid'];
-    #dsm($row);
     $form[$row][]['#markup'] = t('<tr id=portal-row-"' . $portals[$i]['inid'] . '" class="odd">');
     $form[$row][]['#markup'] = t('<td class="in-row">');
     $form[$row][]['#markup'] = t($portals[$i]['inid']);
@@ -81,8 +77,6 @@ function uwpimagenow_admin_settings() {
  * @param type $form_state
  */
 function uwpimagenow_admin_save($form, &$form_state) {
-  dsm($form);
-  dsm($form_state);
   if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
     drupal_goto('admin/config/uwplatteville/imagenow/portal/new');
   }
@@ -99,17 +93,11 @@ function uwpimagenow_admin_save($form, &$form_state) {
 }
 
 function portal_delete($form, &$form_state) {
-  //dsm($form_state);
   $tmp = explode('_', $form_state['clicked_button']['#name']);
-  //dsm($tmp);
   $index = count($tmp) - 1;
-  //dsm($index);
   $portal_id = $tmp[$index];
-  //dsm($portal_id);
   $eids = _get_portal_connections($portal_id);
-  //dsm($eids);
   foreach($eids as $eid){
-    //dsm($eid);
     db_delete('uwpimagenow_connections')
       ->condition('eid', $eid['eid'], '=')
       ->execute();
@@ -119,25 +107,6 @@ function portal_delete($form, &$form_state) {
     ->execute();
   drupal_set_message(t("Portal had been warped beyond repair"));
 }
-
-//function _get_portal_connections($inid){
-//  $portal_connections = [];
-//  // Get the connections from the Database
-//  $result = db_select('uwpimagenow_connections', 'connections')
-//    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
-//    ->condition('inid', $inid, '=')
-//    ->orderBy('eid', 'ASC')
-//    ->execute();
-//  // Organize connection elements
-//  foreach ($result as $row) {
-//    $row1 = [];
-//    $row1['eid'] = $row->eid;
-//    $row1['dek'] = $row->drupal_element_key;
-//    $row1['iek'] = $row->imagenow_element_key;
-//    $portal_connections[] = $row1;
-//  }
-//  return $portal_connections;
-//}
 
 /**
  * Get the drupal to imagenow portals.
