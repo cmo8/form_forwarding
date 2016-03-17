@@ -1,6 +1,6 @@
 <?php
 
-require_once 'include/inow_connections.inc';
+require_once 'inow_connections.inc';
 
 function _delete_portal($portal_id) {
   db_delete('uwpimagenow_portals')
