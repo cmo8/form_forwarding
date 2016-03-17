@@ -107,13 +107,16 @@ function _submit_to_imagenow(&$form_values) {
  * @param type $form_id
  * @param type $form_state
  */
-function uwpimagenow_form_validate($form, &$form_state) {
-  if (form_get_errors()) {
-    return;
-  }
+//function uwpimagenow_form_validate($form, &$form_state) {
+function uwpimagenow_webform_submissions_insert($node, $submission){
+  dpm($node);
+  dpm($submission);
+//if (form_get_errors()) {
+   // return;
+  //}
   watchdog("CMO_PHP", "Submitting...");
-  dpm($form_state['values']);
-  _submit_to_imagenow($form_state['values']);
+  //dpm($form_state['values']);
+  //_submit_to_imagenow($form_state['values']);
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
@@ -139,18 +142,18 @@ function _is_imagenow_form($nid) {
 /**
  * Implements hook_form_alter().
  */
-function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
-  dsm("Foo");
-  dsm($form);
-  if (!empty($form['details']['nid'])) {
-    $tmp = _is_imagenow_form($form['details']['nid']['#value']);
-    if ($tmp != NULL) {
-      dsm("ImageNow Form");
-      $form['#validate'][] = 'uwpimagenow_form_validate';
-    }
-  }
-  //$index = $form['details']['nid']['#value'];
-}
+//function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
+//  dsm("Foo");
+//  dsm($form);
+//  if (!empty($form['details']['nid'])) {
+//    $tmp = _is_imagenow_form($form['details']['nid']['#value']);
+//    if ($tmp != NULL) {
+//      dsm("ImageNow Form");
+//      $form['#validate'][] = 'uwpimagenow_form_validate';
+//    }
+//  }
+//  //$index = $form['details']['nid']['#value'];
+//}
 
 function _get_portal_connections($inid) {
   $portal_connections = [];
