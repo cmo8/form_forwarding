@@ -74,7 +74,7 @@ function _submit_to_imagenow(&$form_values) {
 //we are going to need the length of the data string
 //  $data_length = strlen($post_string);
   //create cURL connection
-  $curl_connection = curl_init($portal['imagenow_url']);
+  $curl_connection = curl_init('http://' . $portal['imagenow_url']);
 
 //set options
   curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
