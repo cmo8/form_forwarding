@@ -45,11 +45,15 @@ function uwpimagenow_permission() {
 }
 
 function _submit_to_imagenow(&$form_values) {
+  watchdog("CMO_PHP", "Submitting...");
   watchdog("CMO-PHP", $form_values);
+  watchdog("CMO_PHP", "Submitting...");
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
+  watchdog("CMO_PHP", "Submitting...");
 //  dpm($portal);
   //create array of data to be posted
   $submitted_values = array();
+  watchdog("CMO_PHP", "Submitting...");
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
   $post_data = NULL;
   for ($i = 0; $i < count($portal['connections']); $i++) {
