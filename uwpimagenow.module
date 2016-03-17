@@ -46,7 +46,6 @@ function uwpimagenow_permission() {
 
 function _submit_to_imagenow(&$form_values) {
   watchdog("CMO_PHP", "Submitting...");
-  //watchdog("CMO-PHP", $form_values);
   watchdog("CMO_PHP", "Submitting...");
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
   watchdog("CMO_PHP", "Submitting...");
@@ -70,32 +69,33 @@ function _submit_to_imagenow(&$form_values) {
 
 //we also need to add a question mark at the beginning of the string
   $post_string = '?' . $post_string;
+  watchdog("CMO_PHP", "Args:" . $post_string);
 //  dpm($post_string);
 //we are going to need the length of the data string
 //  $data_length = strlen($post_string);
 
-//  //create cURL connection
-//  $curl_connection = curl_init($portal['imagenow_url']);
-//
-////set options
-//  curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
-//  curl_setopt($curl_connection, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-//  curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
-//  curl_setopt($curl_connection, CURLOPT_SSL_VERIFYPEER, false);
-//  curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
-//
-////set data to be posted
-//  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
-//
-////perform our request
-//  $result = curl_exec($curl_connection);
-//  watchdog("CMO-PHP", $result);
-////show information regarding the request
-//  watchdog("CMO-PHP", curl_getinfo($curl_connection));
-//  watchdog("CMO-PHP", curl_errno($curl_connection) . '-' . curl_error($curl_connection));
-//
-////close the connection
-//  curl_close($curl_connection);
+  //create cURL connection
+  $curl_connection = curl_init($portal['imagenow_url']);
+
+//set options
+  curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
+  curl_setopt($curl_connection, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
+  curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($curl_connection, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
+
+//set data to be posted
+  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
+
+//perform our request
+  $result = curl_exec($curl_connection);
+  watchdog("CMO-PHP", $result);
+//show information regarding the request
+  watchdog("CMO-PHP", curl_getinfo($curl_connection));
+  watchdog("CMO-PHP", curl_errno($curl_connection) . '-' . curl_error($curl_connection));
+
+//close the connection
+  curl_close($curl_connection);
 }
 
 /**
