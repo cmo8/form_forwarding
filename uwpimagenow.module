@@ -68,26 +68,35 @@ function _submit_to_imagenow(&$form_values) {
   $post_string = implode('&', $post_items);
 
 //we also need to add a question mark at the beginning of the string
-  $post_string = '?' . $post_string;
-  watchdog("CMO_PHP", "Args:" . $post_string);
+//  $post_string = '?' . $post_string;
+//  watchdog("CMO_PHP", "Args:" . $post_string);
 //  dpm($post_string);
 //we are going to need the length of the data string
 //  $data_length = strlen($post_string);
-  //let's open the connection
-  $connection = fsockopen("104.131.178.250", 80);
+//  
 
-//sending the data
-  fputs($connection, "POST  /cmo.php  HTTP/1.1\r\n");
-  fputs($connection, "Host:  " . "104.131.178.250" . " \r\n");
-  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
-  fputs($connection, "Content-Length: $data_length\r\n");
-  fputs($connection, "Connection: close\r\n\r\n");
-  fputs($connection, $post_string);
+ ###############################################################################
+  
+  $curl = 'curl --data "' . $post_string . '" ' . $portal['imagenow_url'];
+  watchdog("CMO_PHP", $curl);
+  exec($curl);
+  
+ ###############################################################################
+//  //let's open the connection
+//  $connection = fsockopen("104.131.178.250", 80);
+//
+////sending the data
+//  fputs($connection, "POST  /cmo.php  HTTP/1.1\r\n");
+//  fputs($connection, "Host:  " . "104.131.178.250" . " \r\n");
+//  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
+//  fputs($connection, "Content-Length: $data_length\r\n");
+//  fputs($connection, "Connection: close\r\n\r\n");
+//  fputs($connection, $post_string);
+//
+////closing the connection
+//  fclose($connection);
 
-//closing the connection
-  fclose($connection);
-
-
+ ###############################################################################
 //  //create cURL connection
 //  $curl_connection = curl_init($portal['imagenow_url']);
 //
