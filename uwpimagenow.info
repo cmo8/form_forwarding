@@ -4,4 +4,5 @@ package = UW-Platteville Modules
 core = 7.x
 version = 7.x-1.0
 dependencies[] = fapi_validation
+dependencies[] = webform
 configure = admin/config/uwplatteville/imagenow
