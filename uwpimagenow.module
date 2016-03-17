@@ -108,7 +108,7 @@ function _submit_to_imagenow(&$form_values) {
  * @param type $form_state
  */
 //function uwpimagenow_form_validate($form, &$form_state) {
-function uwpimagenow_webform_submissions_insert($node, $submission){
+function uwpimagenow_submissions_insert($node, $submission){
   dsm($node);
   dsm($submission);
 //if (form_get_errors()) {
