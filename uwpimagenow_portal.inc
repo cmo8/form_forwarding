@@ -1,4 +1,5 @@
 <?php
+
 require_once 'include/inow_portals.inc';
 
 /**
@@ -55,7 +56,99 @@ function uwpimagenow_portal_admin() {
 
   if ($portal_id != 'new' && $portal_id != 'portal') {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
-    $form['connections'][]['#markup'] = t('<table id="portal-table">');
+################################################################################
+    $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
+    $form['defines'][]['#markup'] = t('<table id="portal-define-table">');
+    $form['defines'][]['#markup'] = t('<thead>');
+    $form['defines'][]['#markup'] = t('<th class="define-id">ID</th>');
+    $form['defines'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['defines'][]['#markup'] = t('<th>Element Value</th>');
+    $form['defines'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['defines'][]['#markup'] = t('</thead>');
+    $form['defines'][]['#markup'] = t('<tbody>');
+
+    for ($i = 0; $i < count($portal_config['defines']); $i++) {
+      $define = 'define-' . strval($i);
+      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
+      $form['defines'][$define][]['#markup'] = t('<td class="define-id">');
+      $form['defines'][$define]['c' . strval($i) . '-dkid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Define ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#disabled' => true,
+        '#default_value' => $portal_config['defines'][$i]['dkid'],
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
+      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Element Key'),
+        '#title_display' => 'invisible',
+        '#required' => false,
+        '#default_value' => $portal_config['defines'][$i]['ikey'],
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('<td>');
+      $form['defines'][$define]['c' . strval($i) . '-imagenow-element-value'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Element Value'),
+        '#title_display' => 'invisible',
+        #'#description' => t('Key as set in ImageNow'),
+        '#required' => false,
+        '#default_value' => $portal_config['defines'][$i]['ivalue'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('<td>');
+      $form['defines'][$define]['d' . strval($i) . '-btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete Define'),
+        '#name' => strval($i) . '_delete_define',
+        '#submit' => array('define_delete'),
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('</tr >');
+    }
+    $form['defines']['new-link'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
+    $form['defines']['new-link'][]['#markup'] = t('<td class="define-id"></td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td class="imagenow-element-key">');
+    $form['defines']['new-link']['imagenow-element-key'] = array(
+      '#type' => 'textfield',
+      '#title' => t('ImageNow Element Key'),
+      '#title_display' => 'invisible',
+      '#required' => false,
+    );
+    $form['defines']['new-link'][]['#markup'] = t('</td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td>');
+    $form['defines']['new-link']['imagenow-element-value'] = array(
+      '#type' => 'textfield',
+      '#title' => t('ImageNow Element Value'),
+      '#title_display' => 'invisible',
+      #'#description' => t('Key as set in ImageNow'),
+      '#required' => false,
+      //'#rules' => array(
+      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+      //),
+    );
+    $form['defines']['new-link'][]['#markup'] = t('</td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td>');
+    $form['defines']['new-link']['btnadd'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add'),
+      '#description' => t('Add Define'),
+      '#name' => 'add_define',
+      '#submit' => array('define_add'),
+    );
+    $form['defines']['new-link'][]['#markup'] = t('</td>');
+    $form['defines']['new-link'][]['#markup'] = t('</tr >');
+    
+################################################################################
+    $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
+    $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
     $form['connections'][]['#markup'] = t('<thead>');
     $form['connections'][]['#markup'] = t('<th class="connection-id">ID</th>');
     $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
@@ -70,7 +163,7 @@ function uwpimagenow_portal_admin() {
       $form['connections'][$connection][]['#markup'] = t('<td class="connection-id">');
       $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
         '#type' => 'textfield',
-        '#title' => t('ID'),
+        '#title' => t('Connection ID'),
         '#title_display' => 'invisible',
         '#required' => true,
         '#disabled' => true,
@@ -144,6 +237,99 @@ function uwpimagenow_portal_admin() {
 
     $form['connections'][]['#markup'] = t('</tbody>');
     $form['connections'][]['#markup'] = t('</table>');
+################################################################################
+    $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
+    $form['files'][]['#markup'] = t('<table id="portal-files-table">');
+    $form['files'][]['#markup'] = t('<thead>');
+    $form['files'][]['#markup'] = t('<th class="files-id">ID</th>');
+    $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['files'][]['#markup'] = t('</thead>');
+    $form['files'][]['#markup'] = t('<tbody>');
+
+    for ($i = 0; $i < count($portal_config['files']); $i++) {
+      $file = 'file-' . strval($i);
+      $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['fileid'] . '" class="odd">');
+      $form['files'][$file][]['#markup'] = t('<td class="file-id">');
+      $form['files'][$file]['f' . strval($i) . '-fileid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('File ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#disabled' => true,
+        '#default_value' => $portal_config['connections'][$i]['eid'],
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('<td class="drupal-form-elements-select">');
+      $form['files'][$file]['c' . strval($i) . '-drupal-form-element'] = array(
+        '#type' => 'select',
+        '#title' => t('Drupal Form Select'),
+        '#title_display' => 'invisible',
+        '#multiple' => false,
+        '#options' => $form_elements, //TODO: Need to set
+        '#default_value' => $portal_config['connections'][$i]['dek'],
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('<td>');
+      $form['files'][$file]['c' . strval($i) . '-imagenow-key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Key'),
+        '#title_display' => 'invisible',
+        #'#description' => t('Key as set in ImageNow'),
+        '#required' => false,
+        '#default_value' => $portal_config['connections'][$i]['iek'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('<td>');
+      $form['files'][$file]['c' . strval($i) . '-btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete Link'),
+        '#name' => strval($i) . '_delete_link',
+        '#submit' => array('connection_delete'),
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('</tr >');
+    }
+    $form['files']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
+    $form['files']['new-link'][]['#markup'] = t('<td class="connection-id"></td>');
+    $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['files']['new-link']['drupal-element'] = array(
+      '#type' => 'select',
+      '#title' => t('Drupal Form Select'),
+      '#multiple' => false,
+      '#options' => $form_elements, //TODO: Need to set
+    );
+    $form['files']['new-link'][]['#markup'] = t('</td>');
+    $form['files']['new-link'][]['#markup'] = t('<td>');
+    $form['files']['new-link']['imagenow-key'] = array(
+      '#title' => t('ImageNow Key'),
+      '#description' => t('Key as set in ImageNow'),
+      '#type' => 'textfield',
+      '#required' => false,
+      //'#rules' => array(
+      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+    );
+    $form['files']['new-link'][]['#markup'] = t('</td>');
+    $form['files']['new-link'][]['#markup'] = t('<td>');
+    $form['files']['new-link']['btnadd'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add'),
+      '#description' => t('Add Link'),
+      '#name' => 'add_link',
+      '#submit' => array('connection_add'),
+    );
+    $form['files']['new-link'][]['#markup'] = t('</td>');
+    $form['files']['new-link'][]['#markup'] = t('</tr >');
+
+    $form['files'][]['#markup'] = t('</tbody>');
+    $form['files'][]['#markup'] = t('</table>');
+
+################################################################################
   }
   $form['btnSavePortal'] = array(
     '#type' => 'submit',
@@ -200,9 +386,6 @@ function connection_add($form, &$form_state) {
   drupal_set_message(t("Add New Connection."));
 }
 
-/**
- * 
- */
 function _get_drupal_form_elements(&$nid) {
   $elements['select'] = ' - Select- ';
   $result = db_select('webform_component', 'components')

@@ -1,8 +1,14 @@
 <?php
 
 require_once 'inow_connections.inc';
+require_once 'inow_define_keys.inc';
+require_once 'inow_file_keys.inc';
+
 
 function _delete_portal($portal_id) {
+  _delete_defines($portal_id);
+  _delete_connections($portal_id);
+  _delete_files($portal_id);
   db_delete('uwpimagenow_portals')
     ->condition('inid', $portal_id, '=')
     ->execute();
@@ -73,7 +79,9 @@ function _get_portal_config($cmo, $pid_flag) {
     $portal_config['fid'] = $row->drupal_nid;
     $portal_config['description'] = $row->description;
     $portal_config['imagenow_url'] = $row->imagenow_submission_url;
+    $portal_config['defines'] = _get_define_keys($row->inid);
     $portal_config['connections'] = _get_portal_connections($row->inid);
+    $portal_config['files'] = _get_file_keys($row->inid);
   }
   return $portal_config;
 }
