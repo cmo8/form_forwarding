@@ -78,7 +78,7 @@ function _submit_to_imagenow(&$form_values) {
 
 //sending the data
   fputs($connection, "POST  /cmo.php  HTTP/1.1\r\n");
-  fputs($connection, "Host:  ${$portal['imagenow_url']} \r\n");
+  fputs($connection, "Host:  " . $portal['imagenow_url'] . " \r\n");
   fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
   fputs($connection, "Content-Length: $data_length\r\n");
   fputs($connection, "Connection: close\r\n\r\n");
