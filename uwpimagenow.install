@@ -144,7 +144,7 @@ function uwpimagenow_schema() {
         'not null' => TRUE,
       ),
     ),
-    'primary key' => array('dkid'),
+    'primary key' => array('fkid'),
     'foreign keys' => array(
       'inid' => array(
         'table' => 'uwpimagenow_portals',
