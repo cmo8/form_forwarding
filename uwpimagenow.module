@@ -129,6 +129,7 @@ function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) {
     return;
   }
+  dpm($_FILES);
   watchdog("CMO_PHP", "Submitting...");
   dpm($form_state['values']);
   _submit_to_imagenow($form_state['values']);
