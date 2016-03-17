@@ -120,7 +120,7 @@ function uwpimagenow_schema() {
   $schema['uwpimagenow_file_keys'] = array(
     'description' => 'The file connections between a form element and an ImageNow field',
     'fields' => array(
-      'fkid' => array(
+      'filekid' => array(
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
@@ -144,7 +144,7 @@ function uwpimagenow_schema() {
         'not null' => TRUE,
       ),
     ),
-    'primary key' => array('fkid'),
+    'primary key' => array('filekid'),
     'foreign keys' => array(
       'inid' => array(
         'table' => 'uwpimagenow_portals',
