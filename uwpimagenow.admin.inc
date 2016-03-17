@@ -4,7 +4,7 @@
  * 
  * @author Sean Mogran <morganse@uwplatt.edu>
  */
-
+require_once 'include/inow_portals.inc';
 /**
  * ImageNow Admin Page. Builds the form for the user to use.
  */
@@ -96,35 +96,7 @@ function portal_delete($form, &$form_state) {
   $tmp = explode('_', $form_state['clicked_button']['#name']);
   $index = count($tmp) - 1;
   $portal_id = $tmp[$index];
-  $eids = _get_portal_connections($portal_id);
-  foreach($eids as $eid){
-    db_delete('uwpimagenow_connections')
-      ->condition('eid', $eid['eid'], '=')
-      ->execute();
-  }
-  db_delete('uwpimagenow_portals')
-    ->condition('inid', $portal_id, '=')
-    ->execute();
+  _delete_connections($portal_id);
+  _delete_portal($portal_id);
   drupal_set_message(t("Portal had been warped beyond repair"));
-}
-
-/**
- * Get the drupal to imagenow portals.
- */
-function _get_drupal_to_imagenow_portals() {
-  $portals = [];
-  // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description'))
-    ->orderBy('inid', 'ASC')
-    ->execute();
-  // Organize portal elements
-  foreach ($result as $row) {
-    $row1 = [];
-    $row1['inid'] = $row->inid;
-    $row1['fid'] = $row->drupal_nid;
-    $row1['description'] = $row->description;
-    $portals[] = $row1;
-  }
-  return $portals;
 }

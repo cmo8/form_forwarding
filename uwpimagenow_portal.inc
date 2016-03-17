@@ -1,4 +1,5 @@
 <?php
+require_once 'include/inow_portals.inc';
 
 /**
  * The ImageNow Portal Details file.
@@ -163,46 +164,18 @@ function portal_save($form, &$form_state) {
   $imagenow_url = $form_state['values']['submitionurl'];
 
   if ($portal_id == 'new') {
-    $eid = db_insert('uwpimagenow_portals')
-      ->fields(
-        array(
-          'drupal_nid' => $drupal_nid,
-          'description' => $description,
-          'imagenow_submission_url' => $imagenow_url,
-          'date' => REQUEST_TIME,
-        )
-      )
-      ->execute();
+    $eid = _create_portal($drupal_nid, $description, $imagenow_url);
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
   }
   else {
-    $update_portal = db_update('uwpimagenow_portals')
-      ->condition('inid', $portal_id, '=')
-      ->fields(
-        array(
-          'drupal_nid' => $drupal_nid,
-          'description' => $description,
-          'imagenow_submission_url' => $imagenow_url,
-        )
-      )
-      ->execute();
-
+    $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
     while ($eid != NULL) {
       $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
       $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
-      $update_connection = db_update('uwpimagenow_connections')
-        ->condition('eid', $eid, '=')
-        ->fields(
-          array(
-            'drupal_element_key' => $drupal_form_element,
-            'imagenow_element_key' => $imagenow_key,
-          )
-        )
-        ->execute();
-
+      $update_connection = _update_connection($eid, $drupal_form_element, $imagenow_key);
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
@@ -214,9 +187,7 @@ function portal_save($form, &$form_state) {
 function connection_delete($form, &$form_state) {
   $index = $form_state['clicked_button']['#name'][0];
   $eid = $form_state['values']['c' . strval($index) . '-eid'];
-  $num_deleted = db_delete('uwpimagenow_connections')
-    ->condition('eid', $eid, '=')
-    ->execute();
+  $num_deleted = _delete_connection($eid);
   drupal_set_message(t("Delete Connection"));
 }
 
@@ -225,15 +196,7 @@ function connection_add($form, &$form_state) {
   $drupal_element_key = $form_state['values']['drupal-element'];
   $imagenow_element_key = $form_state['values']['imagenow-key'];
   // Insert new connection
-  $eid = db_insert('uwpimagenow_connections')
-    ->fields(
-      array(
-        'inid' => $portal_id,
-        'drupal_element_key' => $drupal_element_key,
-        'imagenow_element_key' => $imagenow_element_key,
-      )
-    )
-    ->execute();
+  $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
   drupal_set_message(t("Add New Connection."));
 }
 

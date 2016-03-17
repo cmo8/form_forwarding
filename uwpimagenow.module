@@ -1,5 +1,6 @@
 <?php
-
+require_once 'include/inow_connections.inc';
+require_once 'include/inow_portals.inc';
 /**
  * @file 
  * This Connects a Drupal webform to an ImageNow system
@@ -136,25 +137,6 @@ function uwpimagenow_form_validate($form, &$form_state) {
   watchdog("CMO-php", 'Test uwpimagenow');
 }
 
-function _is_imagenow_form($nid) {
-  $dbNids = NULL;
-  // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('drupal_nid'))
-    ->orderBy('inid', 'ASC')
-    ->execute();
-  // Organize portal elements
-  foreach ($result as $row) {
-    $dbNids[] = $row->drupal_nid;
-  }
-  for ($i = 0; $i < count($dbNids); $i++) {
-    if ($nid == $dbNids[$i]) {
-      return $dbNids[$i];
-    }
-  }
-  return NULL;
-}
-
 /**
  * Implements hook_form_alter().
  */
@@ -168,49 +150,6 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
       $form['#validate'][] = 'uwpimagenow_form_validate';
     }
   }
-  //$index = $form['details']['nid']['#value'];
-}
-
-function _get_portal_connections($inid) {
-  $portal_connections = [];
-  // Get the connections from the Database
-  $result = db_select('uwpimagenow_connections', 'connections')
-    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
-    ->condition('inid', $inid, '=')
-    ->orderBy('eid', 'ASC')
-    ->execute();
-  // Organize connection elements
-  foreach ($result as $row) {
-    $row1 = [];
-    $row1['eid'] = $row->eid;
-    $row1['dek'] = $row->drupal_element_key;
-    $row1['iek'] = $row->imagenow_element_key;
-    $portal_connections[] = $row1;
-  }
-  return $portal_connections;
-}
-
-function _get_portal_config($cmo, $pid_flag) {
-  $portal_config = null;
-  $sqlQuery = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'));
-  if ($pid_flag) {
-    $sqlQuery->condition('inid', $cmo, '=');
-  }
-  else {
-    $sqlQuery->condition('drupal_nid', $cmo, '=');
-  }
-  $result = $sqlQuery->orderBy('inid', 'ASC')->execute();
-  // Organize portal elements
-
-  foreach ($result as $row) {
-    $portal_config['inid'] = $row->inid;
-    $portal_config['fid'] = $row->drupal_nid;
-    $portal_config['description'] = $row->description;
-    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
-    $portal_config['connections'] = _get_portal_connections($row->inid);
-  }
-  return $portal_config;
 }
 
 function _get_subbmitted_values(&$flat_array, $array_in) {
