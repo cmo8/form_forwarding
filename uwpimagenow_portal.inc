@@ -403,22 +403,22 @@ function portal_save($form, &$form_state) {
   // redirect to the specific portal
 }
 
-//function connection_delete($form, &$form_state) {
-//  $index = $form_state['clicked_button']['#name'][0];
-//  $eid = $form_state['values']['c' . strval($index) . '-eid'];
-//  $num_deleted = _delete_connection($eid);
-//  drupal_set_message(t("Delete Connection"));
-//}
-//
-//function connection_add($form, &$form_state) {
-//  $portal_id = end(explode('/', request_path()));
-//  $drupal_element_key = $form_state['values']['drupal-element'];
-//  $imagenow_element_key = $form_state['values']['imagenow-key'];
-//  // Insert new connection
-//  $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
-//  drupal_set_message(t("Add New Connection."));
-//}
-//
+function connection_delete($form, &$form_state) {
+  $index = $form_state['clicked_button']['#name'][0];
+  $eid = $form_state['values']['c' . strval($index) . '-eid'];
+  $num_deleted = _delete_connection($eid);
+  drupal_set_message(t("Delete Connection"));
+}
+
+function connection_add($form, &$form_state) {
+  $portal_id = end(explode('/', request_path()));
+  $drupal_element_key = $form_state['values']['drupal-element'];
+  $imagenow_element_key = $form_state['values']['imagenow-key'];
+  // Insert new connection
+  $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
+  drupal_set_message(t("Add New Connection."));
+}
+
 //function define_delete($form, &$form_state){
 //  $index = $form_state['clicked_button']['#name'][0];
 //  $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
