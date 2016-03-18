@@ -9,11 +9,11 @@ function _delete_defines($portal_id) {
 
 function _delete_define($dkid) {
   db_delete('uwpimagenow_define_keys')
-    ->condition('eid', $dkid['dkid'], '=')
+    ->condition('dkid', $dkid['dkid'], '=')
     ->execute();
 }
 
-function _update_define_key($dkid, $imagenow_key, $imagenow_value) {
+function _update_define($dkid, $imagenow_key, $imagenow_value) {
   $update_define_key = db_update('uwpimagenow_define_keys')
     ->condition('dkid', $dkid, '=')
     ->fields(

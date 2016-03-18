@@ -72,7 +72,7 @@ function uwpimagenow_portal_admin() {
       $define = 'define-' . strval($i);
       $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
       $form['defines'][$define][]['#markup'] = t('<td class="id-hide">');
-      $form['defines'][$define]['c' . strval($i) . '-dkid'] = array(
+      $form['defines'][$define]['d' . strval($i) . '-dkid'] = array(
         '#type' => 'textfield',
         '#title' => t('Define ID'),
         '#title_display' => 'invisible',
@@ -91,7 +91,7 @@ function uwpimagenow_portal_admin() {
       );
       $form['defines'][$define][]['#markup'] = t('</td>');
       $form['defines'][$define][]['#markup'] = t('<td>');
-      $form['defines'][$define]['c' . strval($i) . '-imagenow-element-value'] = array(
+      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-value'] = array(
         '#type' => 'textfield',
         '#title' => t('ImageNow Element Value'),
         '#title_display' => 'invisible',
@@ -308,7 +308,7 @@ function uwpimagenow_portal_admin() {
     $form['files']['new-link'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
     $form['files']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
     $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
-    $form['files']['new-link']['drupal-element'] = array(
+    $form['files']['new-link']['file-drupal-element'] = array(
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
@@ -316,7 +316,7 @@ function uwpimagenow_portal_admin() {
     );
     $form['files']['new-link'][]['#markup'] = t('</td>');
     $form['files']['new-link'][]['#markup'] = t('<td>');
-    $form['files']['new-link']['imagenow-key'] = array(
+    $form['files']['new-link']['file-imagenow-key'] = array(
       '#title' => t('ImageNow Key'),
       '#description' => t('Key as set in ImageNow'),
       '#type' => 'textfield',
@@ -365,7 +365,19 @@ function portal_save($form, &$form_state) {
     drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
   }
   else {
+    // Update Portal
     $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
+    // Update defines
+    $index = 0;
+    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+    while ($dkid != NULL) {
+      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
+      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
+      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
+      $index++;
+      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+    }
+    // Update Connections
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
     while ($eid != NULL) {
@@ -374,6 +386,16 @@ function portal_save($form, &$form_state) {
       $update_connection = _update_connection($eid, $drupal_form_element, $imagenow_key);
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
+    }
+    // Update files
+    $index = 0;
+    $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+    while ($dkid != NULL) {
+      $imagenow_key = $form_state['values']['f' . strval($i) . '-imagenow-key'];
+      $drupal_form_element = $form_state['values']['f' . strval($i) . '-drupal-form-element'];
+      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
+      $index++;
+      $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
     }
     drupal_set_message(t("Portal had been reconfigured"));
   }
@@ -394,6 +416,38 @@ function connection_add($form, &$form_state) {
   // Insert new connection
   $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
   drupal_set_message(t("Add New Connection."));
+}
+
+function define_delete($form, &$form_state){
+  $index = $form_state['clicked_button']['#name'][0];
+  $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+  $num_deleted = _delete_define($dkid);
+  drupal_set_message(t("Delete Define"));
+}  
+
+function define_add($form, &$form_state) {
+  $portal_id = end(explode('/', request_path()));
+  $imagenow_element_key = $form_state['values']['imagenow-element-key'];
+  $imagenow_element_value = $form_state['values']['imagenow-element-value'];
+  // Insert new connection
+  $dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
+  drupal_set_message(t("Add New Define."));
+}
+
+function file_delete($form, &$form_state){
+  $index = $form_state['clicked_button']['#name'][0];
+  $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
+  $num_deleted = _delete_define($filekid);
+  drupal_set_message(t("Delete File"));
+}  
+
+function file_add($form, &$form_state) {
+  $portal_id = end(explode('/', request_path()));
+  $file_drupal_element = $form_state['values']['file-drupal-element'];
+  $file_imagenow_key = $form_state['values']['file-imagenow-key'];
+  // Insert new connection
+  $dkid = _create_define($portal_id, $file_imagenow_key, $file_drupal_element);
+  drupal_set_message(t("Add New Define."));
 }
 
 function _get_drupal_form_elements(&$nid) {
