@@ -57,194 +57,6 @@ function uwpimagenow_portal_admin() {
   if ($portal_id != 'new' && $portal_id != 'portal') {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
 ################################################################################
-    $form['defines'][]['#markup'] = t('<div id="defines">');
-    $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
-    $form['defines'][]['#markup'] = t('<table id="portal-define-table">');
-    $form['defines'][]['#markup'] = t('<thead>');
-    $form['defines'][]['#markup'] = t('<th class="define-id">ID</th>');
-    $form['defines'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-    $form['defines'][]['#markup'] = t('<th>Element Value</th>');
-    $form['defines'][]['#markup'] = t('<th>&nbsp;</th>');
-    $form['defines'][]['#markup'] = t('</thead>');
-    $form['defines'][]['#markup'] = t('<tbody>');
-
-    for ($i = 0; $i < count($portal_config['defines']); $i++) {
-      $define = 'define-' . strval($i);
-      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
-      $form['defines'][$define][]['#markup'] = t('<td class="define-id">');
-      $form['defines'][$define]['c' . strval($i) . '-dkid'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Define ID'),
-        '#title_display' => 'invisible',
-        '#required' => true,
-        '#disabled' => true,
-        '#default_value' => $portal_config['defines'][$i]['dkid'],
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
-      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
-        '#type' => 'textfield',
-        '#title' => t('ImageNow Element Key'),
-        '#title_display' => 'invisible',
-        '#required' => false,
-        '#default_value' => $portal_config['defines'][$i]['ikey'],
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td>');
-      $form['defines'][$define]['c' . strval($i) . '-imagenow-element-value'] = array(
-        '#type' => 'textfield',
-        '#title' => t('ImageNow Element Value'),
-        '#title_display' => 'invisible',
-        #'#description' => t('Key as set in ImageNow'),
-        '#required' => false,
-        '#default_value' => $portal_config['defines'][$i]['ivalue'],
-        //'#rules' => array(
-        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-        //),
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td>');
-      $form['defines'][$define]['d' . strval($i) . '-btndelete'] = array(
-        '#type' => 'submit',
-        '#value' => t('Delete'),
-        '#description' => t('Delete Define'),
-        '#name' => strval($i) . '_delete_define',
-        '#submit' => array('define_delete'),
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('</tr >');
-    }
-    $form['defines']['new-link'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
-    $form['defines']['new-link'][]['#markup'] = t('<td class="define-id"></td>');
-    $form['defines']['new-link'][]['#markup'] = t('<td class="imagenow-element-key">');
-    $form['defines']['new-link']['imagenow-element-key'] = array(
-      '#type' => 'textfield',
-      '#title' => t('ImageNow Element Key'),
-      '#title_display' => 'invisible',
-      '#required' => false,
-    );
-    $form['defines']['new-link'][]['#markup'] = t('</td>');
-    $form['defines']['new-link'][]['#markup'] = t('<td>');
-    $form['defines']['new-link']['imagenow-element-value'] = array(
-      '#type' => 'textfield',
-      '#title' => t('ImageNow Element Value'),
-      '#title_display' => 'invisible',
-      #'#description' => t('Key as set in ImageNow'),
-      '#required' => false,
-      //'#rules' => array(
-      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-      //),
-    );
-    $form['defines']['new-link'][]['#markup'] = t('</td>');
-    $form['defines']['new-link'][]['#markup'] = t('<td>');
-    $form['defines']['new-link']['btnadd'] = array(
-      '#type' => 'submit',
-      '#value' => t('Add'),
-      '#description' => t('Add Define'),
-      '#name' => 'add_define',
-      '#submit' => array('define_add'),
-    );
-    $form['defines']['new-link'][]['#markup'] = t('</td>');
-    $form['defines']['new-link'][]['#markup'] = t('</tr >');
-    
-    $form['defines'][]['#markup'] = t('</tbody>');
-    $form['defines'][]['#markup'] = t('</table>');
-    
-    $form['defines'][]['#markup'] = t('</div>');
-################################################################################
-    $form['connections'][]['#markup'] = t('<div id="connections">');
-    $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
-    $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
-    $form['connections'][]['#markup'] = t('<thead>');
-    $form['connections'][]['#markup'] = t('<th class="connection-id">ID</th>');
-    $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-    $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-    $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
-    $form['connections'][]['#markup'] = t('</thead>');
-    $form['connections'][]['#markup'] = t('<tbody>');
-
-    for ($i = 0; $i < count($portal_config['connections']); $i++) {
-      $connection = 'connection-' . strval($i);
-      $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
-      $form['connections'][$connection][]['#markup'] = t('<td class="connection-id">');
-      $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Connection ID'),
-        '#title_display' => 'invisible',
-        '#required' => true,
-        '#disabled' => true,
-        '#default_value' => $portal_config['connections'][$i]['eid'],
-      );
-      $form['connections'][$connection][]['#markup'] = t('</td>');
-      $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-      $form['connections'][$connection]['c' . strval($i) . '-drupal-form-element'] = array(
-        '#type' => 'select',
-        '#title' => t('Drupal Form Select'),
-        '#title_display' => 'invisible',
-        '#multiple' => false,
-        '#options' => $form_elements, //TODO: Need to set
-        '#default_value' => $portal_config['connections'][$i]['dek'],
-      );
-      $form['connections'][$connection][]['#markup'] = t('</td>');
-      $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
-        '#type' => 'textfield',
-        '#title' => t('ImageNow Key'),
-        '#title_display' => 'invisible',
-        #'#description' => t('Key as set in ImageNow'),
-        '#required' => false,
-        '#default_value' => $portal_config['connections'][$i]['iek'],
-        //'#rules' => array(
-        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-        //),
-      );
-      $form['connections'][$connection][]['#markup'] = t('</td>');
-      $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['c' . strval($i) . '-btndelete'] = array(
-        '#type' => 'submit',
-        '#value' => t('Delete'),
-        '#description' => t('Delete Link'),
-        '#name' => strval($i) . '_delete_link',
-        '#submit' => array('connection_delete'),
-      );
-      $form['connections'][$connection][]['#markup'] = t('</td>');
-      $form['connections'][$connection][]['#markup'] = t('</tr >');
-    }
-    $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
-    $form['connections']['new-link'][]['#markup'] = t('<td class="connection-id"></td>');
-    $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
-    $form['connections']['new-link']['drupal-element'] = array(
-      '#type' => 'select',
-      '#title' => t('Drupal Form Select'),
-      '#multiple' => false,
-      '#options' => $form_elements, //TODO: Need to set
-    );
-    $form['connections']['new-link'][]['#markup'] = t('</td>');
-    $form['connections']['new-link'][]['#markup'] = t('<td>');
-    $form['connections']['new-link']['imagenow-key'] = array(
-      '#title' => t('ImageNow Key'),
-      '#description' => t('Key as set in ImageNow'),
-      '#type' => 'textfield',
-      '#required' => false,
-      //'#rules' => array(
-      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-    );
-    $form['connections']['new-link'][]['#markup'] = t('</td>');
-    $form['connections']['new-link'][]['#markup'] = t('<td>');
-    $form['connections']['new-link']['btnadd'] = array(
-      '#type' => 'submit',
-      '#value' => t('Add'),
-      '#description' => t('Add Link'),
-      '#name' => 'add_link',
-      '#submit' => array('connection_add'),
-    );
-    $form['connections']['new-link'][]['#markup'] = t('</td>');
-    $form['connections']['new-link'][]['#markup'] = t('</tr >');
-
-    $form['connections'][]['#markup'] = t('</tbody>');
-    $form['connections'][]['#markup'] = t('</table>');
-    $form['connections'][]['#markup'] = t('</div>');
-################################################################################
     $form['files'][]['#markup'] = t('<div id="files">');
     $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
     $form['files'][]['#markup'] = t('<table id="portal-files-table">');
@@ -337,6 +149,196 @@ function uwpimagenow_portal_admin() {
     $form['files']['#markup'] = t('</tbody>');
     $form['files']['#markup'] = t('</table>');
     $form['files'][]['#markup'] = t('</div>');
+################################################################################
+    $form['defines'][]['#markup'] = t('<div id="defines">');
+    $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
+    $form['defines'][]['#markup'] = t('<table id="portal-define-table">');
+    $form['defines'][]['#markup'] = t('<thead>');
+    $form['defines'][]['#markup'] = t('<th class="define-id">ID</th>');
+    $form['defines'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['defines'][]['#markup'] = t('<th>Element Value</th>');
+    $form['defines'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['defines'][]['#markup'] = t('</thead>');
+    $form['defines'][]['#markup'] = t('<tbody>');
+
+    for ($i = 0; $i < count($portal_config['defines']); $i++) {
+      $define = 'define-' . strval($i);
+      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
+      $form['defines'][$define][]['#markup'] = t('<td class="define-id">');
+      $form['defines'][$define]['c' . strval($i) . '-dkid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Define ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#disabled' => true,
+        '#default_value' => $portal_config['defines'][$i]['dkid'],
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
+      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Element Key'),
+        '#title_display' => 'invisible',
+        '#required' => false,
+        '#default_value' => $portal_config['defines'][$i]['ikey'],
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('<td>');
+      $form['defines'][$define]['c' . strval($i) . '-imagenow-element-value'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Element Value'),
+        '#title_display' => 'invisible',
+        #'#description' => t('Key as set in ImageNow'),
+        '#required' => false,
+        '#default_value' => $portal_config['defines'][$i]['ivalue'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('<td>');
+      $form['defines'][$define]['d' . strval($i) . '-btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete Define'),
+        '#name' => strval($i) . '_delete_define',
+        '#submit' => array('define_delete'),
+      );
+      $form['defines'][$define][]['#markup'] = t('</td>');
+      $form['defines'][$define][]['#markup'] = t('</tr >');
+    }
+    $form['defines']['new-link'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
+    $form['defines']['new-link'][]['#markup'] = t('<td class="define-id"></td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td class="imagenow-element-key">');
+    $form['defines']['new-link']['imagenow-element-key'] = array(
+      '#type' => 'textfield',
+      '#title' => t('ImageNow Element Key'),
+      '#title_display' => 'invisible',
+      '#required' => false,
+    );
+    $form['defines']['new-link'][]['#markup'] = t('</td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td>');
+    $form['defines']['new-link']['imagenow-element-value'] = array(
+      '#type' => 'textfield',
+      '#title' => t('ImageNow Element Value'),
+      '#title_display' => 'invisible',
+      #'#description' => t('Key as set in ImageNow'),
+      '#required' => false,
+      //'#rules' => array(
+      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+      //),
+    );
+    $form['defines']['new-link'][]['#markup'] = t('</td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td>');
+    $form['defines']['new-link']['btnadd'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add'),
+      '#description' => t('Add Define'),
+      '#name' => 'add_define',
+      '#submit' => array('define_add'),
+    );
+    $form['defines']['new-link'][]['#markup'] = t('</td>');
+    $form['defines']['new-link'][]['#markup'] = t('</tr >');
+
+    $form['defines'][]['#markup'] = t('</tbody>');
+    $form['defines'][]['#markup'] = t('</table>');
+
+    $form['defines'][]['#markup'] = t('</div>');
+
+################################################################################
+    $form['connections'][]['#markup'] = t('<div id="connections">');
+    $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
+    $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
+    $form['connections'][]['#markup'] = t('<thead>');
+    $form['connections'][]['#markup'] = t('<th class="connection-id">ID</th>');
+    $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['connections'][]['#markup'] = t('</thead>');
+    $form['connections'][]['#markup'] = t('<tbody>');
+
+    for ($i = 0; $i < count($portal_config['connections']); $i++) {
+      $connection = 'connection-' . strval($i);
+      $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
+      $form['connections'][$connection][]['#markup'] = t('<td class="connection-id">');
+      $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Connection ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#disabled' => true,
+        '#default_value' => $portal_config['connections'][$i]['eid'],
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
+      $form['connections'][$connection]['c' . strval($i) . '-drupal-form-element'] = array(
+        '#type' => 'select',
+        '#title' => t('Drupal Form Select'),
+        '#title_display' => 'invisible',
+        '#multiple' => false,
+        '#options' => $form_elements, //TODO: Need to set
+        '#default_value' => $portal_config['connections'][$i]['dek'],
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Key'),
+        '#title_display' => 'invisible',
+        #'#description' => t('Key as set in ImageNow'),
+        '#required' => false,
+        '#default_value' => $portal_config['connections'][$i]['iek'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection]['c' . strval($i) . '-btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete Link'),
+        '#name' => strval($i) . '_delete_link',
+        '#submit' => array('connection_delete'),
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('</tr >');
+    }
+    $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
+    $form['connections']['new-link'][]['#markup'] = t('<td class="connection-id"></td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['connections']['new-link']['drupal-element'] = array(
+      '#type' => 'select',
+      '#title' => t('Drupal Form Select'),
+      '#multiple' => false,
+      '#options' => $form_elements, //TODO: Need to set
+    );
+    $form['connections']['new-link'][]['#markup'] = t('</td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td>');
+    $form['connections']['new-link']['imagenow-key'] = array(
+      '#title' => t('ImageNow Key'),
+      '#description' => t('Key as set in ImageNow'),
+      '#type' => 'textfield',
+      '#required' => false,
+      //'#rules' => array(
+      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+    );
+    $form['connections']['new-link'][]['#markup'] = t('</td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td>');
+    $form['connections']['new-link']['btnadd'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add'),
+      '#description' => t('Add Link'),
+      '#name' => 'add_link',
+      '#submit' => array('connection_add'),
+    );
+    $form['connections']['new-link'][]['#markup'] = t('</td>');
+    $form['connections']['new-link'][]['#markup'] = t('</tr >');
+
+    $form['connections'][]['#markup'] = t('</tbody>');
+    $form['connections'][]['#markup'] = t('</table>');
+
+    $form['connections'][]['#markup'] = t('</div>');
 ################################################################################
   }
   $form['btnSavePortal'] = array(
