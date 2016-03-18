@@ -146,6 +146,10 @@ function uwpimagenow_portal_admin() {
     );
     $form['defines']['new-link'][]['#markup'] = t('</td>');
     $form['defines']['new-link'][]['#markup'] = t('</tr >');
+    
+    $form['defines'][]['#markup'] = t('</tbody>');
+    $form['defines'][]['#markup'] = t('</table>');
+    
     $form['defines'][]['#markup'] = t('</div>');
 ################################################################################
     $form['connections'][]['#markup'] = t('<div id="connections">');
