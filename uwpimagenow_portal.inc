@@ -369,15 +369,15 @@ function portal_save($form, &$form_state) {
     // Update Portal
     $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
     // Update defines
-//    $index = 0;
-//    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-//    while ($dkid != NULL) {
-//      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
-//      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
-//      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
-//      $index++;
-//      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-//    }
+    $index = 0;
+    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+    while ($dkid != NULL) {
+      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
+      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
+      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
+      $index++;
+      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+    }
     // Update Connections
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
