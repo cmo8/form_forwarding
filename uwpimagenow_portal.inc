@@ -260,9 +260,9 @@ function uwpimagenow_portal_admin() {
 
     for ($i = 0; $i < count($portal_config['files']); $i++) {
       $file = 'file-' . strval($i);
-      $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['fileid'] . '" class="odd">');
+      $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['filekid'] . '" class="odd">');
       $form['files'][$file][]['#markup'] = t('<td class="file-id">');
-      $form['files'][$file]['f' . strval($i) . '-fileid'] = array(
+      $form['files'][$file]['f' . strval($i) . '-filekid'] = array(
         '#type' => 'textfield',
         '#title' => t('File ID'),
         '#title_display' => 'invisible',
