@@ -115,37 +115,37 @@ function uwpimagenow_portal_admin() {
 //      $form['files'][$file][]['#markup'] = t('</td>');
 //      $form['files'][$file][]['#markup'] = t('</tr >');
 //    }
-//    $form['files']['new-link'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
-//    $form['files']['new-link'][]['#markup'] = t('<td class="file-id"></td>');
-//    $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
-//    $form['files']['new-link']['drupal-element'] = array(
-//      '#type' => 'select',
-//      '#title' => t('Drupal Form Select'),
-//      '#multiple' => false,
-//      '#options' => $form_elements, //TODO: Need to set
-//    );
-//    $form['files']['new-link'][]['#markup'] = t('</td>');
-//    $form['files']['new-link'][]['#markup'] = t('<td>');
-//    $form['files']['new-link']['imagenow-key'] = array(
-//      '#title' => t('ImageNow Key'),
-//      '#description' => t('Key as set in ImageNow'),
-//      '#type' => 'textfield',
-//      '#required' => false,
-//      //'#rules' => array(
-//      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-//    );
-//    $form['files']['new-link'][]['#markup'] = t('</td>');
-//    $form['files']['new-link'][]['#markup'] = t('<td>');
-//    $form['files']['new-link']['btnadd'] = array(
-//      '#type' => 'submit',
-//      '#value' => t('Add'),
-//      '#description' => t('Add Link'),
-//      '#name' => 'add_file',
-//      '#submit' => array('file_add'),
-//    );
-//    $form['files']['new-link'][]['#markup'] = t('</td>');
-//    $form['files']['new-link'][]['#markup'] = t('</tr >');
-//
+    $form['files']['new-link'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
+    $form['files']['new-link'][]['#markup'] = t('<td class="file-id"></td>');
+    $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['files']['new-link']['drupal-element'] = array(
+      '#type' => 'select',
+      '#title' => t('Drupal Form Select'),
+      '#multiple' => false,
+      '#options' => $form_elements, //TODO: Need to set
+    );
+    $form['files']['new-link'][]['#markup'] = t('</td>');
+    $form['files']['new-link'][]['#markup'] = t('<td>');
+    $form['files']['new-link']['imagenow-key'] = array(
+      '#title' => t('ImageNow Key'),
+      '#description' => t('Key as set in ImageNow'),
+      '#type' => 'textfield',
+      '#required' => false,
+      //'#rules' => array(
+      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+    );
+    $form['files']['new-link'][]['#markup'] = t('</td>');
+    $form['files']['new-link'][]['#markup'] = t('<td>');
+    $form['files']['new-link']['btnadd'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add'),
+      '#description' => t('Add Link'),
+      '#name' => 'add_file',
+      '#submit' => array('file_add'),
+    );
+    $form['files']['new-link'][]['#markup'] = t('</td>');
+    $form['files']['new-link'][]['#markup'] = t('</tr >');
+
     $form['files'][]['#markup'] = t('</tbody>');
     $form['files'][]['#markup'] = t('</table>');
     $form['files'][]['#markup'] = t('</div>');
