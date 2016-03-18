@@ -80,7 +80,7 @@ function _get_portal_config($cmo, $pid_flag) {
     $portal_config['imagenow_url'] = $row->imagenow_submission_url;
     $portal_config['defines'] = _get_define_keys($row->inid);
     $portal_config['connections'] = _get_portal_connections($row->inid);
-    //$portal_config['files'] = _get_file_keys($row->inid);
+    $portal_config['files'] = _get_file_keys($row->inid);
   }
   return $portal_config;
 }

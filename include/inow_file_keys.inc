@@ -39,7 +39,7 @@ function _create_file($portal_id, $imagenow_element_key, $drupal_element_key) {
   return $fileid;
 }
 
-function _get_portal_files($inid) {
+function _get_file_keys($inid) {
   $portal_files = [];
   // Get the connections from the Database
   $result = db_select('uwpimagenow_file_keys', 'file_keys')
