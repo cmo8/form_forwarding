@@ -15,7 +15,7 @@ function uwpimagenow_portal_admin() {
   $path_url = request_path();
   $path_explode = explode('/', $path_url);
   $portal_id = end($path_explode);
-  $portal_config = _get_portal_config($portal_id, TRUE);
+  //$portal_config = _get_portal_config($portal_id, TRUE);
 
   $form = array();
   $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
