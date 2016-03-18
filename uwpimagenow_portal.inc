@@ -61,7 +61,7 @@ function uwpimagenow_portal_admin() {
     $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
     $form['defines'][]['#markup'] = t('<table id="portal-define-table">');
     $form['defines'][]['#markup'] = t('<thead>');
-    $form['defines'][]['#markup'] = t('<th class="define-id">ID</th>');
+    $form['defines'][]['#markup'] = t('<th class="id-hide">ID</th>');
     $form['defines'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
     $form['defines'][]['#markup'] = t('<th>Element Value</th>');
     $form['defines'][]['#markup'] = t('<th>&nbsp;</th>');
@@ -71,7 +71,7 @@ function uwpimagenow_portal_admin() {
     for ($i = 0; $i < count($portal_config['defines']); $i++) {
       $define = 'define-' . strval($i);
       $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
-      $form['defines'][$define][]['#markup'] = t('<td class="define-id">');
+      $form['defines'][$define][]['#markup'] = t('<td class="id-hide">');
       $form['defines'][$define]['c' . strval($i) . '-dkid'] = array(
         '#type' => 'textfield',
         '#title' => t('Define ID'),
@@ -115,7 +115,7 @@ function uwpimagenow_portal_admin() {
       $form['defines'][$define][]['#markup'] = t('</tr >');
     }
     $form['defines']['new-link'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
-    $form['defines']['new-link'][]['#markup'] = t('<td class="define-id"></td>');
+    $form['defines']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
     $form['defines']['new-link'][]['#markup'] = t('<td class="imagenow-element-key">');
     $form['defines']['new-link']['imagenow-element-key'] = array(
       '#type' => 'textfield',
@@ -157,7 +157,7 @@ function uwpimagenow_portal_admin() {
     $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
     $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
     $form['connections'][]['#markup'] = t('<thead>');
-    $form['connections'][]['#markup'] = t('<th class="connection-id">ID</th>');
+    $form['connections'][]['#markup'] = t('<th class="id-hide">ID</th>');
     $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
     $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
     $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
@@ -167,7 +167,7 @@ function uwpimagenow_portal_admin() {
     for ($i = 0; $i < count($portal_config['connections']); $i++) {
       $connection = 'connection-' . strval($i);
       $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
-      $form['connections'][$connection][]['#markup'] = t('<td class="connection-id">');
+      $form['connections'][$connection][]['#markup'] = t('<td class="id-hide">');
       $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
         '#type' => 'textfield',
         '#title' => t('Connection ID'),
@@ -212,7 +212,7 @@ function uwpimagenow_portal_admin() {
       $form['connections'][$connection][]['#markup'] = t('</tr >');
     }
     $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
-    $form['connections']['new-link'][]['#markup'] = t('<td class="connection-id"></td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
     $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
     $form['connections']['new-link']['drupal-element'] = array(
       '#type' => 'select',
@@ -251,7 +251,7 @@ function uwpimagenow_portal_admin() {
     $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
     $form['files'][]['#markup'] = t('<table id="portal-files-table">');
     $form['files'][]['#markup'] = t('<thead>');
-    $form['files'][]['#markup'] = t('<th class="files-id">ID</th>');
+    $form['files'][]['#markup'] = t('<th class="id-hide">ID</th>');
     $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
     $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
     $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
@@ -261,7 +261,7 @@ function uwpimagenow_portal_admin() {
     for ($i = 0; $i < count($portal_config['files']); $i++) {
       $file = 'file-' . strval($i);
       $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['filekid'] . '" class="odd">');
-      $form['files'][$file][]['#markup'] = t('<td class="file-id">');
+      $form['files'][$file][]['#markup'] = t('<td class="id-hide">');
       $form['files'][$file]['f' . strval($i) . '-filekid'] = array(
         '#type' => 'textfield',
         '#title' => t('File ID'),
@@ -306,7 +306,7 @@ function uwpimagenow_portal_admin() {
       $form['files'][$file][]['#markup'] = t('</tr >');
     }
     $form['files']['new-link'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
-    $form['files']['new-link'][]['#markup'] = t('<td class="file-id"></td>');
+    $form['files']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
     $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
     $form['files']['new-link']['drupal-element'] = array(
       '#type' => 'select',
