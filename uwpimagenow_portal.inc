@@ -427,8 +427,8 @@ function connection_add($form, &$form_state) {
 //}  
 //
 function define_add($form, &$form_state) {
-  dpm($form);
-  dpm($form_state);
+  dsm($form);
+  dsm($form_state);
 //  $portal_id = end(explode('/', request_path()));
 //  $imagenow_element_key = $form_state['values']['imagenow-element-key'];
 //  $imagenow_element_value = $form_state['values']['imagenow-element-value'];
