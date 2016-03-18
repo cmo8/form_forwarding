@@ -147,7 +147,7 @@ function uwpimagenow_portal_admin() {
 //    $form['defines']['new-link'][]['#markup'] = t('</tr >');
     
 ################################################################################
-    $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
+    //$form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
     $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
     $form['connections'][]['#markup'] = t('<thead>');
     $form['connections'][]['#markup'] = t('<th class="connection-id">ID</th>');
@@ -326,8 +326,8 @@ function uwpimagenow_portal_admin() {
 //    $form['files']['new-link'][]['#markup'] = t('</td>');
 //    $form['files']['new-link'][]['#markup'] = t('</tr >');
 //
-//    $form[]['#markup'] = t('</tbody>');
-//    $form[]['#markup'] = t('</table>');
+//    $form['files']['#markup'] = t('</tbody>');
+//    $form['files']['#markup'] = t('</table>');
 
 ################################################################################
   }
