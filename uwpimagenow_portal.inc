@@ -1,7 +1,8 @@
 <?php
-
 require_once 'include/inow_portals.inc';
-
+require_once 'include/inow_connections.inc';
+require_once 'include/inow_define_keys.inc';
+require_once 'include/inow_file_keys.inc';
 /**
  * The ImageNow Portal Details file.
  * 
