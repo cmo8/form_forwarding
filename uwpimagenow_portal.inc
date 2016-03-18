@@ -59,14 +59,14 @@ function uwpimagenow_portal_admin() {
 ################################################################################
     $form['files'][]['#markup'] = t('<div id="files">');
     $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
-//    $form['files'][]['#markup'] = t('<table id="portal-files-table">');
-//    $form['files'][]['#markup'] = t('<thead>');
-//    $form['files'][]['#markup'] = t('<th class="files-id">ID</th>');
-//    $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-//    $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-//    $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
-//    $form['files'][]['#markup'] = t('</thead>');
-//    $form['files'][]['#markup'] = t('<tbody>');
+    $form['files'][]['#markup'] = t('<table id="portal-files-table">');
+    $form['files'][]['#markup'] = t('<thead>');
+    $form['files'][]['#markup'] = t('<th class="files-id">ID</th>');
+    $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['files'][]['#markup'] = t('</thead>');
+    $form['files'][]['#markup'] = t('<tbody>');
 //
 //    for ($i = 0; $i < count($portal_config['files']); $i++) {
 //      $file = 'file-' . strval($i);
@@ -146,8 +146,8 @@ function uwpimagenow_portal_admin() {
 //    $form['files']['new-link'][]['#markup'] = t('</td>');
 //    $form['files']['new-link'][]['#markup'] = t('</tr >');
 //
-//    $form['files']['#markup'] = t('</tbody>');
-//    $form['files']['#markup'] = t('</table>');
+    $form['files']['#markup'] = t('</tbody>');
+    $form['files']['#markup'] = t('</table>');
     $form['files'][]['#markup'] = t('</div>');
 ################################################################################
     $form['defines'][]['#markup'] = t('<div id="defines">');
