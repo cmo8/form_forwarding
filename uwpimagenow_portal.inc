@@ -369,15 +369,15 @@ function portal_save($form, &$form_state) {
     // Update Portal
     $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
     // Update defines
-    $index = 0;
-    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-    while ($dkid != NULL) {
-      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
-      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
-      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
-      $index++;
-      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-    }
+//    $index = 0;
+//    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+//    while ($dkid != NULL) {
+//      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
+//      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
+//      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
+//      $index++;
+//      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+//    }
     // Update Connections
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
@@ -388,36 +388,36 @@ function portal_save($form, &$form_state) {
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
-    // Update files
-    $index = 0;
-    $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
-    while ($dkid != NULL) {
-      $imagenow_key = $form_state['values']['f' . strval($i) . '-imagenow-key'];
-      $drupal_form_element = $form_state['values']['f' . strval($i) . '-drupal-form-element'];
-      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
-      $index++;
-      $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
-    }
+//    // Update files
+//    $index = 0;
+//    $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+//    while ($dkid != NULL) {
+//      $imagenow_key = $form_state['values']['f' . strval($i) . '-imagenow-key'];
+//      $drupal_form_element = $form_state['values']['f' . strval($i) . '-drupal-form-element'];
+//      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
+//      $index++;
+//      $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+//    }
     drupal_set_message(t("Portal had been reconfigured"));
   }
   // redirect to the specific portal
 }
 
-function connection_delete($form, &$form_state) {
-  $index = $form_state['clicked_button']['#name'][0];
-  $eid = $form_state['values']['c' . strval($index) . '-eid'];
-  $num_deleted = _delete_connection($eid);
-  drupal_set_message(t("Delete Connection"));
-}
-
-function connection_add($form, &$form_state) {
-  $portal_id = end(explode('/', request_path()));
-  $drupal_element_key = $form_state['values']['drupal-element'];
-  $imagenow_element_key = $form_state['values']['imagenow-key'];
-  // Insert new connection
-  $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
-  drupal_set_message(t("Add New Connection."));
-}
+//function connection_delete($form, &$form_state) {
+//  $index = $form_state['clicked_button']['#name'][0];
+//  $eid = $form_state['values']['c' . strval($index) . '-eid'];
+//  $num_deleted = _delete_connection($eid);
+//  drupal_set_message(t("Delete Connection"));
+//}
+//
+//function connection_add($form, &$form_state) {
+//  $portal_id = end(explode('/', request_path()));
+//  $drupal_element_key = $form_state['values']['drupal-element'];
+//  $imagenow_element_key = $form_state['values']['imagenow-key'];
+//  // Insert new connection
+//  $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
+//  drupal_set_message(t("Add New Connection."));
+//}
 
 function define_delete($form, &$form_state){
   $index = $form_state['clicked_button']['#name'][0];
@@ -435,21 +435,21 @@ function define_add($form, &$form_state) {
   drupal_set_message(t("Add New Define."));
 }
 
-function file_delete($form, &$form_state){
-  $index = $form_state['clicked_button']['#name'][0];
-  $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
-  $num_deleted = _delete_define($filekid);
-  drupal_set_message(t("Delete File"));
-}  
-
-function file_add($form, &$form_state) {
-  $portal_id = end(explode('/', request_path()));
-  $file_drupal_element = $form_state['values']['file-drupal-element'];
-  $file_imagenow_key = $form_state['values']['file-imagenow-key'];
-  // Insert new connection
-  $dkid = _create_define($portal_id, $file_imagenow_key, $file_drupal_element);
-  drupal_set_message(t("Add New Define."));
-}
+//function file_delete($form, &$form_state){
+//  $index = $form_state['clicked_button']['#name'][0];
+//  $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
+//  $num_deleted = _delete_define($filekid);
+//  drupal_set_message(t("Delete File"));
+//}  
+//
+//function file_add($form, &$form_state) {
+//  $portal_id = end(explode('/', request_path()));
+//  $file_drupal_element = $form_state['values']['file-drupal-element'];
+//  $file_imagenow_key = $form_state['values']['file-imagenow-key'];
+//  // Insert new connection
+//  $dkid = _create_define($portal_id, $file_imagenow_key, $file_drupal_element);
+//  drupal_set_message(t("Add New Define."));
+//}
 
 function _get_drupal_form_elements(&$nid) {
   $elements['select'] = ' - Select- ';
