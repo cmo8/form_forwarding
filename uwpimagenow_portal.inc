@@ -57,6 +57,7 @@ function uwpimagenow_portal_admin() {
   if ($portal_id != 'new' && $portal_id != 'portal') {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
 ################################################################################
+    $form['defines'][]['#markup'] = t('<div id="defines>');
     $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
     $form['defines'][]['#markup'] = t('<table id="portal-define-table">');
     $form['defines'][]['#markup'] = t('<thead>');
@@ -145,8 +146,9 @@ function uwpimagenow_portal_admin() {
     );
     $form['defines']['new-link'][]['#markup'] = t('</td>');
     $form['defines']['new-link'][]['#markup'] = t('</tr >');
-    
+    $form['connections'][]['#markup'] = t('</div>');
 ################################################################################
+    $form['connections'][]['#markup'] = t('<div id="connections>');
     $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
     $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
     $form['connections'][]['#markup'] = t('<thead>');
@@ -237,7 +239,9 @@ function uwpimagenow_portal_admin() {
 
     $form['connections'][]['#markup'] = t('</tbody>');
     $form['connections'][]['#markup'] = t('</table>');
+    $form['connections'][]['#markup'] = t('</div>');
 ################################################################################
+    $form['files'][]['#markup'] = t('<div id="files>');
     $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
     $form['files'][]['#markup'] = t('<table id="portal-files-table">');
     $form['files'][]['#markup'] = t('<thead>');
@@ -328,7 +332,7 @@ function uwpimagenow_portal_admin() {
 
     $form['files']['#markup'] = t('</tbody>');
     $form['files']['#markup'] = t('</table>');
-
+    $form['connections'][]['#markup'] = t('</div>');
 ################################################################################
   }
   $form['btnSavePortal'] = array(
