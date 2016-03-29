@@ -71,7 +71,7 @@ function uwpimagenow_portal_admin() {
 
     for ($i = 0; $i < count($portal_config['defines']); $i++) {
       $define = 'define-' . strval($i);
-      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
+      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['dkid'] . '" class="odd">');
       $form['defines'][$define][]['#markup'] = t('<td class="id-hide">');
       $form['defines'][$define]['d' . strval($i) . '-dkid'] = array(
         '#type' => 'textfield',
