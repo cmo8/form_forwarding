@@ -154,16 +154,16 @@ function uwpimagenow_portal_admin() {
     $form['defines'][]['#markup'] = t('</div>');
 
 ################################################################################
-//    $form['connections'][]['#markup'] = t('<div id="connections">');
-//    $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
-//    $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
-//    $form['connections'][]['#markup'] = t('<thead>');
-//    $form['connections'][]['#markup'] = t('<th class="id-hide">ID</th>');
-//    $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-//    $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-//    $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
-//    $form['connections'][]['#markup'] = t('</thead>');
-//    $form['connections'][]['#markup'] = t('<tbody>');
+    $form['connections'][]['#markup'] = t('<div id="connections">');
+    $form['connections'][]['#markup'] = t('<h3>Portal Connections</h3>');
+    $form['connections'][]['#markup'] = t('<table id="portal-connections-table">');
+    $form['connections'][]['#markup'] = t('<thead>');
+    $form['connections'][]['#markup'] = t('<th class="id-hide">ID</th>');
+    $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['connections'][]['#markup'] = t('</thead>');
+    $form['connections'][]['#markup'] = t('<tbody>');
 //
 //    for ($i = 0; $i < count($portal_config['connections']); $i++) {
 //      $connection = 'connection-' . strval($i);
@@ -242,23 +242,23 @@ function uwpimagenow_portal_admin() {
 //    );
 //    $form['connections']['new-link'][]['#markup'] = t('</td>');
 //    $form['connections']['new-link'][]['#markup'] = t('</tr >');
-//
-//    $form['connections'][]['#markup'] = t('</tbody>');
-//    $form['connections'][]['#markup'] = t('</table>');
-//
-//    $form['connections'][]['#markup'] = t('</div>');
+
+    $form['connections'][]['#markup'] = t('</tbody>');
+    $form['connections'][]['#markup'] = t('</table>');
+
+    $form['connections'][]['#markup'] = t('</div>');
 ################################################################################
-//    $form['files'][]['#markup'] = t('<div id="files">');
-//    $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
-//    $form['files'][]['#markup'] = t('<table id="portal-files-table">');
-//    $form['files'][]['#markup'] = t('<thead>');
-//    $form['files'][]['#markup'] = t('<th class="id-hide">ID</th>');
-//    $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-//    $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
-//    $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
-//    $form['files'][]['#markup'] = t('</thead>');
-//    $form['files'][]['#markup'] = t('<tbody>');
-//
+    $form['files'][]['#markup'] = t('<div id="files">');
+    $form['files'][]['#markup'] = t('<h3>Portal Files</h3>');
+    $form['files'][]['#markup'] = t('<table id="portal-files-table">');
+    $form['files'][]['#markup'] = t('<thead>');
+    $form['files'][]['#markup'] = t('<th class="id-hide">ID</th>');
+    $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
+    $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
+    $form['files'][]['#markup'] = t('</thead>');
+    $form['files'][]['#markup'] = t('<tbody>');
+
 //    for ($i = 0; $i < count($portal_config['files']); $i++) {
 //      $file = 'file-' . strval($i);
 //      $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['filekid'] . '" class="odd">');
@@ -336,10 +336,10 @@ function uwpimagenow_portal_admin() {
 //    );
 //    $form['files']['new-link'][]['#markup'] = t('</td>');
 //    $form['files']['new-link'][]['#markup'] = t('</tr >');
-//
-//    $form['files'][]['#markup'] = t('</tbody>');
-//    $form['files'][]['#markup'] = t('</table>');
-//    $form['files'][]['#markup'] = t('</div>');
+
+    $form['files'][]['#markup'] = t('</tbody>');
+    $form['files'][]['#markup'] = t('</table>');
+    $form['files'][]['#markup'] = t('</div>');
 ################################################################################
   }
   $form['btnSavePortal'] = array(
