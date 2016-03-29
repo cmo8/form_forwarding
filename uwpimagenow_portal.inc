@@ -309,18 +309,18 @@ function uwpimagenow_portal_admin() {
       $form['files'][$file][]['#markup'] = t('</td>');
       $form['files'][$file][]['#markup'] = t('</tr >');
     }
-    $form['files']['new-link'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
-    $form['files']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
-    $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
-    $form['files']['new-link']['file-drupal-element'] = array(
+    $form['files']['new-file'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
+    $form['files']['new-file'][]['#markup'] = t('<td class="id-hide"></td>');
+    $form['files']['new-file'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['files']['new-file']['file-drupal-element'] = array(
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
       '#options' => $form_elements, //TODO: Need to set
     );
-    $form['files']['new-link'][]['#markup'] = t('</td>');
-    $form['files']['new-link'][]['#markup'] = t('<td>');
-    $form['files']['new-link']['file-imagenow-key'] = array(
+    $form['files']['new-file'][]['#markup'] = t('</td>');
+    $form['files']['new-file'][]['#markup'] = t('<td>');
+    $form['files']['new-file']['file-imagenow-key'] = array(
       '#title' => t('ImageNow Key'),
       '#description' => t('Key as set in ImageNow'),
       '#type' => 'textfield',
@@ -328,9 +328,9 @@ function uwpimagenow_portal_admin() {
       //'#rules' => array(
       //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
     );
-    $form['files']['new-link'][]['#markup'] = t('</td>');
-    $form['files']['new-link'][]['#markup'] = t('<td>');
-    $form['files']['new-link']['btnadd-file'] = array(
+    $form['files']['new-file'][]['#markup'] = t('</td>');
+    $form['files']['new-file'][]['#markup'] = t('<td>');
+    $form['files']['new-file']['btnadd-file'] = array(
       '#type' => 'submit',
       '#value' => t('Add'),
       '#description' => t('Add Link'),
@@ -338,8 +338,8 @@ function uwpimagenow_portal_admin() {
       //'#submit' => array('portal_admin_save'),
       '#submit' => array('file_add'),
     );
-    $form['files']['new-link'][]['#markup'] = t('</td>');
-    $form['files']['new-link'][]['#markup'] = t('</tr >');
+    $form['files']['new-file'][]['#markup'] = t('</td>');
+    $form['files']['new-file'][]['#markup'] = t('</tr >');
 
     $form['files'][]['#markup'] = t('</tbody>');
     $form['files'][]['#markup'] = t('</table>');
@@ -400,24 +400,24 @@ function connection_add($form, &$form_state) {
   drupal_set_message(t("Add New Connection."));
 }
 
-//function file_delete($form, &$form_state){
-//  $index = $form_state['clicked_button']['#name'][0];
-//  $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
-//  $num_deleted = _delete_define($filekid);
-//  drupal_set_message(t("Delete File"));
-//}  
-//
-//function file_add($form, &$form_state) {
-//  $portal_id = request_path();
-//  $portal_id = explode('/', $portal_id);
-//  $portal_id = end($portal_id);
-//  $file_drupal_element = $form_state['values']['file-drupal-element'];
-//  $file_imagenow_key = $form_state['values']['file-imagenow-key'];
-//  // Insert new connection
-//  $dkid = _create_define($portal_id, $file_imagenow_key, $file_drupal_element);
-//  drupal_set_message(t("Add New File."));
-//}
-//
+function file_delete($form, &$form_state){
+  $index = $form_state['clicked_button']['#name'][0];
+  $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
+  $num_deleted = _delete_define($filekid);
+  drupal_set_message(t("Delete File"));
+}  
+
+function file_add($form, &$form_state) {
+  $portal_id = request_path();
+  $portal_id = explode('/', $portal_id);
+  $portal_id = end($portal_id);
+  $file_drupal_element = $form_state['values']['file-drupal-element'];
+  $file_imagenow_key = $form_state['values']['file-imagenow-key'];
+  // Insert new connection
+  $dkid = _create_define($portal_id, $file_imagenow_key, $file_drupal_element);
+  drupal_set_message(t("Add New File."));
+}
+
 //function portal_save($form, &$form_state) {
 //  $portal_id = end(explode('/', request_path()));
 //
