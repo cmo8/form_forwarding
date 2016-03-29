@@ -69,52 +69,52 @@ function uwpimagenow_portal_admin() {
     $form['defines'][]['#markup'] = t('</thead>');
     $form['defines'][]['#markup'] = t('<tbody>');
 
-    for ($i = 0; $i < count($portal_config['defines']); $i++) {
-      $define = 'define-' . strval($i);
-      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
-      $form['defines'][$define][]['#markup'] = t('<td class="id-hide">');
-      $form['defines'][$define]['d' . strval($i) . '-dkid'] = array(
-        '#type' => 'textfield',
-        '#title' => t('Define ID'),
-        '#title_display' => 'invisible',
-        '#required' => true,
-        '#disabled' => true,
-        '#default_value' => $portal_config['defines'][$i]['dkid'],
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
-      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
-        '#type' => 'textfield',
-        '#title' => t('ImageNow Element Key'),
-        '#title_display' => 'invisible',
-        '#required' => false,
-        '#default_value' => $portal_config['defines'][$i]['ikey'],
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td>');
-      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-value'] = array(
-        '#type' => 'textfield',
-        '#title' => t('ImageNow Element Value'),
-        '#title_display' => 'invisible',
-        #'#description' => t('Key as set in ImageNow'),
-        '#required' => false,
-        '#default_value' => $portal_config['defines'][$i]['ivalue'],
-        //'#rules' => array(
-        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-        //),
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td>');
-      $form['defines'][$define]['d' . strval($i) . '-btndelete'] = array(
-        '#type' => 'submit',
-        '#value' => t('Delete'),
-        '#description' => t('Delete Define'),
-        '#name' => strval($i) . '_delete_define',
-        '#submit' => array('define_delete'),
-      );
-      $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('</tr >');
-    }
+//    for ($i = 0; $i < count($portal_config['defines']); $i++) {
+//      $define = 'define-' . strval($i);
+//      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
+//      $form['defines'][$define][]['#markup'] = t('<td class="id-hide">');
+//      $form['defines'][$define]['d' . strval($i) . '-dkid'] = array(
+//        '#type' => 'textfield',
+//        '#title' => t('Define ID'),
+//        '#title_display' => 'invisible',
+//        '#required' => true,
+//        '#disabled' => true,
+//        '#default_value' => $portal_config['defines'][$i]['dkid'],
+//      );
+//      $form['defines'][$define][]['#markup'] = t('</td>');
+//      $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
+//      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
+//        '#type' => 'textfield',
+//        '#title' => t('ImageNow Element Key'),
+//        '#title_display' => 'invisible',
+//        '#required' => false,
+//        '#default_value' => $portal_config['defines'][$i]['ikey'],
+//      );
+//      $form['defines'][$define][]['#markup'] = t('</td>');
+//      $form['defines'][$define][]['#markup'] = t('<td>');
+//      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-value'] = array(
+//        '#type' => 'textfield',
+//        '#title' => t('ImageNow Element Value'),
+//        '#title_display' => 'invisible',
+//        #'#description' => t('Key as set in ImageNow'),
+//        '#required' => false,
+//        '#default_value' => $portal_config['defines'][$i]['ivalue'],
+//        //'#rules' => array(
+//        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+//        //),
+//      );
+//      $form['defines'][$define][]['#markup'] = t('</td>');
+//      $form['defines'][$define][]['#markup'] = t('<td>');
+//      $form['defines'][$define]['d' . strval($i) . '-btndelete'] = array(
+//        '#type' => 'submit',
+//        '#value' => t('Delete'),
+//        '#description' => t('Delete Define'),
+//        '#name' => strval($i) . '_delete_define',
+//        '#submit' => array('define_delete'),
+//      );
+//      $form['defines'][$define][]['#markup'] = t('</td>');
+//      $form['defines'][$define][]['#markup'] = t('</tr >');
+//    }
     $form['defines']['new-define'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
     $form['defines']['new-define'][]['#markup'] = t('<td class="id-hide"></td>');
     $form['defines']['new-define'][]['#markup'] = t('<td class="imagenow-element-key">');
