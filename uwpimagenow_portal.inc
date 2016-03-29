@@ -210,36 +210,36 @@ function uwpimagenow_portal_admin() {
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('</tr >');
     }
-//    $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
-//    $form['connections']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
-//    $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
-//    $form['connections']['new-link']['drupal-element'] = array(
-//      '#type' => 'select',
-//      '#title' => t('Drupal Form Select'),
-//      '#multiple' => false,
-//      '#options' => $form_elements, //TODO: Need to set
-//    );
-//    $form['connections']['new-link'][]['#markup'] = t('</td>');
-//    $form['connections']['new-link'][]['#markup'] = t('<td>');
-//    $form['connections']['new-link']['imagenow-key'] = array(
-//      '#title' => t('ImageNow Key'),
-//      '#description' => t('Key as set in ImageNow'),
-//      '#type' => 'textfield',
-//      '#required' => false,
-//      //'#rules' => array(
-//      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-//    );
-//    $form['connections']['new-link'][]['#markup'] = t('</td>');
-//    $form['connections']['new-link'][]['#markup'] = t('<td>');
-//    $form['connections']['new-link']['btnadd'] = array(
-//      '#type' => 'submit',
-//      '#value' => t('Add'),
-//      '#description' => t('Add Link'),
-//      '#name' => 'add_link',
-//      '#submit' => array('connection_add'),
-//    );
-//    $form['connections']['new-link'][]['#markup'] = t('</td>');
-//    $form['connections']['new-link'][]['#markup'] = t('</tr >');
+    $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
+    $form['connections']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
+    $form['connections']['new-link']['drupal-element'] = array(
+      '#type' => 'select',
+      '#title' => t('Drupal Form Select'),
+      '#multiple' => false,
+      '#options' => $form_elements, //TODO: Need to set
+    );
+    $form['connections']['new-link'][]['#markup'] = t('</td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td>');
+    $form['connections']['new-link']['imagenow-key'] = array(
+      '#title' => t('ImageNow Key'),
+      '#description' => t('Key as set in ImageNow'),
+      '#type' => 'textfield',
+      '#required' => false,
+      //'#rules' => array(
+      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+    );
+    $form['connections']['new-link'][]['#markup'] = t('</td>');
+    $form['connections']['new-link'][]['#markup'] = t('<td>');
+    $form['connections']['new-link']['btnadd'] = array(
+      '#type' => 'submit',
+      '#value' => t('Add'),
+      '#description' => t('Add Link'),
+      '#name' => 'add_link',
+      '#submit' => array('connection_add'),
+    );
+    $form['connections']['new-link'][]['#markup'] = t('</td>');
+    $form['connections']['new-link'][]['#markup'] = t('</tr >');
 
     $form['connections'][]['#markup'] = t('</tbody>');
     $form['connections'][]['#markup'] = t('</table>');
