@@ -363,11 +363,11 @@ function uwpimagenow_portal_admin() {
 function define_add($form, &$form_state) {
   dsm($form);
   dsm($form_state);
-//  $portal_id = end(explode('/', request_path()));
-//  $imagenow_element_key = $form_state['values']['imagenow-element-key'];
-//  $imagenow_element_value = $form_state['values']['imagenow-element-value'];
-////   Insert new connection
-//  $dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
+  $portal_id = end(explode('/', request_path()));
+  $imagenow_element_key = $form_state['values']['imagenow-element-key'];
+  $imagenow_element_value = $form_state['values']['imagenow-element-value'];
+//   Insert new connection
+  $dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
   drupal_set_message(t("Add New Define."));
 }
 
