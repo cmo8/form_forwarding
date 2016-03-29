@@ -109,8 +109,8 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete Define'),
         '#name' => strval($i) . '_delete_define',
-        '#submit' => array('portal_admin_save'),
-        //'#submit' => array('define_delete'),
+        //'#submit' => array('portal_admin_save'),
+        '#submit' => array('define_delete'),
       );
       $form['defines'][$define][]['#markup'] = t('</td>');
       $form['defines'][$define][]['#markup'] = t('</tr >');
@@ -137,13 +137,13 @@ function uwpimagenow_portal_admin() {
     );
     $form['defines']['new-define'][]['#markup'] = t('</td>');
     $form['defines']['new-define'][]['#markup'] = t('<td>');
-    $form['defines']['new-define']['btnadd'] = array(
+    $form['defines']['new-define']['btnadd-define'] = array(
       '#type' => 'submit',
       '#value' => t('Add'),
       '#description' => t('Add Define'),
       '#name' => 'add_define',
-      '#submit' => array('portal_admin_save'),
-      //'#submit' => array('define_add'),
+      //'#submit' => array('portal_admin_save'),
+      '#submit' => array('define_add'),
     );
     $form['defines']['new-define'][]['#markup'] = t('</td>');
     $form['defines']['new-define'][]['#markup'] = t('</tr >');
@@ -207,8 +207,8 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
         '#name' => strval($i) . '_delete_link',
-        //'#submit' => array('portal_save'),
-        '#submit' => array('portal_admin_save'),
+        '#submit' => array('portal_save'),
+        //'#submit' => array('portal_admin_save'),
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('</tr >');
@@ -234,13 +234,13 @@ function uwpimagenow_portal_admin() {
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('<td>');
-    $form['connections']['new-link']['btnadd'] = array(
+    $form['connections']['new-link']['btnadd-conn'] = array(
       '#type' => 'submit',
       '#value' => t('Add'),
       '#description' => t('Add Link'),
       '#name' => 'add_link',
-      //'#submit' => array('portal_save'),
-      '#submit' => array('portal_admin_save'),
+      '#submit' => array('portal_save'),
+      //'#submit' => array('portal_admin_save'),
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('</tr >');
@@ -330,13 +330,13 @@ function uwpimagenow_portal_admin() {
     );
     $form['files']['new-link'][]['#markup'] = t('</td>');
     $form['files']['new-link'][]['#markup'] = t('<td>');
-    $form['files']['new-link']['btnadd'] = array(
+    $form['files']['new-link']['btnadd-file'] = array(
       '#type' => 'submit',
       '#value' => t('Add'),
       '#description' => t('Add Link'),
       '#name' => 'add_file',
-      '#submit' => array('portal_admin_save'),
-      //'#submit' => array('file_add'),
+      //'#submit' => array('portal_admin_save'),
+      '#submit' => array('file_add'),
     );
     $form['files']['new-link'][]['#markup'] = t('</td>');
     $form['files']['new-link'][]['#markup'] = t('</tr >');
@@ -351,8 +351,7 @@ function uwpimagenow_portal_admin() {
     '#value' => t('Save'),
     '#description' => t('Save Potal'),
     '#name' => 'save_portal',
-    '#submit' => array('portal_admin_save'),
-    //'#submit' => array('portal_save'),
+    '#submit' => array('portal_save'),
   );
 
   return $form;
