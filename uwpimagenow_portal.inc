@@ -56,7 +56,7 @@ function uwpimagenow_portal_admin() {
   );
 
   if ($portal_id != 'new' && $portal_id != 'portal') {
-//    $form_elements = _get_drupal_form_elements($portal_config['fid']);
+    $form_elements = _get_drupal_form_elements($portal_config['fid']);
 ################################################################################
     $form['defines'][]['#markup'] = t('<div id="defines">');
     $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
