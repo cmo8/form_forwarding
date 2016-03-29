@@ -353,12 +353,12 @@ function uwpimagenow_portal_admin() {
   return $form;
 }
 
-//function define_delete($form, &$form_state){
-//  $index = $form_state['clicked_button']['#name'][0];
-//  $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-//  $num_deleted = _delete_define($dkid);
-//  drupal_set_message(t("Delete Define"));
-//}
+function define_delete($form, &$form_state){
+  $index = $form_state['clicked_button']['#name'][0];
+  $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+  $num_deleted = _delete_define($dkid);
+  drupal_set_message(t("Delete Define"));
+}
 
 function define_add($form, &$form_state) {
   dsm($form);
