@@ -28,32 +28,32 @@ function uwpimagenow_portal_admin() {
     $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
   }
 
-//  $form['drupalnid'] = array(
-//    '#type' => 'textfield',
-//    '#title' => t('Drupal Node ID'),
-//    '#required' => TRUE,
-//    '#default_value' => $portal_config['fid'],
-//    '#rules' => array(
-//      array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
-//    ),
-//  );
-//
-//  $form['description'] = array(
-//    '#type' => 'textfield',
-//    '#title' => t('Description'),
-//    '#required' => TRUE,
-//    '#default_value' => $portal_config['description'],
-//  );
-//
-//  $form['submitionurl'] = array(
-//    '#type' => 'textfield',
-//    '#title' => t('ImageNow Submition URL'),
-//    '#required' => TRUE,
-//    '#default_value' => $portal_config['imagenow_url'],
-//    '#rules' => array(
-//      'url',
-//    ),
-//  );
+  $form['drupalnid'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Drupal Node ID'),
+    '#required' => TRUE,
+    '#default_value' => $portal_config['fid'],
+    '#rules' => array(
+      array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
+    ),
+  );
+
+  $form['description'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Description'),
+    '#required' => TRUE,
+    '#default_value' => $portal_config['description'],
+  );
+
+  $form['submitionurl'] = array(
+    '#type' => 'textfield',
+    '#title' => t('ImageNow Submition URL'),
+    '#required' => TRUE,
+    '#default_value' => $portal_config['imagenow_url'],
+    '#rules' => array(
+      'url',
+    ),
+  );
 
 //  if ($portal_id != 'new' && $portal_id != 'portal') {
 //    $form_elements = _get_drupal_form_elements($portal_config['fid']);
@@ -342,13 +342,13 @@ function uwpimagenow_portal_admin() {
 //    $form['files'][]['#markup'] = t('</div>');
 ################################################################################
 //  }
-//  $form['btnSavePortal'] = array(
-//    '#type' => 'submit',
-//    '#value' => t('Save'),
-//    '#description' => t('Save Potal'),
-//    '#name' => 'save_portal',
-//    '#submit' => array('portal_save'),
-//  );
+  $form['btnSavePortal'] = array(
+    '#type' => 'submit',
+    '#value' => t('Save'),
+    '#description' => t('Save Potal'),
+    '#name' => 'save_portal',
+    '#submit' => array('portal_save'),
+  );
 
   return $form;
 }
