@@ -8,8 +8,12 @@ function _delete_files($portal_id) {
 }
 
 function _delete_file($filekid) {
+  $tmp = $filekid;
+  if(is_array($filekid)){
+    $tmp = $filekid['filekid'];
+  }
   db_delete('uwpimagenow_file_keys')
-    ->condition('filekid', $filekid['filekid'], '=')
+    ->condition('filekid', $tmp, '=')
     ->execute();
 }
 

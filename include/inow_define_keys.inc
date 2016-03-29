@@ -8,8 +8,12 @@ function _delete_defines($portal_id) {
 }
 
 function _delete_define($dkid) {
+  $tmp = $dkid;
+  if(is_array($dkid)){
+    $tmp = $dkid['dkid'];
+  }
   db_delete('uwpimagenow_define_keys')
-    ->condition('dkid', $dkid['dkid'], '=')
+    ->condition('dkid', $tmp, '=')
     ->execute();
 }
 

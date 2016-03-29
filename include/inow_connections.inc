@@ -8,8 +8,12 @@ function _delete_connections($portal_id) {
 }
 
 function _delete_connection($eid) {
+  $tmp = $eid;
+  if(is_array($eid)){
+    $tmp = $eid['eid'];
+  }
   db_delete('uwpimagenow_connections')
-    ->condition('eid', $eid['eid'], '=')
+    ->condition('eid', $tmp, '=')
     ->execute();
 }
 
