@@ -109,7 +109,7 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete Define'),
         '#name' => strval($i) . '_delete_define',
-        '#submit' => array('uwpimagenow_portal_admin_save'),
+        '#submit' => array('portal_admin_save'),
         //'#submit' => array('define_delete'),
       );
       $form['defines'][$define][]['#markup'] = t('</td>');
@@ -142,7 +142,7 @@ function uwpimagenow_portal_admin() {
       '#value' => t('Add'),
       '#description' => t('Add Define'),
       '#name' => 'add_define',
-      '#submit' => array('uwpimagenow_portal_admin_save'),
+      '#submit' => array('portal_admin_save'),
       //'#submit' => array('define_add'),
     );
     $form['defines']['new-define'][]['#markup'] = t('</td>');
@@ -207,8 +207,8 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
         '#name' => strval($i) . '_delete_link',
-        '#submit' => array('portal_save'),
-        //'#submit' => array('uwpimagenow_portal_admin_save'),
+        //'#submit' => array('portal_save'),
+        '#submit' => array('portal_admin_save'),
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('</tr >');
@@ -239,8 +239,8 @@ function uwpimagenow_portal_admin() {
       '#value' => t('Add'),
       '#description' => t('Add Link'),
       '#name' => 'add_link',
-      '#submit' => array('portal_save'),
-      //'#submit' => array('uwpimagenow_portal_admin_save'),
+      //'#submit' => array('portal_save'),
+      '#submit' => array('portal_admin_save'),
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('</tr >');
@@ -303,7 +303,7 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete File'),
         '#name' => strval($i) . '_delete_file',
-        '#submit' => array('uwpimagenow_portal_admin_save'),
+        '#submit' => array('portal_admin_save'),
         //'#submit' => array('file_delete'),
       );
       $form['files'][$file][]['#markup'] = t('</td>');
@@ -335,7 +335,7 @@ function uwpimagenow_portal_admin() {
       '#value' => t('Add'),
       '#description' => t('Add Link'),
       '#name' => 'add_file',
-      '#submit' => array('uwpimagenow_portal_admin_save'),
+      '#submit' => array('portal_admin_save'),
       //'#submit' => array('file_add'),
     );
     $form['files']['new-link'][]['#markup'] = t('</td>');
@@ -351,13 +351,14 @@ function uwpimagenow_portal_admin() {
     '#value' => t('Save'),
     '#description' => t('Save Potal'),
     '#name' => 'save_portal',
-    '#submit' => array('uwpimagenow_portal_admin_save'),
+    '#submit' => array('portal_admin_save'),
     //'#submit' => array('portal_save'),
   );
 
   return $form;
 }
-function uwpimagenow_portal_admin_save($form, &$form_state) {
+
+function portal_admin_save($form, &$form_state) {
   dsm("submission");
   dsm($form_state);
 }
