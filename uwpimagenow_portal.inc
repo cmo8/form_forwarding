@@ -349,8 +349,8 @@ function uwpimagenow_portal_admin() {
 //    '#name' => 'save_portal',
 //    '#submit' => array('portal_save'),
 //  );
-//
-//  return $form;
+
+  return $form;
 }
 
 //function define_delete($form, &$form_state){
