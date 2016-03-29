@@ -164,54 +164,54 @@ function uwpimagenow_portal_admin() {
     $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
     $form['connections'][]['#markup'] = t('</thead>');
     $form['connections'][]['#markup'] = t('<tbody>');
-//
-//    for ($i = 0; $i < count($portal_config['connections']); $i++) {
-//      $connection = 'connection-' . strval($i);
-//      $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
-//      $form['connections'][$connection][]['#markup'] = t('<td class="id-hide">');
-//      $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
-//        '#type' => 'textfield',
-//        '#title' => t('Connection ID'),
-//        '#title_display' => 'invisible',
-//        '#required' => true,
-//        '#disabled' => true,
-//        '#default_value' => $portal_config['connections'][$i]['eid'],
-//      );
-//      $form['connections'][$connection][]['#markup'] = t('</td>');
-//      $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
-//      $form['connections'][$connection]['c' . strval($i) . '-drupal-form-element'] = array(
-//        '#type' => 'select',
-//        '#title' => t('Drupal Form Select'),
-//        '#title_display' => 'invisible',
-//        '#multiple' => false,
-//        '#options' => $form_elements, //TODO: Need to set
-//        '#default_value' => $portal_config['connections'][$i]['dek'],
-//      );
-//      $form['connections'][$connection][]['#markup'] = t('</td>');
-//      $form['connections'][$connection][]['#markup'] = t('<td>');
-//      $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
-//        '#type' => 'textfield',
-//        '#title' => t('ImageNow Key'),
-//        '#title_display' => 'invisible',
-//        #'#description' => t('Key as set in ImageNow'),
-//        '#required' => false,
-//        '#default_value' => $portal_config['connections'][$i]['iek'],
-//        //'#rules' => array(
-//        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-//        //),
-//      );
-//      $form['connections'][$connection][]['#markup'] = t('</td>');
-//      $form['connections'][$connection][]['#markup'] = t('<td>');
-//      $form['connections'][$connection]['c' . strval($i) . '-btndelete'] = array(
-//        '#type' => 'submit',
-//        '#value' => t('Delete'),
-//        '#description' => t('Delete Link'),
-//        '#name' => strval($i) . '_delete_link',
-//        '#submit' => array('connection_delete'),
-//      );
-//      $form['connections'][$connection][]['#markup'] = t('</td>');
-//      $form['connections'][$connection][]['#markup'] = t('</tr >');
-//    }
+
+    for ($i = 0; $i < count($portal_config['connections']); $i++) {
+      $connection = 'connection-' . strval($i);
+      $form['connections'][$connection][]['#markup'] = t('<tr id=connection-row-"' . $portal_config['connections'][$i]['eid'] . '" class="odd">');
+      $form['connections'][$connection][]['#markup'] = t('<td class="id-hide">');
+      $form['connections'][$connection]['c' . strval($i) . '-eid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('Connection ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#disabled' => true,
+        '#default_value' => $portal_config['connections'][$i]['eid'],
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td class="drupal-form-elements-select">');
+      $form['connections'][$connection]['c' . strval($i) . '-drupal-form-element'] = array(
+        '#type' => 'select',
+        '#title' => t('Drupal Form Select'),
+        '#title_display' => 'invisible',
+        '#multiple' => false,
+        '#options' => $form_elements, //TODO: Need to set
+        '#default_value' => $portal_config['connections'][$i]['dek'],
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Key'),
+        '#title_display' => 'invisible',
+        #'#description' => t('Key as set in ImageNow'),
+        '#required' => false,
+        '#default_value' => $portal_config['connections'][$i]['iek'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('<td>');
+      $form['connections'][$connection]['c' . strval($i) . '-btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete Link'),
+        '#name' => strval($i) . '_delete_link',
+        '#submit' => array('connection_delete'),
+      );
+      $form['connections'][$connection][]['#markup'] = t('</td>');
+      $form['connections'][$connection][]['#markup'] = t('</tr >');
+    }
 //    $form['connections']['new-link'][]['#markup'] = t('<tr id="connection-row-new" class="odd">');
 //    $form['connections']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
 //    $form['connections']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
