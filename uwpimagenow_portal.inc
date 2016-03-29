@@ -115,18 +115,18 @@ function uwpimagenow_portal_admin() {
       $form['defines'][$define][]['#markup'] = t('</td>');
       $form['defines'][$define][]['#markup'] = t('</tr >');
     }
-    $form['defines']['new-link'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
-    $form['defines']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
-    $form['defines']['new-link'][]['#markup'] = t('<td class="imagenow-element-key">');
-    $form['defines']['new-link']['imagenow-element-key'] = array(
+    $form['defines']['new-define'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
+    $form['defines']['new-define'][]['#markup'] = t('<td class="id-hide"></td>');
+    $form['defines']['new-define'][]['#markup'] = t('<td class="imagenow-element-key">');
+    $form['defines']['new-define']['imagenow-element-key'] = array(
       '#type' => 'textfield',
       '#title' => t('ImageNow Element Key'),
       '#title_display' => 'invisible',
       '#required' => false,
     );
-    $form['defines']['new-link'][]['#markup'] = t('</td>');
-    $form['defines']['new-link'][]['#markup'] = t('<td>');
-    $form['defines']['new-link']['imagenow-element-value'] = array(
+    $form['defines']['new-define'][]['#markup'] = t('</td>');
+    $form['defines']['new-define'][]['#markup'] = t('<td>');
+    $form['defines']['new-define']['imagenow-element-value'] = array(
       '#type' => 'textfield',
       '#title' => t('ImageNow Element Value'),
       '#title_display' => 'invisible',
@@ -136,17 +136,17 @@ function uwpimagenow_portal_admin() {
       //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
       //),
     );
-    $form['defines']['new-link'][]['#markup'] = t('</td>');
-    $form['defines']['new-link'][]['#markup'] = t('<td>');
-    $form['defines']['new-link']['btnadd'] = array(
+    $form['defines']['new-define'][]['#markup'] = t('</td>');
+    $form['defines']['new-define'][]['#markup'] = t('<td>');
+    $form['defines']['new-define']['btnadd'] = array(
       '#type' => 'submit',
       '#value' => t('Add'),
       '#description' => t('Add Define'),
       '#name' => 'add_define',
       '#submit' => array('add_define'),
     );
-    $form['defines']['new-link'][]['#markup'] = t('</td>');
-    $form['defines']['new-link'][]['#markup'] = t('</tr >');
+    $form['defines']['new-define'][]['#markup'] = t('</td>');
+    $form['defines']['new-define'][]['#markup'] = t('</tr >');
 
     $form['defines'][]['#markup'] = t('</tbody>');
     $form['defines'][]['#markup'] = t('</table>');
@@ -419,13 +419,6 @@ function connection_add($form, &$form_state) {
   drupal_set_message(t("Add New Connection."));
 }
 
-//function define_delete($form, &$form_state){
-//  $index = $form_state['clicked_button']['#name'][0];
-//  $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-//  $num_deleted = _delete_define($dkid);
-//  drupal_set_message(t("Delete Define"));
-//}  
-//
 function add_define($form, &$form_state) {
   dsm($form);
   dsm($form_state);
@@ -436,6 +429,14 @@ function add_define($form, &$form_state) {
 //  $dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
   drupal_set_message(t("Add New Define."));
 }
+
+//function define_delete($form, &$form_state){
+//  $index = $form_state['clicked_button']['#name'][0];
+//  $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+//  $num_deleted = _delete_define($dkid);
+//  drupal_set_message(t("Delete Define"));
+//}
+
 
 //function file_delete($form, &$form_state){
 //  $index = $form_state['clicked_button']['#name'][0];
