@@ -13,20 +13,20 @@ require_once 'include/inow_file_keys.inc';
  * ImageNow Admin Page. Builds the form for the user to use.
  */
 function uwpimagenow_portal_admin() {
-  $path_url = request_path();
-  $path_explode = explode('/', $path_url);
-  $portal_id = end($path_explode);
-  $portal_config = _get_portal_config($portal_id, TRUE);
-
-  $form = array();
-  $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
-  //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
-  if ($portal_id != 'new' && $portal_id != 'portal') {
-    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
-  }
-  else {
-    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
-  }
+//  $path_url = request_path();
+//  $path_explode = explode('/', $path_url);
+//  $portal_id = end($path_explode);
+//  $portal_config = _get_portal_config($portal_id, TRUE);
+//
+//  $form = array();
+//  $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
+//  //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
+//  if ($portal_id != 'new' && $portal_id != 'portal') {
+//    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
+//  }
+//  else {
+//    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
+//  }
 
   $form['drupalnid'] = array(
     '#type' => 'textfield',
@@ -55,8 +55,8 @@ function uwpimagenow_portal_admin() {
     ),
   );
 
-  if ($portal_id != 'new' && $portal_id != 'portal') {
-    $form_elements = _get_drupal_form_elements($portal_config['fid']);
+//  if ($portal_id != 'new' && $portal_id != 'portal') {
+//    $form_elements = _get_drupal_form_elements($portal_config['fid']);
 ################################################################################
 //    $form['defines'][]['#markup'] = t('<div id="defines">');
 //    $form['defines'][]['#markup'] = t('<h3>Portal Value Defines</h3>');
@@ -341,7 +341,7 @@ function uwpimagenow_portal_admin() {
 //    $form['files'][]['#markup'] = t('</table>');
 //    $form['files'][]['#markup'] = t('</div>');
 ################################################################################
-  }
+//  }
   $form['btnSavePortal'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
