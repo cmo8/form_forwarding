@@ -358,6 +358,7 @@ function uwpimagenow_portal_admin() {
   return $form;
 }
 function uwpimagenow_portal_admin_save($form, &$form_state) {
+  dsm("submission");
   dsm($form_state);
 }
 //function define_delete($form, &$form_state){
