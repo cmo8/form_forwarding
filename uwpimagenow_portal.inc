@@ -71,7 +71,7 @@ function uwpimagenow_portal_admin() {
 
     for ($i = 0; $i < count($portal_config['defines']); $i++) {
       $define = 'define-' . strval($i);
-      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['eid'] . '" class="odd">');
+      $form['defines'][$define][]['#markup'] = t('<tr id=define-row-"' . $portal_config['defines'][$i]['dkid'] . '" class="odd">');
       $form['defines'][$define][]['#markup'] = t('<td class="id-hide">');
       $form['defines'][$define]['d' . strval($i) . '-dkid'] = array(
         '#type' => 'textfield',
@@ -259,53 +259,53 @@ function uwpimagenow_portal_admin() {
     $form['files'][]['#markup'] = t('</thead>');
     $form['files'][]['#markup'] = t('<tbody>');
 
-//    for ($i = 0; $i < count($portal_config['files']); $i++) {
-//      $file = 'file-' . strval($i);
-//      $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['filekid'] . '" class="odd">');
-//      $form['files'][$file][]['#markup'] = t('<td class="id-hide">');
-//      $form['files'][$file]['f' . strval($i) . '-filekid'] = array(
-//        '#type' => 'textfield',
-//        '#title' => t('File ID'),
-//        '#title_display' => 'invisible',
-//        '#required' => true,
-//        '#disabled' => true,
-//        '#default_value' => $portal_config['files'][$i]['eid'],
-//      );
-//      $form['files'][$file][]['#markup'] = t('</td>');
-//      $form['files'][$file][]['#markup'] = t('<td class="drupal-form-elements-select">');
-//      $form['files'][$file]['f' . strval($i) . '-drupal-form-element'] = array(
-//        '#type' => 'select',
-//        '#title' => t('Drupal Form Select'),
-//        '#title_display' => 'invisible',
-//        '#multiple' => false,
-//        '#options' => $form_elements, //TODO: Need to set
-//        '#default_value' => $portal_config['files'][$i]['dek'],
-//      );
-//      $form['files'][$file][]['#markup'] = t('</td>');
-//      $form['files'][$file][]['#markup'] = t('<td>');
-//      $form['files'][$file]['f' . strval($i) . '-imagenow-key'] = array(
-//        '#type' => 'textfield',
-//        '#title' => t('ImageNow Key'),
-//        '#title_display' => 'invisible',
-//        #'#description' => t('Key as set in ImageNow'),
-//        '#required' => false,
-//        '#default_value' => $portal_config['files'][$i]['iek'],
-//        //'#rules' => array(
-//        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-//        //),
-//      );
-//      $form['files'][$file][]['#markup'] = t('</td>');
-//      $form['files'][$file][]['#markup'] = t('<td>');
-//      $form['files'][$file]['f' . strval($i) . '-btndelete'] = array(
-//        '#type' => 'submit',
-//        '#value' => t('Delete'),
-//        '#description' => t('Delete File'),
-//        '#name' => strval($i) . '_delete_file',
-//        '#submit' => array('file_delete'),
-//      );
-//      $form['files'][$file][]['#markup'] = t('</td>');
-//      $form['files'][$file][]['#markup'] = t('</tr >');
-//    }
+    for ($i = 0; $i < count($portal_config['files']); $i++) {
+      $file = 'file-' . strval($i);
+      $form['files'][$file][]['#markup'] = t('<tr id=file-row-"' . $portal_config['files'][$i]['filekid'] . '" class="odd">');
+      $form['files'][$file][]['#markup'] = t('<td class="id-hide">');
+      $form['files'][$file]['f' . strval($i) . '-filekid'] = array(
+        '#type' => 'textfield',
+        '#title' => t('File ID'),
+        '#title_display' => 'invisible',
+        '#required' => true,
+        '#disabled' => true,
+        '#default_value' => $portal_config['files'][$i]['eid'],
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('<td class="drupal-form-elements-select">');
+      $form['files'][$file]['f' . strval($i) . '-drupal-form-element'] = array(
+        '#type' => 'select',
+        '#title' => t('Drupal Form Select'),
+        '#title_display' => 'invisible',
+        '#multiple' => false,
+        '#options' => $form_elements, //TODO: Need to set
+        '#default_value' => $portal_config['files'][$i]['dek'],
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('<td>');
+      $form['files'][$file]['f' . strval($i) . '-imagenow-key'] = array(
+        '#type' => 'textfield',
+        '#title' => t('ImageNow Key'),
+        '#title_display' => 'invisible',
+        #'#description' => t('Key as set in ImageNow'),
+        '#required' => false,
+        '#default_value' => $portal_config['files'][$i]['iek'],
+        //'#rules' => array(
+        //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+        //),
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('<td>');
+      $form['files'][$file]['f' . strval($i) . '-btndelete'] = array(
+        '#type' => 'submit',
+        '#value' => t('Delete'),
+        '#description' => t('Delete File'),
+        '#name' => strval($i) . '_delete_file',
+        '#submit' => array('file_delete'),
+      );
+      $form['files'][$file][]['#markup'] = t('</td>');
+      $form['files'][$file][]['#markup'] = t('</tr >');
+    }
 //    $form['files']['new-link'][]['#markup'] = t('<tr id="file-row-new" class="odd">');
 //    $form['files']['new-link'][]['#markup'] = t('<td class="id-hide"></td>');
 //    $form['files']['new-link'][]['#markup'] = t('<td class="drupal-form-elements-select">');
