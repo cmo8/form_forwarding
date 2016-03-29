@@ -115,38 +115,38 @@ function uwpimagenow_portal_admin() {
 //      $form['defines'][$define][]['#markup'] = t('</td>');
 //      $form['defines'][$define][]['#markup'] = t('</tr >');
 //    }
-    $form['defines']['new-define'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
-    $form['defines']['new-define'][]['#markup'] = t('<td class="id-hide"></td>');
-    $form['defines']['new-define'][]['#markup'] = t('<td class="imagenow-element-key">');
-    $form['defines']['new-define']['imagenow-element-key'] = array(
-      '#type' => 'textfield',
-      '#title' => t('ImageNow Element Key'),
-      '#title_display' => 'invisible',
-      '#required' => false,
-    );
-    $form['defines']['new-define'][]['#markup'] = t('</td>');
-    $form['defines']['new-define'][]['#markup'] = t('<td>');
-    $form['defines']['new-define']['imagenow-element-value'] = array(
-      '#type' => 'textfield',
-      '#title' => t('ImageNow Element Value'),
-      '#title_display' => 'invisible',
-      #'#description' => t('Key as set in ImageNow'),
-      '#required' => false,
-      //'#rules' => array(
-      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-      //),
-    );
-    $form['defines']['new-define'][]['#markup'] = t('</td>');
-    $form['defines']['new-define'][]['#markup'] = t('<td>');
-    $form['defines']['new-define']['btnadd'] = array(
-      '#type' => 'submit',
-      '#value' => t('Add'),
-      '#description' => t('Add Define'),
-      '#name' => 'add_define',
-      '#submit' => array('define_add'),
-    );
-    $form['defines']['new-define'][]['#markup'] = t('</td>');
-    $form['defines']['new-define'][]['#markup'] = t('</tr >');
+//    $form['defines']['new-define'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
+//    $form['defines']['new-define'][]['#markup'] = t('<td class="id-hide"></td>');
+//    $form['defines']['new-define'][]['#markup'] = t('<td class="imagenow-element-key">');
+//    $form['defines']['new-define']['imagenow-element-key'] = array(
+//      '#type' => 'textfield',
+//      '#title' => t('ImageNow Element Key'),
+//      '#title_display' => 'invisible',
+//      '#required' => false,
+//    );
+//    $form['defines']['new-define'][]['#markup'] = t('</td>');
+//    $form['defines']['new-define'][]['#markup'] = t('<td>');
+//    $form['defines']['new-define']['imagenow-element-value'] = array(
+//      '#type' => 'textfield',
+//      '#title' => t('ImageNow Element Value'),
+//      '#title_display' => 'invisible',
+//      #'#description' => t('Key as set in ImageNow'),
+//      '#required' => false,
+//      //'#rules' => array(
+//      //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
+//      //),
+//    );
+//    $form['defines']['new-define'][]['#markup'] = t('</td>');
+//    $form['defines']['new-define'][]['#markup'] = t('<td>');
+//    $form['defines']['new-define']['btnadd'] = array(
+//      '#type' => 'submit',
+//      '#value' => t('Add'),
+//      '#description' => t('Add Define'),
+//      '#name' => 'add_define',
+//      '#submit' => array('define_add'),
+//    );
+//    $form['defines']['new-define'][]['#markup'] = t('</td>');
+//    $form['defines']['new-define'][]['#markup'] = t('</tr >');
 
     $form['defines'][]['#markup'] = t('</tbody>');
     $form['defines'][]['#markup'] = t('</table>');
