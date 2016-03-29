@@ -31,7 +31,7 @@ function _update_define($dkid, $imagenow_key, $imagenow_value) {
   return $update_define_key;
 }
 
-function _create_define_key($portal_id, $imagenow_key, $imagenow_value) {
+function _create_define($portal_id, $imagenow_key, $imagenow_value) {
     $dkid = db_insert('uwpimagenow_define_keys')
     ->fields(
       array(
