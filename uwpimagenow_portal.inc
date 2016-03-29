@@ -207,7 +207,7 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete Link'),
         '#name' => strval($i) . '_delete_link',
-        '#submit' => array('portal_save'),
+        '#submit' => array('connection_delete'),
         //'#submit' => array('portal_admin_save'),
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
@@ -239,7 +239,7 @@ function uwpimagenow_portal_admin() {
       '#value' => t('Add'),
       '#description' => t('Add Link'),
       '#name' => 'add_link',
-      '#submit' => array('portal_save'),
+      '#submit' => array('connection_add'),
       //'#submit' => array('portal_admin_save'),
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
