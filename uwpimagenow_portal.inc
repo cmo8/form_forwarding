@@ -17,16 +17,16 @@ function uwpimagenow_portal_admin() {
   $path_explode = explode('/', $path_url);
   $portal_id = end($path_explode);
   $portal_config = _get_portal_config($portal_id, TRUE);
-//
-//  $form = array();
-//  $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
-//  //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
-//  if ($portal_id != 'new' && $portal_id != 'portal') {
-//    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
-//  }
-//  else {
-//    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
-//  }
+
+  $form = array();
+  $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
+  //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
+  if ($portal_id != 'new' && $portal_id != 'portal') {
+    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
+  }
+  else {
+    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
+  }
 
 //  $form['drupalnid'] = array(
 //    '#type' => 'textfield',
