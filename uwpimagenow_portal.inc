@@ -369,7 +369,7 @@ function define_add($form, &$form_state) {
   $imagenow_element_key = $form_state['values']['imagenow-element-key'];
   $imagenow_element_value = $form_state['values']['imagenow-element-value'];
 //   Insert new connection
-  //$dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
+  $dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
   drupal_set_message(t("Add New Define."));
 }
 

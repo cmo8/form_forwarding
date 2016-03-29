@@ -24,7 +24,6 @@ function _update_define($dkid, $imagenow_key, $imagenow_value) {
       array(
         'imagenow_element_key' => $imagenow_key,
         'imagenow_element_value' => $imagenow_value,
-        
       )
     )
     ->execute();
@@ -38,7 +37,6 @@ function _create_define($portal_id, $imagenow_key, $imagenow_value) {
         'inid' => $portal_id,
         'imagenow_element_key' => $imagenow_key,
         'imagenow_element_value' => $imagenow_value,
-        
       )
     )
     ->execute();
