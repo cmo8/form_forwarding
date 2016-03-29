@@ -143,7 +143,7 @@ function uwpimagenow_portal_admin() {
       '#value' => t('Add'),
       '#description' => t('Add Define'),
       '#name' => 'add_define',
-      '#submit' => array('define_add'),
+      '#submit' => array('add_define'),
     );
     $form['defines']['new-link'][]['#markup'] = t('</td>');
     $form['defines']['new-link'][]['#markup'] = t('</tr >');
@@ -426,7 +426,7 @@ function connection_add($form, &$form_state) {
 //  drupal_set_message(t("Delete Define"));
 //}  
 //
-function define_add($form, &$form_state) {
+function add_define($form, &$form_state) {
   dsm($form);
   dsm($form_state);
 //  $portal_id = end(explode('/', request_path()));
