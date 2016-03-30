@@ -305,7 +305,7 @@ function uwpimagenow_portal_admin() {
         '#description' => t('Delete File'),
         '#name' => strval($i) . '_delete_file',
         //'#submit' => array('portal_admin_save'),
-        '#submit' => array('file_delete'),
+        '#submit' => array('delete_file'),
       );
       $form['files'][$file][]['#markup'] = t('</td>');
       $form['files'][$file][]['#markup'] = t('</tr >');
@@ -400,7 +400,7 @@ function connection_add($form, &$form_state) {
   }
 }
 
-function file_delete($form, &$form_state) {
+function delete_file($form, &$form_state) {
   $index = $form_state['clicked_button']['#name'][0];
   $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
   $num_deleted = _delete_file($filekid);
