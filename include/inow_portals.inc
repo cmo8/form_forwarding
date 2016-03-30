@@ -61,14 +61,14 @@ function _is_imagenow_form($nid) {
   return NULL;
 }
 
-function _get_portal_config($cmo, $pid_flag) {
+function _get_portal_config($inid, $pid_flag) {
   $portal_config = null;
   $sqlQuery = db_select('uwpimagenow_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'));
   if ($pid_flag === TRUE) {
-    $sqlQuery->condition('inid', $cmo, '=');
+    $sqlQuery->condition('inid', $inid, '=');
   } else {
-    $sqlQuery->condition('drupal_nid', $cmo, '=');
+    $sqlQuery->condition('drupal_nid', $inid, '=');
   }
   $result = $sqlQuery->orderBy('inid', 'ASC')->execute();
   // Organize portal elements
