@@ -401,6 +401,7 @@ function connection_add($form, &$form_state) {
 }
 
 function delete_file($form, &$form_state) {
+  dsm($form_state);
   $index = $form_state['clicked_button']['#name'][0];
   $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
   $num_deleted = _delete_file($filekid);
