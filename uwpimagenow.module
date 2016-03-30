@@ -49,23 +49,23 @@ function _submit_to_imagenow(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
   dpm($portal);
   //create array of data to be posted
-  $submitted_values = array();
+  $post_data = NULL;
   //Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
     $post_data[$portal['defines'][$i]['ikey']] = $submitted_values[$portal['defines'][$i]['ivalue']];
   }
   //Add the connection.
+  $submitted_values = array();
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
-  $post_data = NULL;
   for ($i = 0; $i < count($portal['connections']); $i++) {
     $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
   }
-//  dpm($post_data);
+  
 //traverse array and prepare data for posting (key1=value1)
   foreach ($post_data as $key => $value) {
     $post_items[] = $key . '=' . $value;
   }
-//  dpm($post_items);
+  
 //create the final string to be posted using implode()
   $post_string = implode('&', $post_items);
 
@@ -132,10 +132,8 @@ function uwpimagenow_form_validate($form, &$form_state) {
     return;
   }
   dpm($_FILES);
-  watchdog("CMO_PHP", "Submitting...");
   dpm($form_state['values']);
   _submit_to_imagenow($form_state['values']);
-  watchdog("CMO-php", 'Test uwpimagenow');
 }
 
 /**
