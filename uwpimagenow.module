@@ -52,7 +52,7 @@ function _submit_to_imagenow(&$form_values) {
   $post_data = NULL;
   //Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
-    $post_data[$portal['defines'][$i]['ikey']] = $submitted_values[$portal['defines'][$i]['ivalue']];
+    $post_data[$portal['defines'][$i]['ikey']] = $portal['defines'][$i]['ivalue'];
   }
   //Add the connection.
   $submitted_values = array();
