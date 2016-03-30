@@ -31,9 +31,6 @@ function _update_connection($eid, $drupal_form_element, $imagenow_key) {
 }
 
 function _create_connection($inid, $drupal_element_key, $imagenow_element_key) {
-//  if(_is_connection_exist($inid, $drupal_element_key, $imagenow_element_key)){
-//    return NULL;
-//  }
   $eid = db_insert('uwpimagenow_connections')
     ->fields(
       array(

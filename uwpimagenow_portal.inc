@@ -446,13 +446,13 @@ function portal_save($form, &$form_state) {
     }
     // Update files
     $index = 0;
-    $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+    $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     while ($dkid != NULL) {
-      $imagenow_key = $form_state['values']['f' . strval($i) . '-imagenow-key'];
-      $drupal_form_element = $form_state['values']['f' . strval($i) . '-drupal-form-element'];
+      $imagenow_key = $form_state['values']['f' . strval($index) . '-imagenow-key'];
+      $drupal_form_element = $form_state['values']['f' . strval($index) . '-drupal-form-element'];
       $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
       $index++;
-      $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+      $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     }
     drupal_set_message(t("Portal had been reconfigured"));
   }
