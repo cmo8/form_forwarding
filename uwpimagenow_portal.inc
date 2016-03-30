@@ -267,7 +267,7 @@ function uwpimagenow_portal_admin() {
         '#title_display' => 'invisible',
         '#required' => true,
         '#disabled' => true,
-        '#default_value' => $portal_config['files'][$i]['eid'],
+        '#default_value' => $portal_config['files'][$i]['filekid'],
       );
       $form['files'][$file][]['#markup'] = t('</td>');
       $form['files'][$file][]['#markup'] = t('<td class="drupal-form-elements-select">');
