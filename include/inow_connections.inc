@@ -30,11 +30,14 @@ function _update_connection($eid, $drupal_form_element, $imagenow_key) {
   return $update_connection;
 }
 
-function _create_connection($portal_id, $drupal_element_key, $imagenow_element_key) {
+function _create_connection($inid, $drupal_element_key, $imagenow_element_key) {
+  if(_is_connection_exist($inid, $drupal_element_key, $imagenow_element_key)){
+    return NULL;
+  }
   $eid = db_insert('uwpimagenow_connections')
     ->fields(
       array(
-        'inid' => $portal_id,
+        'inid' => $inid,
         'drupal_element_key' => $drupal_element_key,
         'imagenow_element_key' => $imagenow_element_key,
       )
@@ -60,4 +63,21 @@ function _get_portal_connections($inid) {
     $portal_connections[] = $row1;
   }
   return $portal_connections;
+}
+
+function _is_connection_exist($inid, $drupal_element_key, $imagenow_element_key) {
+  $result = db_select('uwpimagenow_connections', 'connections')
+    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
+    ->condition('inid', $inid, '=')
+    ->condition(db_or()->condition('drupal_element_key', $drupal_element_key, '=')
+      ->condition('imagenow_element_key', $imagenow_element_key, '='))
+    ->orderBy('eid', 'ASC')
+    ->execute();
+  // Organize connection elements
+  foreach ($result as $row) {
+    if($row->drupal_element_key == $drupal_element_key || $row->imagenow_element_key == $imagenow_element_key){
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
