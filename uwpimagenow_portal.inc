@@ -18,7 +18,6 @@ function uwpimagenow_portal_admin() {
   $path_explode = explode('/', $path_url);
   $portal_id = end($path_explode);
   $portal_config = _get_portal_config($portal_id, TRUE);
-  dsm($portal_config);
   $form = array();
   $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
@@ -358,8 +357,6 @@ function define_delete($form, &$form_state) {
 }
 
 function define_add($form, &$form_state) {
-  dsm($form);
-  dsm($form_state);
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
@@ -395,7 +392,6 @@ function connection_add($form, &$form_state) {
 function delete_file($form, &$form_state) {
   $index = $form_state['clicked_button']['#name'][0];
   $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
-  watchdog("CMO-PHP", $filekid);
   $num_deleted = _delete_file($filekid);
   drupal_set_message(t("Delete File"));
 }
