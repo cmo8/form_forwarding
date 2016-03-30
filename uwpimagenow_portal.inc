@@ -413,55 +413,55 @@ function file_add($form, &$form_state) {
   }
 }
 
-//function portal_save($form, &$form_state) {
-//  $portal_id = end(explode('/', request_path()));
-//
-//  $drupal_nid = $form_state['values']['drupalnid'];
-//  $description = $form_state['values']['description'];
-//  $imagenow_url = $form_state['values']['submitionurl'];
-//
-//  if ($portal_id == 'new') {
-//    $eid = _create_portal($drupal_nid, $description, $imagenow_url);
-//    drupal_set_message(t("New Portal Saved"));
-//    drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
-//  }
-//  else {
-//    // Update Portal
-//    $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
-//    // Update defines
-//    $index = 0;
-//    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-//    while ($dkid != NULL) {
-//      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
-//      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
-//      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
-//      $index++;
-//      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-//    }
-//    // Update Connections
-//    $index = 0;
-//    $eid = $form_state['values']['c' . strval($index) . '-eid'];
-//    while ($eid != NULL) {
-//      $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
-//      $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
-//      $update_connection = _update_connection($eid, $drupal_form_element, $imagenow_key);
-//      $index++;
-//      $eid = $form_state['values']['c' . strval($index) . '-eid'];
-//    }
-//    // Update files
-//    $index = 0;
-//    $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
-//    while ($dkid != NULL) {
-//      $imagenow_key = $form_state['values']['f' . strval($i) . '-imagenow-key'];
-//      $drupal_form_element = $form_state['values']['f' . strval($i) . '-drupal-form-element'];
-//      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
-//      $index++;
-//      $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
-//    }
-//    drupal_set_message(t("Portal had been reconfigured"));
-//  }
-//  // redirect to the specific portal
-//}
+function portal_save($form, &$form_state) {
+  $portal_id = end(explode('/', request_path()));
+
+  $drupal_nid = $form_state['values']['drupalnid'];
+  $description = $form_state['values']['description'];
+  $imagenow_url = $form_state['values']['submitionurl'];
+
+  if ($portal_id == 'new') {
+    $eid = _create_portal($drupal_nid, $description, $imagenow_url);
+    drupal_set_message(t("New Portal Saved"));
+    drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
+  }
+  else {
+    // Update Portal
+    $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
+    // Update defines
+    $index = 0;
+    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+    while ($dkid != NULL) {
+      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
+      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
+      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
+      $index++;
+      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+    }
+    // Update Connections
+    $index = 0;
+    $eid = $form_state['values']['c' . strval($index) . '-eid'];
+    while ($eid != NULL) {
+      $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
+      $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
+      $update_connection = _update_connection($eid, $drupal_form_element, $imagenow_key);
+      $index++;
+      $eid = $form_state['values']['c' . strval($index) . '-eid'];
+    }
+    // Update files
+    $index = 0;
+    $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+    while ($dkid != NULL) {
+      $imagenow_key = $form_state['values']['f' . strval($i) . '-imagenow-key'];
+      $drupal_form_element = $form_state['values']['f' . strval($i) . '-drupal-form-element'];
+      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
+      $index++;
+      $filekid = $form_state['values']['f' . strval($i) . '-filekid'];
+    }
+    drupal_set_message(t("Portal had been reconfigured"));
+  }
+  // redirect to the specific portal
+}
 
 function _get_drupal_form_elements(&$nid) {
   $elements['select'] = ' - Select- ';
