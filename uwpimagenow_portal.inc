@@ -447,7 +447,7 @@ function portal_save($form, &$form_state) {
     // Update files
     $index = 0;
     $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
-    while ($dkid != NULL) {
+    while ($filekid != NULL) {
       $imagenow_key = $form_state['values']['f' . strval($index) . '-imagenow-key'];
       $drupal_form_element = $form_state['values']['f' . strval($index) . '-drupal-form-element'];
       $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
