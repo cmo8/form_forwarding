@@ -304,8 +304,8 @@ function uwpimagenow_portal_admin() {
         '#value' => t('Delete'),
         '#description' => t('Delete File'),
         '#name' => strval($i) . '_delete_file',
-        '#submit' => array('portal_admin_save'),
-        //'#submit' => array('file_delete'),
+        //'#submit' => array('portal_admin_save'),
+        '#submit' => array('file_delete'),
       );
       $form['files'][$file][]['#markup'] = t('</td>');
       $form['files'][$file][]['#markup'] = t('</tr >');
