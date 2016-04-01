@@ -60,26 +60,37 @@ function _submit_to_imagenow(&$form_values) {
   for ($i = 0; $i < count($portal['connections']); $i++) {
     $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
   }
-  
+  //FILE handle
+##################
+  dpm("Temp: " . file_directory_temp());
+##################
+  for ($i = 0; $i < count($portal['files']); $i++) {
+    if(array_key_exists('dek', $submitted_values[$portal['files'][$i]])){
+      dpm('File ' . $i . ' : ' . $submitted_values[$portal['files'][$i]['dek']]);
+      $post_data[$portal['files'][$i]['iek']] = $submitted_values[$portal['files'][$i]['dek']];
+    } else {
+      dpm("No File Submission...");
+    }
+  }
 //traverse array and prepare data for posting (key1=value1)
   foreach ($post_data as $key => $value) {
     $post_items[] = $key . '=' . $value;
   }
-  
 //create the final string to be posted using implode()
   $post_string = implode('&', $post_items);
 
 //we also need to add a question mark at the beginning of the string
 //  $post_string = '?' . $post_string;
 //  watchdog("CMO_PHP", "Args:" . $post_string);
-//  dpm($post_string);
+  dpm("Arg String:");
+  dpm($post_string);
 //we are going to need the length of the data string
 //  $data_length = strlen($post_string);
 //  
 
  ###############################################################################
-  
-  $curl = 'curl --data "' . $post_string . '" ' . $portal['imagenow_url'];
+  //$curl = 'curl --data "' . $post_string . '" ' . $portal['imagenow_url'];
+  $curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
   watchdog("CMO_PHP", $curl);
   exec($curl);
   
