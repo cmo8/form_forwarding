@@ -89,8 +89,8 @@ function _submit_to_imagenow(&$form_values) {
 //  
 
  ###############################################################################
-  //$curl = 'curl --data "' . $post_string . '" ' . $portal['imagenow_url'];
-  $curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
+  $curl = 'curl --data "' . $post_string . '" ' . $portal['imagenow_url'];
+  //$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
   watchdog("CMO_PHP", $curl);
   exec($curl);
   
