@@ -66,7 +66,7 @@ function _submit_to_imagenow(&$form_values) {
 ##################
   for ($i = 0; $i < count($portal['files']); $i++) {
     if(array_key_exists("dek", $portal['files'][$i])){
-      dpm('File ' . $i . ' : ' . $submitted_values[$portal['files'][$i]['dek']]);
+      dpm('File ' . $i . ' : ' . drupal_realpath($submitted_values[$portal['files'][$i]['dek']]));
       $post_data[$portal['files'][$i]['iek']] = file_load($submitted_values[$portal['files'][$i]['dek']]);
     } else {
       dpm("No File Submission...");
