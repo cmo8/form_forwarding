@@ -1,4 +1,5 @@
 <?php
+
 require_once 'include/inow_connections.inc';
 require_once 'include/inow_portals.inc';
 /**
@@ -45,16 +46,82 @@ function uwpimagenow_permission() {
   );
 }
 
+function _inc_gen_file_keys_to($inowKeys, $value){
+  $elements = explode("-", $value);
+  $inowKeysRtn = array();
+  if(is_numeric($elements[0]) && is_numeric($elements[1])){
+    $start = intval($elements[0]);
+    $end = intval($elements[1]);
+    foreach ($inowKeys as $inowKey) {
+      for($i = $start; $i <= $end; $i++){
+        $inowKeysRtn[] = $inowKey . strval($i);
+      }
+    }
+  } else {
+    $start = $elements[0];
+    $end = $elements[1];
+    foreach ($inowKeys as $inowKey) {
+      $currentChar = $start;
+      while($currentChar <= $end){
+        $inowKeysRtn[] = $inowKey . $currentChar;
+        ++$currentChar;
+      }
+    }
+  }
+  return $inowKeysRtn;
+}
+
+function _inc_gen_file_keys_through_list($inowKeys, $value){
+  $elements = explode(",", $value);
+  $inowKeysRtn = array();
+  foreach ($inowKeys as $inowKey) {
+    foreach ($elements as $element) {
+      $inowKeysRtn[] = $inowKey . $element;
+    }
+  }
+  return $inowKeysRtn;
+}
+
+function _inc_gen_file_keys($inowKeys, $value){
+  $inowKeysRtn = array();
+  $value[0] = "";
+  $value[count($value) - 1] = "";
+  if(strpos($value, "-")){
+    $inowKeysRtn = _inc_gen_file_keys_to($inowKeys, $value);
+  } else if(strpos($value, ",")) {
+    $inowKeysRtn = _inc_gen_file_keys_through_list($inowKeys, $value);
+  }
+  return $inowKeysRtn;
+}
+
+function _gen_file_keys($inowKeys, $inowKeyArray) {
+  $inowKeysRtn = array();
+  foreach($inowKeyArray as $value) {
+    if(startswith("[", $inowKeyArray[$i])){
+      $inowKeysRtn = _inc_gen_file_keys($inowKeys, $value);
+    } else {
+      if(count($inowKeys) > 0){
+        foreach ($inowKeys as $element) {
+          $inowKeysRtn[] = $element . $value;
+        }
+      } else {
+        $inowKeysRtn[] = $value;
+      }
+    }
+  }
+  return $inowKeysRtn;
+}
+  
 function _submit_to_imagenow(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
   dpm($portal);
-  //create array of data to be posted
+//create array of data to be posted
   $post_data = NULL;
-  //Add the Defines to the URL params
+//Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
     $post_data[$portal['defines'][$i]['ikey']] = $portal['defines'][$i]['ivalue'];
   }
-  //Add the connection.
+//Add the connection.
   $submitted_values = array();
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
   dpm("_get_subbmitted_values");
@@ -62,15 +129,29 @@ function _submit_to_imagenow(&$form_values) {
   for ($i = 0; $i < count($portal['connections']); $i++) {
     $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
   }
-  //FILE handle
+//FILE handle
   dpm("Temp: " . file_directory_temp());
   for ($i = 0; $i < count($portal['files']); $i++) {
-    if(array_key_exists("dek", $portal['files'][$i])){
-      dpm('File ' . $i . ' : ' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri));
-      dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
-      $post_data[$portal['files'][$i]['iek']] =  '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+    if (array_key_exists($portal['files'][$i]['dek'], $form_values['submitted'])) {
+      if (is_array($form_values['submitted'][$portal['files'][$i]['dek']])) {
+        dpm("Multi File...");
+        $files = $form_values['submitted'][$portal['files'][$i]['dek']]["_fids"];
+        $inowKey = $portal['files'][$i]['iek'];
+        $inowKeyArray = explode("/", $inowKey);
+        $inowKeys = array();
+        _gen_file_keys($inowKeys, $inowKeyArray);
 
-    } else {
+        foreach ($files as $key => $file) {
+          $post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
+        }
+      }
+      else {
+        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
+        dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+        $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+      }
+    }
+    else {
       dpm("No File Submission...");
     }
   }
@@ -89,14 +170,13 @@ function _submit_to_imagenow(&$form_values) {
 //we are going to need the length of the data string
 //  $data_length = strlen($post_string);
 //  
-
- ###############################################################################
+###############################################################################
   $curl = 'curl --form ' . $post_string . ' ' . $portal['imagenow_url'];
-  //$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
+//$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
   watchdog("CMO_PHP", $curl);
   exec($curl);
-  
- ###############################################################################
+
+###############################################################################
 //  //let's open the connection
 //  $connection = fsockopen("104.131.178.250", 80);
 //
@@ -110,8 +190,7 @@ function _submit_to_imagenow(&$form_values) {
 //
 ////closing the connection
 //  fclose($connection);
-
- ###############################################################################
+###############################################################################
 //  //create cURL connection
 //  $curl_connection = curl_init($portal['imagenow_url']);
 //
@@ -153,8 +232,8 @@ function uwpimagenow_form_validate($form, &$form_state) {
  * Implements hook_form_alter().
  */
 function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
-  #dsm("Foo");
-  #dsm($form);
+#dsm("Foo");
+#dsm($form);
   if (!empty($form['details']['nid'])) {
     $tmp = _is_imagenow_form($form['details']['nid']['#value']);
     if ($tmp != NULL) {
