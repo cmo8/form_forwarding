@@ -136,6 +136,15 @@ function _gen_file_keys($inowKey) {
 //    echo $key . "</br>";
 //  }
 //}
+
+//$regx = "file_/[1,2,3,a,b,c]/_new";
+//_print_file_keys($regx);
+//echo "</br></br>";
+//$regx = "[a-d]/_file_/[1-5]/_new";
+//_print_file_keys($regx);
+//echo "</br></br>";
+//$regx = "file_/[a-f]/_new";
+//_print_file_keys($regx);
   
 function _submit_to_imagenow(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
