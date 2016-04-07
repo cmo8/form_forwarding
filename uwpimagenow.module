@@ -148,7 +148,7 @@ function _gen_file_keys($inowKey) {
   
 function _submit_to_imagenow(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
-  dpm($portal);
+  #dpm($portal);
 //create array of data to be posted
   $post_data = NULL;
 //Add the Defines to the URL params
@@ -158,17 +158,17 @@ function _submit_to_imagenow(&$form_values) {
 //Add the connection.
   $submitted_values = array();
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
-  dpm("_get_subbmitted_values");
-  dpm($submitted_values);
+  #dpm("_get_subbmitted_values");
+  #dpm($submitted_values);
   for ($i = 0; $i < count($portal['connections']); $i++) {
     $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
   }
 //FILE handle
-  dpm("Temp: " . file_directory_temp());
+  #dpm("Temp: " . file_directory_temp());
   for ($i = 0; $i < count($portal['files']); $i++) {
     if (array_key_exists($portal['files'][$i]['dek'], $form_values['submitted'])) {
       if (is_array($form_values['submitted'][$portal['files'][$i]['dek']])) {
-        dpm("Multi File...");
+        #dpm("Multi File...");
         $files = $form_values['submitted'][$portal['files'][$i]['dek']]["_fids"];
         $inowKeys = _gen_file_keys($portal['files'][$i]['iek']);
 
@@ -177,13 +177,13 @@ function _submit_to_imagenow(&$form_values) {
         }
       }
       else {
-        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
-        dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+        #dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
+        #dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
       }
     }
     else {
-      dpm("No File Submission...");
+      #dpm("No File Submission...");
     }
   }
 //traverse array and prepare data for posting (key1=value1)
@@ -196,15 +196,15 @@ function _submit_to_imagenow(&$form_values) {
 //we also need to add a question mark at the beginning of the string
 //  $post_string = '?' . $post_string;
 //  watchdog("CMO_PHP", "Args:" . $post_string);
-  dpm("Arg String:");
-  dpm($post_string);
+  #dpm("Arg String:");
+  #dpm($post_string);
 //we are going to need the length of the data string
 //  $data_length = strlen($post_string);
 //  
 ###############################################################################
   $curl = 'curl --form ' . $post_string . ' ' . $portal['imagenow_url'];
 //$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
-  watchdog("CMO_PHP", $curl);
+  #watchdog("CMO_PHP", $curl);
   exec($curl);
 
 ###############################################################################
@@ -254,8 +254,8 @@ function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) {
     return;
   }
-  dpm($_FILES);
-  dpm($form_state['values']);
+  #dpm($_FILES);
+  #dpm($form_state['values']);
   _submit_to_imagenow($form_state['values']);
 }
 
@@ -268,7 +268,7 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   if (!empty($form['details']['nid'])) {
     $tmp = _is_imagenow_form($form['details']['nid']['#value']);
     if ($tmp != NULL) {
-      dsm("ImageNow Form");
+      #dsm("ImageNow Form");
       $form['#validate'][] = 'uwpimagenow_form_validate';
     }
   }
