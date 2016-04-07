@@ -46,32 +46,41 @@ function uwpimagenow_permission() {
   );
 }
 
-function _inc_gen_file_keys_to($inowKeys, $value){
+function _inc_gen_file_keys_to($inowKeys, $value) {
   $elements = explode("-", $value);
   $inowKeysRtn = array();
-  if(is_numeric($elements[0]) && is_numeric($elements[1])){
-    $start = intval($elements[0]);
-    $end = intval($elements[1]);
+  if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
+count($inowKeys) > 0) {
     foreach ($inowKeys as $inowKey) {
-      for($i = $start; $i <= $end; $i++){
+      for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++)
+{
         $inowKeysRtn[] = $inowKey . strval($i);
       }
     }
-  } else {
-    $start = $elements[0];
-    $end = $elements[1];
+  } else if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
+count($inowKeys) == 0){
+    for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
+      $inowKeysRtn[] = strval($i);
+    }
+  } else if(count($inowKeys) > 0) {
     foreach ($inowKeys as $inowKey) {
-      $currentChar = $start;
-      while($currentChar <= $end){
+      $currentChar = $elements[0];
+      while ($currentChar <= $elements[1]) {
         $inowKeysRtn[] = $inowKey . $currentChar;
         ++$currentChar;
       }
+    }
+  } else if(count($inowKeys) == 0) {
+    $currentChar = $elements[0];
+    while ($currentChar <= $elements[1]) {
+      $inowKeysRtn[] = $currentChar;
+      ++$currentChar;
     }
   }
   return $inowKeysRtn;
 }
 
-function _inc_gen_file_keys_through_list($inowKeys, $value){
+function _inc_gen_file_keys_through_list($inowKeys, $value) {
   $elements = explode(",", $value);
   $inowKeysRtn = array();
   foreach ($inowKeys as $inowKey) {
@@ -82,35 +91,51 @@ function _inc_gen_file_keys_through_list($inowKeys, $value){
   return $inowKeysRtn;
 }
 
-function _inc_gen_file_keys($inowKeys, $value){
+function _inc_gen_file_keys($inowKeys, $value) {
   $inowKeysRtn = array();
   $value[0] = "";
-  $value[count($value) - 1] = "";
-  if(strpos($value, "-")){
-    $inowKeysRtn = _inc_gen_file_keys_to($inowKeys, $value);
-  } else if(strpos($value, ",")) {
+  $value[strlen($value) - 1] = "";
+  if (strpos($value, "-")) {
+    $inowKeysRtn = _inc_gen_file_keys_to($inowKeys, trim($value));
+  } else if (strpos($value, ",")) {
     $inowKeysRtn = _inc_gen_file_keys_through_list($inowKeys, $value);
   }
   return $inowKeysRtn;
 }
 
-function _gen_file_keys($inowKeys, $inowKeyArray) {
-  $inowKeysRtn = array();
-  foreach($inowKeyArray as $value) {
-    if(startswith("[", $inowKeyArray[$i])){
-      $inowKeysRtn = _inc_gen_file_keys($inowKeys, $value);
+function _gen_file_keys($inowKey) {
+  $inowKeyArray = explode("/", $inowKey);
+  $inowKeys = array();
+  foreach ($inowKeyArray as $value) {
+    if ($value[0] == '[') {
+      $inowKeys = _inc_gen_file_keys($inowKeys, $value);
     } else {
-      if(count($inowKeys) > 0){
-        foreach ($inowKeys as $element) {
-          $inowKeysRtn[] = $element . $value;
+      if (count($inowKeys) > 0) {
+        foreach ($inowKeys as $key => $element) {
+          $inowKeys[$key] = $element . $value;
         }
       } else {
-        $inowKeysRtn[] = $value;
+        $inowKeys[] = $value;
       }
     }
   }
-  return $inowKeysRtn;
+  return $inowKeys;
 }
+
+//function _print_file_keys($inowKey) {
+//  $inowKeyArray = explode("/", $inowKey);
+//  $inowKeys = array();
+//  $inowKeys = _gen_file_keys($inowKeys, $inowKeyArray);
+//
+//  echo "Initial Value: " . $inowKey . "</br>";
+//  echo "</br>";
+//  echo "inowKeys Array Size: " . count($inowKeys) . "</br>";
+//  echo "</br>";
+//  echo "Generated File Keys:" . "</br>";
+//  foreach ($inowKeys as $key) {
+//    echo $key . "</br>";
+//  }
+//}
   
 function _submit_to_imagenow(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
@@ -136,10 +161,7 @@ function _submit_to_imagenow(&$form_values) {
       if (is_array($form_values['submitted'][$portal['files'][$i]['dek']])) {
         dpm("Multi File...");
         $files = $form_values['submitted'][$portal['files'][$i]['dek']]["_fids"];
-        $inowKey = $portal['files'][$i]['iek'];
-        $inowKeyArray = explode("/", $inowKey);
-        $inowKeys = array();
-        _gen_file_keys($inowKeys, $inowKeyArray);
+        $inowKeys = _gen_file_keys($portal['files'][$i]['iek']);
 
         foreach ($files as $key => $file) {
           $post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
