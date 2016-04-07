@@ -14,7 +14,7 @@ function uwpimagenow_admin_settings() {
   $form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow_admin.js';
 
   $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
-  $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not weary it is all magic..</p>');
+  $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not worry it is all magic..</p>');
   
   $portals = _get_drupal_to_imagenow_portals();
   $form[]['#markup'] = t('<table id="portal-table">');

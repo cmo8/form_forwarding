@@ -46,23 +46,34 @@ function uwpimagenow_permission() {
   );
 }
 
+/**
+ * Appends the value to the end of each element in the $inowKeys and incroments 
+ * the value. Till the Max number/charactor is reached.
+ * @param array $inowKeys
+ * @param string $value ex: 1-9 or a-h
+ * @return array
+ */
 function _inc_gen_file_keys_to($inowKeys, $value) {
   $elements = explode("-", $value);
   $inowKeysRtn = array();
+  //if the array is NOT empty and the range is numeric add each number in the array to each element in the array.
   if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
-count($inowKeys) > 0) {
+    count($inowKeys) > 0) {
     foreach ($inowKeys as $inowKey) {
-      for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++)
-{
+      for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
         $inowKeysRtn[] = $inowKey . strval($i);
       }
     }
-  } else if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
-count($inowKeys) == 0){
+  }
+  //if the array is empty and the range is numeric add each number in the array
+  else if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
+    count($inowKeys) == 0) {
     for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
       $inowKeysRtn[] = strval($i);
     }
-  } else if(count($inowKeys) > 0) {
+  }
+  //if the array is NOT empty and the range is char add each chard in the array to each element in the array.
+  else if (count($inowKeys) > 0) {
     foreach ($inowKeys as $inowKey) {
       $currentChar = $elements[0];
       while ($currentChar <= $elements[1]) {
@@ -70,7 +81,9 @@ count($inowKeys) == 0){
         ++$currentChar;
       }
     }
-  } else if(count($inowKeys) == 0) {
+  }
+  //if the array is empty and the range is charactor add each char in the array
+  else if (count($inowKeys) == 0) {
     $currentChar = $elements[0];
     while ($currentChar <= $elements[1]) {
       $inowKeysRtn[] = $currentChar;
@@ -79,7 +92,12 @@ count($inowKeys) == 0){
   }
   return $inowKeysRtn;
 }
-
+/**
+ * Appends the values in the exploded string to the end of each element in the $inowKeys.
+ * @param array $inowKeys
+ * @param string $value
+ * @return array
+ */
 function _inc_gen_file_keys_through_list($inowKeys, $value) {
   $elements = explode(",", $value);
   $inowKeysRtn = array();
@@ -90,31 +108,45 @@ function _inc_gen_file_keys_through_list($inowKeys, $value) {
   }
   return $inowKeysRtn;
 }
-
+/**
+ * The value is a Expretion that is ex: [1-5], [a-g], [1,2,3,5,6], or [asd,qwe,zxc]
+ * Removes the "[", "]" and then figures out if it is a to "-", or through list ",".
+ * @param array $inowKeys
+ * @param string $value
+ * @return array
+ */
 function _inc_gen_file_keys($inowKeys, $value) {
   $inowKeysRtn = array();
   $value[0] = "";
   $value[strlen($value) - 1] = "";
   if (strpos($value, "-")) {
     $inowKeysRtn = _inc_gen_file_keys_to($inowKeys, trim($value));
-  } else if (strpos($value, ",")) {
+  }
+  else if (strpos($value, ",")) {
     $inowKeysRtn = _inc_gen_file_keys_through_list($inowKeys, $value);
   }
   return $inowKeysRtn;
 }
 
+/**
+ * Takes a string 
+ * @param type $inowKey
+ * @return type
+ */
 function _gen_file_keys($inowKey) {
   $inowKeyArray = explode("/", $inowKey);
   $inowKeys = array();
   foreach ($inowKeyArray as $value) {
     if ($value[0] == '[') {
       $inowKeys = _inc_gen_file_keys($inowKeys, $value);
-    } else {
+    }
+    else {
       if (count($inowKeys) > 0) {
         foreach ($inowKeys as $key => $element) {
           $inowKeys[$key] = $element . $value;
         }
-      } else {
+      }
+      else {
         $inowKeys[] = $value;
       }
     }
@@ -136,7 +168,6 @@ function _gen_file_keys($inowKey) {
 //    echo $key . "</br>";
 //  }
 //}
-
 //$regx = "file_/[1,2,3,a,b,c]/_new";
 //_print_file_keys($regx);
 //echo "</br></br>";
@@ -145,7 +176,7 @@ function _gen_file_keys($inowKey) {
 //echo "</br></br>";
 //$regx = "file_/[a-f]/_new";
 //_print_file_keys($regx);
-  
+
 function _submit_to_imagenow(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
   #dpm($portal);
