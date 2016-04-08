@@ -1,8 +1,8 @@
 <?php
 
-require_once 'inow_connections.inc';
-require_once 'inow_define_keys.inc';
-require_once 'inow_file_keys.inc';
+require_once 'portal_connection.inc';
+require_once 'portal_define_key.inc';
+require_once 'portal_file_key.inc';
 
 
 function _delete_portal($portal_id) {

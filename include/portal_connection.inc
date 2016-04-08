@@ -1,5 +1,8 @@
 <?php
-
+/**
+ * Deletes all the connections for the given portal from the database.
+ * @param string/int $portal_id
+ */
 function _delete_connections($portal_id) {
   $eids = _get_portal_connections($portal_id);
   foreach ($eids as $eid) {
@@ -7,6 +10,10 @@ function _delete_connections($portal_id) {
   }
 }
 
+/**
+ * Deletes the given connection from the database.
+ * @param string/array $eid
+ */
 function _delete_connection($eid) {
   $tmp = $eid;
   if(is_array($eid)){
@@ -17,6 +24,13 @@ function _delete_connection($eid) {
     ->execute();
 }
 
+/**
+ * Updates the given connection with the new  drupal key and 3rd party key.
+ * @param int $eid
+ * @param string $drupal_form_element
+ * @param string $imagenow_key
+ * @return int
+ */
 function _update_connection($eid, $drupal_form_element, $imagenow_key) {
   $update_connection = db_update('uwpimagenow_connections')
     ->condition('eid', $eid, '=')
@@ -30,6 +44,13 @@ function _update_connection($eid, $drupal_form_element, $imagenow_key) {
   return $update_connection;
 }
 
+/**
+ * Creates a new connection with the given drupal key and 3rd party key.
+ * @param int $inid
+ * @param string $drupal_element_key
+ * @param string $imagenow_element_key
+ * @return int
+ */
 function _create_connection($inid, $drupal_element_key, $imagenow_element_key) {
   $eid = db_insert('uwpimagenow_connections')
     ->fields(
@@ -43,6 +64,11 @@ function _create_connection($inid, $drupal_element_key, $imagenow_element_key) {
   return $eid;
 }
 
+/**
+ * Gets the connections for the given portal.
+ * @param int $inid
+ * @return array
+ */
 function _get_portal_connections($inid) {
   $portal_connections = [];
   // Get the connections from the Database

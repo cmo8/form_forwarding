@@ -1,7 +1,7 @@
 <?php
 
-require_once 'include/inow_connections.inc';
-require_once 'include/inow_portals.inc';
+require_once 'include/portal_connection.inc';
+require_once 'include/portal.inc';
 /**
  * @file 
  * This Connects a Drupal webform to an ImageNow system
@@ -49,61 +49,61 @@ function uwpimagenow_permission() {
 /**
  * Appends the value to the end of each element in the $inowKeys and incroments 
  * the value. Till the Max number/charactor is reached.
- * @param array $inowKeys
+ * @param array $thirdPartyKeys
  * @param string $value ex: 1-9 or a-h
  * @return array
  */
-function _inc_gen_file_keys_to($inowKeys, $value) {
+function _inc_gen_file_keys_to($thirdPartyKeys, $value) {
   $elements = explode("-", $value);
-  $inowKeysRtn = array();
+  $thirdPartyKeysRtn = array();
   //if the array is NOT empty and the range is numeric add each number in the array to each element in the array.
   if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
-    count($inowKeys) > 0) {
-    foreach ($inowKeys as $inowKey) {
+    count($thirdPartyKeys) > 0) {
+    foreach ($thirdPartyKeys as $thirdPartyKey) {
       for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
-        $inowKeysRtn[] = $inowKey . strval($i);
+        $thirdPartyKeysRtn[] = $thirdPartyKey . strval($i);
       }
     }
   }
   //if the array is empty and the range is numeric add each number in the array
   else if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
-    count($inowKeys) == 0) {
+    count($thirdPartyKeys) == 0) {
     for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
-      $inowKeysRtn[] = strval($i);
+      $thirdPartyKeysRtn[] = strval($i);
     }
   }
   //if the array is NOT empty and the range is char add each chard in the array to each element in the array.
-  else if (count($inowKeys) > 0) {
-    foreach ($inowKeys as $inowKey) {
+  else if (count($thirdPartyKeys) > 0) {
+    foreach ($thirdPartyKeys as $thirdPartyKey) {
       $currentChar = $elements[0];
       while ($currentChar <= $elements[1]) {
-        $inowKeysRtn[] = $inowKey . $currentChar;
+        $thirdPartyKeysRtn[] = $thirdPartyKey . $currentChar;
         ++$currentChar;
       }
     }
   }
   //if the array is empty and the range is charactor add each char in the array
-  else if (count($inowKeys) == 0) {
+  else if (count($thirdPartyKeys) == 0) {
     $currentChar = $elements[0];
     while ($currentChar <= $elements[1]) {
-      $inowKeysRtn[] = $currentChar;
+      $thirdPartyKeysRtn[] = $currentChar;
       ++$currentChar;
     }
   }
-  return $inowKeysRtn;
+  return $thirdPartyKeysRtn;
 }
 /**
  * Appends the values in the exploded string to the end of each element in the $inowKeys.
- * @param array $inowKeys
+ * @param array $thirdPartyKeys
  * @param string $value
  * @return array
  */
-function _inc_gen_file_keys_through_list($inowKeys, $value) {
+function _inc_gen_file_keys_through_list($thirdPartyKeys, $value) {
   $elements = explode(",", $value);
   $inowKeysRtn = array();
-  foreach ($inowKeys as $inowKey) {
+  foreach ($thirdPartyKeys as $thirdPartyKey) {
     foreach ($elements as $element) {
-      $inowKeysRtn[] = $inowKey . $element;
+      $inowKeysRtn[] = $thirdPartyKey . $element;
     }
   }
   return $inowKeysRtn;
@@ -111,47 +111,47 @@ function _inc_gen_file_keys_through_list($inowKeys, $value) {
 /**
  * The value is a Expretion that is ex: [1-5], [a-g], [1,2,3,5,6], or [asd,qwe,zxc]
  * Removes the "[", "]" and then figures out if it is a to "-", or through list ",".
- * @param array $inowKeys
+ * @param array $thirdPartyKeys
  * @param string $value
  * @return array
  */
-function _inc_gen_file_keys($inowKeys, $value) {
-  $inowKeysRtn = array();
+function _inc_gen_file_keys($thirdPartyKeys, $value) {
+  $thirdPartyKeysRtn = array();
   $value[0] = "";
   $value[strlen($value) - 1] = "";
   if (strpos($value, "-")) {
-    $inowKeysRtn = _inc_gen_file_keys_to($inowKeys, trim($value));
+    $thirdPartyKeysRtn = _inc_gen_file_keys_to($thirdPartyKeys, trim($value));
   }
   else if (strpos($value, ",")) {
-    $inowKeysRtn = _inc_gen_file_keys_through_list($inowKeys, $value);
+    $thirdPartyKeysRtn = _inc_gen_file_keys_through_list($thirdPartyKeys, $value);
   }
-  return $inowKeysRtn;
+  return $thirdPartyKeysRtn;
 }
 
 /**
- * Takes a string 
- * @param type $inowKey
- * @return type
+ * Takes a string that has a range in it and generates a list of all the avalable keys.
+ * @param string $thirdPartyKey
+ * @return array
  */
-function _gen_file_keys($inowKey) {
-  $inowKeyArray = explode("/", $inowKey);
-  $inowKeys = array();
-  foreach ($inowKeyArray as $value) {
+function _gen_file_keys($thirdPartyKey) {
+  $thirdPartyKeyArray = explode("/", $thirdPartyKey);
+  $thirdPartyKeys = array();
+  foreach ($thirdPartyKeyArray as $value) {
     if ($value[0] == '[') {
-      $inowKeys = _inc_gen_file_keys($inowKeys, $value);
+      $thirdPartyKeys = _inc_gen_file_keys($thirdPartyKeys, $value);
     }
     else {
-      if (count($inowKeys) > 0) {
-        foreach ($inowKeys as $key => $element) {
-          $inowKeys[$key] = $element . $value;
+      if (count($thirdPartyKeys) > 0) {
+        foreach ($thirdPartyKeys as $key => $element) {
+          $thirdPartyKeys[$key] = $element . $value;
         }
       }
       else {
-        $inowKeys[] = $value;
+        $thirdPartyKeys[] = $value;
       }
     }
   }
-  return $inowKeys;
+  return $thirdPartyKeys;
 }
 
 //function _print_file_keys($inowKey) {
@@ -177,7 +177,14 @@ function _gen_file_keys($inowKey) {
 //$regx = "file_/[a-f]/_new";
 //_print_file_keys($regx);
 
-function _submit_to_imagenow(&$form_values) {
+/**
+ * Maps the defined vales to there defined keys.
+ * Maps the Forms submitted data to the 3rd party form key.
+ * Maps the Files submitted to the 3rd party form keys for files.
+ * Then submits the information to the 3rd party form.
+ * @param array $form_values
+ */
+function _submit_to_third_party(&$form_values) {
   $portal = _get_portal_config($form_values['details']['nid'], FALSE);
   #dpm($portal);
 //create array of data to be posted
@@ -223,16 +230,20 @@ function _submit_to_imagenow(&$form_values) {
   }
 //create the final string to be posted using implode()
   $post_string = implode(' --form ', $post_items);
+  
 
-//we also need to add a question mark at the beginning of the string
-//  $post_string = '?' . $post_string;
-//  watchdog("CMO_PHP", "Args:" . $post_string);
+
+  ////we also need to add a question mark at the beginning of the string
+  //  $post_string = '?' . $post_string;
+  //  watchdog("CMO_PHP", "Args:" . $post_string);
   #dpm("Arg String:");
   #dpm($post_string);
-//we are going to need the length of the data string
-//  $data_length = strlen($post_string);
-//  
+  //we are going to need the length of the data string
+  //  $data_length = strlen($post_string);
+  //  
 ###############################################################################
+//TODO: Try to get the module to submit through PHP vs. a System Call
+  //This is using a system aplication to submit the data.
   $curl = 'curl --form ' . $post_string . ' ' . $portal['imagenow_url'];
 //$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
   #watchdog("CMO_PHP", $curl);
@@ -278,16 +289,14 @@ function _submit_to_imagenow(&$form_values) {
  * Take the ImageNow forms that pass validation
  * and submit them to imagenow system.
  * 
- * @param type $form_id
- * @param type $form_state
+ * @param array $form_id
+ * @param array $form_state
  */
 function uwpimagenow_form_validate($form, &$form_state) {
   if (form_get_errors()) {
     return;
   }
-  #dpm($_FILES);
-  #dpm($form_state['values']);
-  _submit_to_imagenow($form_state['values']);
+  _submit_to_third_party($form_state['values']);
 }
 
 /**
@@ -305,6 +314,12 @@ function uwpimagenow_form_alter(&$form, &$form_state, $form_id) {
   }
 }
 
+/**
+ * Takes an array that may have more arrays in it and returns a 2d array. 
+ * This is to account for the use of field sets in a web form.
+ * @param array $flat_array
+ * @param array $array_in
+ */
 function _get_subbmitted_values(&$flat_array, $array_in) {
   foreach ($array_in as $key => $value) {
     if (is_array($value) == false) {

@@ -4,7 +4,7 @@
  * 
  * @author Sean Mogran <morganse@uwplatt.edu>
  */
-require_once 'include/inow_portals.inc';
+require_once 'include/portal.inc';
 /**
  * ImageNow Admin Page. Builds the form for the user to use.
  */
