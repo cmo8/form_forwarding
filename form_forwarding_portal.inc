@@ -1,31 +1,31 @@
 <?php
 
-require_once 'include/inow_portals.inc';
-require_once 'include/inow_connections.inc';
-require_once 'include/inow_define_keys.inc';
-require_once 'include/inow_file_keys.inc';
+require_once 'include/portal.inc';
+require_once 'include/portal_connection.inc';
+require_once 'include/portal_define_key.inc';
+require_once 'include/portal_file_key.inc';
 /**
- * The ImageNow Portal Details file.
+ * The Third Party Portal Details file.
  * 
  * @author Sean Mogran <morganse@uwplatt.edu>
  */
 
 /**
- * ImageNow Admin Page. Builds the form for the user to use.
+ * Third Party Admin Page. Builds the form for the user to use.
  */
-function uwpimagenow_portal_admin() {
+function form_forwarding_portal_admin() {
   $path_url = request_path();
   $path_explode = explode('/', $path_url);
   $portal_id = end($path_explode);
   $portal_config = _get_portal_config($portal_id, TRUE);
   $form = array();
-  $form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow_admin.css';
-  //$form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow-admin.js';
+  $form['#attached']['css'][] = drupal_get_path('module', 'form_forwarding') . '/css/form_forwarding_admin.css';
+  //$form['#attached']['js'][] = drupal_get_path('module', 'form_forwarding') . '/js/form_forwarding_admin.js';
   if ($portal_id != 'new' && $portal_id != 'portal') {
-    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal ' . $portal_id . '</h2>');
+    $form[]['#markup'] = t('<h2>' . l('Third Party Admin', '/admin/config/webform/form_forwarding') . ' Portal ' . $portal_id . '</h2>');
   }
   else {
-    $form[]['#markup'] = t('<h2>' . l('ImageNow Admin', '/admin/config/uwplatteville/imagenow') . ' Portal New</h2>');
+    $form[]['#markup'] = t('<h2>' . l('Third Party Admin', '/admin/config/webform/form_forwarding') . ' Portal New</h2>');
   }
 
   $form['drupalnid'] = array(
@@ -47,7 +47,7 @@ function uwpimagenow_portal_admin() {
 
   $form['submitionurl'] = array(
     '#type' => 'textfield',
-    '#title' => t('ImageNow Submition URL'),
+    '#title' => t('Third Party Submition URL'),
     '#required' => TRUE,
     '#default_value' => $portal_config['imagenow_url'],
     '#rules' => array(
@@ -63,7 +63,7 @@ function uwpimagenow_portal_admin() {
     $form['defines'][]['#markup'] = t('<table id="portal-define-table">');
     $form['defines'][]['#markup'] = t('<thead>');
     $form['defines'][]['#markup'] = t('<th class="id-hide">ID</th>');
-    $form['defines'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['defines'][]['#markup'] = t('<th>Third Party<br>Element Key</th>');
     $form['defines'][]['#markup'] = t('<th>Element Value</th>');
     $form['defines'][]['#markup'] = t('<th>&nbsp;</th>');
     $form['defines'][]['#markup'] = t('</thead>');
@@ -85,7 +85,7 @@ function uwpimagenow_portal_admin() {
       $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
       $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
         '#type' => 'textfield',
-        '#title' => t('ImageNow Element Key'),
+        '#title' => t('Third Party Element Key'),
         '#title_display' => 'invisible',
         '#required' => false,
         '#default_value' => $portal_config['defines'][$i]['ikey'],
@@ -94,7 +94,7 @@ function uwpimagenow_portal_admin() {
       $form['defines'][$define][]['#markup'] = t('<td>');
       $form['defines'][$define]['d' . strval($i) . '-imagenow-element-value'] = array(
         '#type' => 'textfield',
-        '#title' => t('ImageNow Element Value'),
+        '#title' => t('Third Party Element Value'),
         '#title_display' => 'invisible',
         '#required' => false,
         '#default_value' => $portal_config['defines'][$i]['ivalue'],
@@ -119,7 +119,7 @@ function uwpimagenow_portal_admin() {
     $form['defines']['new-define'][]['#markup'] = t('<td class="imagenow-element-key">');
     $form['defines']['new-define']['imagenow-element-key'] = array(
       '#type' => 'textfield',
-      '#title' => t('ImageNow Element Key'),
+      '#title' => t('Third Party Element Key'),
       '#title_display' => 'invisible',
       '#required' => false,
     );
@@ -127,7 +127,7 @@ function uwpimagenow_portal_admin() {
     $form['defines']['new-define'][]['#markup'] = t('<td>');
     $form['defines']['new-define']['imagenow-element-value'] = array(
       '#type' => 'textfield',
-      '#title' => t('ImageNow Element Value'),
+      '#title' => t('Third Party Element Value'),
       '#title_display' => 'invisible',
       '#required' => false,
       //'#rules' => array(
@@ -158,7 +158,7 @@ function uwpimagenow_portal_admin() {
     $form['connections'][]['#markup'] = t('<thead>');
     $form['connections'][]['#markup'] = t('<th class="id-hide">ID</th>');
     $form['connections'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-    $form['connections'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['connections'][]['#markup'] = t('<th>Third Party<br>Element Key</th>');
     $form['connections'][]['#markup'] = t('<th>&nbsp;</th>');
     $form['connections'][]['#markup'] = t('</thead>');
     $form['connections'][]['#markup'] = t('<tbody>');
@@ -189,7 +189,7 @@ function uwpimagenow_portal_admin() {
       $form['connections'][$connection][]['#markup'] = t('<td>');
       $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
         '#type' => 'textfield',
-        '#title' => t('ImageNow Key'),
+        '#title' => t('Third Party Key'),
         '#title_display' => 'invisible',
         '#required' => false,
         '#default_value' => $portal_config['connections'][$i]['iek'],
@@ -221,8 +221,8 @@ function uwpimagenow_portal_admin() {
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('<td>');
     $form['connections']['new-link']['imagenow-key'] = array(
-      '#title' => t('ImageNow Key'),
-      '#description' => t('Key as set in ImageNow'),
+      '#title' => t('Third Party Key'),
+      '#description' => t('Key as set in Third Party'),
       '#type' => 'textfield',
       '#required' => false,
       //'#rules' => array(
@@ -251,7 +251,7 @@ function uwpimagenow_portal_admin() {
     $form['files'][]['#markup'] = t('<thead>');
     $form['files'][]['#markup'] = t('<th class="id-hide">ID</th>');
     $form['files'][]['#markup'] = t('<th>Drupal<br>Form Elements</th>');
-    $form['files'][]['#markup'] = t('<th>ImageNow<br>Element Key</th>');
+    $form['files'][]['#markup'] = t('<th>Third Party<br>Element Key</th>');
     $form['files'][]['#markup'] = t('<th>&nbsp;</th>');
     $form['files'][]['#markup'] = t('</thead>');
     $form['files'][]['#markup'] = t('<tbody>');
@@ -282,7 +282,7 @@ function uwpimagenow_portal_admin() {
       $form['files'][$file][]['#markup'] = t('<td>');
       $form['files'][$file]['f' . strval($i) . '-imagenow-key'] = array(
         '#type' => 'textfield',
-        '#title' => t('ImageNow Key'),
+        '#title' => t('Third Party Key'),
         '#title_display' => 'invisible',
         '#required' => false,
         '#default_value' => $portal_config['files'][$i]['iek'],
@@ -314,8 +314,8 @@ function uwpimagenow_portal_admin() {
     $form['files']['new-file'][]['#markup'] = t('</td>');
     $form['files']['new-file'][]['#markup'] = t('<td>');
     $form['files']['new-file']['file-imagenow-key'] = array(
-      '#title' => t('ImageNow Key'),
-      '#description' => t('Key as set in ImageNow'),
+      '#title' => t('Third Party Key'),
+      '#description' => t('Key as set in Third Party'),
       '#type' => 'textfield',
       '#required' => false,
       //'#rules' => array(
@@ -349,66 +349,95 @@ function uwpimagenow_portal_admin() {
   return $form;
 }
 
+/**
+ * Handler for deleting a define
+ * @param array $form
+ * @param array $form_state
+ */
 function define_delete($form, &$form_state) {
   $index = $form_state['clicked_button']['#name'][0];
   $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
   $num_deleted = _delete_define($dkid);
   drupal_set_message(t("Delete Define"));
 }
-
+/**
+ * Handler for adding a define
+ * @param array $form
+ * @param array $form_state
+ */
 function define_add($form, &$form_state) {
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
-  $imagenow_element_key = $form_state['values']['imagenow-element-key'];
-  $imagenow_element_value = $form_state['values']['imagenow-element-value'];
-  if ($imagenow_element_key !== "" && $imagenow_element_value !== "") {
+  $third_party_element_key = $form_state['values']['third-party-element-key'];
+  $third_party_element_value = $form_state['values']['third-party-element-value'];
+  if ($third_party_element_key !== "" && $third_party_element_value !== "") {
     //Insert new connection
-    $dkid = _create_define($portal_id, $imagenow_element_key, $imagenow_element_value);
-    drupal_set_message(t("Add New Define."));
+    $dkid = _create_define($portal_id, $third_party_element_key, $third_party_element_value);
+    drupal_set_message(t("Added New Define."));
   }
 }
-
+/**
+ * Handler for deleting a connection
+ * @param array $form
+ * @param array $form_state
+ */
 function connection_delete($form, &$form_state) {
   $index = $form_state['clicked_button']['#name'][0];
   $eid = $form_state['values']['c' . strval($index) . '-eid'];
   $num_deleted = _delete_connection($eid);
   drupal_set_message(t("Delete Connection"));
 }
-
+/**
+ * Handler for adding a connection
+ * @param array $form
+ * @param array $form_state
+ */
 function connection_add($form, &$form_state) {
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
   $drupal_element_key = $form_state['values']['drupal-element'];
-  $imagenow_element_key = $form_state['values']['imagenow-key'];
-  if ($drupal_element_key !== "" && $imagenow_element_key !== "") {
+  $third_party_element_key = $form_state['values']['third-party-key'];
+  if ($drupal_element_key !== "" && $third_party_element_key !== "") {
     // Insert new connection
-    $eid = _create_connection($portal_id, $drupal_element_key, $imagenow_element_key);
-    drupal_set_message(t("Add New Connection."));
+    $eid = _create_connection($portal_id, $drupal_element_key, $third_party_element_key);
+    drupal_set_message(t("Added New Connection."));
   }
 }
-
+/**
+ * Handler for deleting a file
+ * @param array $form
+ * @param array $form_state
+ */
 function delete_file($form, &$form_state) {
   $index = $form_state['clicked_button']['#name'][0];
   $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
   $num_deleted = _delete_file($filekid);
   drupal_set_message(t("Delete File"));
 }
-
+/**
+ * Handler for adding a file
+ * @param array $form
+ * @param array $form_state
+ */
 function file_add($form, &$form_state) {
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
   $file_drupal_element = $form_state['values']['file-drupal-element'];
-  $file_imagenow_key = $form_state['values']['file-imagenow-key'];
-  if ($file_drupal_element !== "" && $file_imagenow_key !== "") {
+  $file_third_party_key = $form_state['values']['file-third-party-key'];
+  if ($file_drupal_element !== "" && $file_third_party_key !== "") {
     // Insert new connection
-    $dkid = _create_file($portal_id, $file_imagenow_key, $file_drupal_element);
+    $dkid = _create_file($portal_id, $file_third_party_key, $file_drupal_element);
     drupal_set_message(t("Add New File."));
   }
 }
-
+/**
+ * Handler that saves all the elements in the portal
+ * @param array $form
+ * @param array $form_state
+ */
 function portal_save($form, &$form_state) {
   $portal_id = end(explode('/', request_path()));
 
@@ -459,6 +488,12 @@ function portal_save($form, &$form_state) {
   // redirect to the specific portal
 }
 
+/**
+ * Searched the webform_component table for all the components on the form to
+ * display them in the dropdowns for easy selection.
+ * @param int $nid
+ * @return array
+ */
 function _get_drupal_form_elements(&$nid) {
   $elements['select'] = ' - Select- ';
   $result = db_select('webform_component', 'components')

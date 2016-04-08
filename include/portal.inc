@@ -88,7 +88,7 @@ function _get_portal_config($inid, $pid_flag) {
 /**
  * Get the drupal to imagenow portals.
  */
-function _get_drupal_to_imagenow_portals() {
+function _get_drupal_to_third_party_portals() {
   $portals = [];
   // Get the portals from the Database
   $result = db_select('uwpimagenow_portals', 'portals')

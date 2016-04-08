@@ -1,18 +1,18 @@
 <?php
 
 /* 
- * UWP ImageNow install file
+ * UWP Webform Forwarding install file
  */
 
 /**
  * Implements hook_schema().
  */
-function uwpimagenow_schema() {
-  $schema['uwpimagenow_portals'] = array(
-    'description' => 'A list of all the drupal forms that submit to an ImageNow script',
+function form_forwarding_schema() {
+  $schema['form_forwarding_portals'] = array(
+    'description' => 'A list of all the drupal forms that submit to an Webform Forwarding script',
     'fields' => array(
       'inid' => array(
-        'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
+        'description' => 'The primary identifier for a drupal webform and its corresponding Webform Forwarding script.',
         'type' => 'serial',
         'unsigned' => TRUE,
         'not null' => TRUE,
@@ -29,8 +29,8 @@ function uwpimagenow_schema() {
         'length' => 255,
         'not null' => TRUE,
       ),
-      'imagenow_submission_url' => array(
-        'description' => 'The URL for the ImageNow submission',
+      'submission_url' => array(
+        'description' => 'The URL for the Webform Forwarding submission',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -45,8 +45,8 @@ function uwpimagenow_schema() {
     'primary key' => array('inid'),
   );
   
-  $schema['uwpimagenow_connections'] = array(
-    'description' => 'The connections between a form element and an ImageNow field',
+  $schema['form_forwarding_connections'] = array(
+    'description' => 'The connections between a form element and an Webform Forwarding field',
     'fields' => array(
       'eid' => array(
         'type' => 'serial',
@@ -54,7 +54,7 @@ function uwpimagenow_schema() {
         'not null' => TRUE,
       ),
       'inid' => array(
-        'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
+        'description' => 'The primary identifier for a drupal webform and its corresponding Webform Forwarding script.',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
@@ -65,8 +65,8 @@ function uwpimagenow_schema() {
         'length' => 255,
         'not null' => TRUE,
       ),
-      'imagenow_element_key' => array(
-        'description' => 'ImageNow element key',
+      'third_party_element_key' => array(
+        'description' => 'Third party element key',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -75,14 +75,14 @@ function uwpimagenow_schema() {
     'primary key' => array('eid'),
     'foreign keys' => array(
       'inid' => array(
-        'table' => 'uwpimagenow_portals',
+        'table' => 'form_forwarding_portals',
         'columns' => array('inid' => 'inid'),
       ),
     ),
   );
   
-  $schema['uwpimagenow_define_keys'] = array(
-    'description' => 'The hard coded key => value form elements in the ImageNow field',
+  $schema['form_forwarding_define_keys'] = array(
+    'description' => 'The hard coded key => value form elements in the Webform Forwarding field',
     'fields' => array(
       'dkid' => array(
         'type' => 'serial',
@@ -90,19 +90,19 @@ function uwpimagenow_schema() {
         'not null' => TRUE,
       ),
       'inid' => array(
-        'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
+        'description' => 'The primary identifier for a drupal webform and its corresponding Webform Forwarding script.',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'imagenow_element_key' => array(
-        'description' => 'ImageNow element key',
+      'third_party_element_key' => array(
+        'description' => 'Third party element key',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
       ),
-      'imagenow_element_value' => array(
-        'description' => 'ImageNow element value',
+      'third_party_element_value' => array(
+        'description' => 'Third party element value',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -111,14 +111,14 @@ function uwpimagenow_schema() {
     'primary key' => array('dkid'),
     'foreign keys' => array(
       'inid' => array(
-        'table' => 'uwpimagenow_portals',
+        'table' => 'form_forwarding_portals',
         'columns' => array('inid' => 'inid'),
       ),
     ),
   );
   
-  $schema['uwpimagenow_file_keys'] = array(
-    'description' => 'The file connections between a form element and an ImageNow field',
+  $schema['form_forwarding_file_keys'] = array(
+    'description' => 'The file connections between a form element and an Webform Forwarding field',
     'fields' => array(
       'filekid' => array(
         'type' => 'serial',
@@ -126,13 +126,13 @@ function uwpimagenow_schema() {
         'not null' => TRUE,
       ),
       'inid' => array(
-        'description' => 'The primary identifier for a drupal webform and its corresponding ImageNow script.',
+        'description' => 'The primary identifier for a drupal webform and its corresponding Webform Forwarding script.',
         'type' => 'int',
         'unsigned' => TRUE,
         'not null' => TRUE,
       ),
-      'imagenow_element_key' => array(
-        'description' => 'ImageNow element key',
+      'third_party_element_key' => array(
+        'description' => 'THird Party element key',
         'type' => 'varchar',
         'length' => 255,
         'not null' => TRUE,
@@ -147,7 +147,7 @@ function uwpimagenow_schema() {
     'primary key' => array('filekid'),
     'foreign keys' => array(
       'inid' => array(
-        'table' => 'uwpimagenow_portals',
+        'table' => 'form_forwarding_portals',
         'columns' => array('inid' => 'inid'),
       ),
     ),
