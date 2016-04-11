@@ -35,6 +35,12 @@ function form_forwarding_schema() {
         'length' => 255,
         'not null' => TRUE,
       ),
+      'group' => array(
+        'description' => 'The group allows for only specific portals to be shows to a given user',
+        'type' => 'varchar',
+        'length' => 255,
+        'not null' => TRUE,
+      ),
       'date' => array(
         'description' => 'The date which the search was done',
         'type' => 'int',
