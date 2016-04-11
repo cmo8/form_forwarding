@@ -1,12 +1,18 @@
 <?php
-
+/**
+ * Deletes all the defines for the given portal from the database.
+ * @param string/int $portal_id
+ */
 function _delete_defines($portal_id) {
   $dkids = _get_portal_connections($portal_id);
   foreach ($dkids as $dkid) {
     _delete_connection($dkid);
   }
 }
-
+/**
+ * Deletes the given define from the database.
+ * @param string/array $dkid
+ */
 function _delete_define($dkid) {
   $tmp = $dkid;
   if(is_array($dkid)){
@@ -16,7 +22,13 @@ function _delete_define($dkid) {
     ->condition('dkid', $tmp, '=')
     ->execute();
 }
-
+/**
+ * Updates the given define with the new 3rd party key and 3rd party value.
+ * @param int $dkid
+ * @param string $imagenow_key
+ * @param string $imagenow_value
+ * @return int
+ */
 function _update_define($dkid, $imagenow_key, $imagenow_value) {
   $update_define_key = db_update('uwpimagenow_define_keys')
     ->condition('dkid', $dkid, '=')
@@ -29,7 +41,13 @@ function _update_define($dkid, $imagenow_key, $imagenow_value) {
     ->execute();
   return $update_define_key;
 }
-
+/**
+ * Creates a new define with the given 3rd party key and 3rd party value.
+ * @param string $portal_id
+ * @param string $imagenow_key
+ * @param string $imagenow_value
+ * @return int $dkid
+ */
 function _create_define($portal_id, $imagenow_key, $imagenow_value) {
     $dkid = db_insert('uwpimagenow_define_keys')
     ->fields(
@@ -42,7 +60,11 @@ function _create_define($portal_id, $imagenow_key, $imagenow_value) {
     ->execute();
   return $dkid;
 }
-
+/**
+ * Gets the defines for the given portal.
+ * @param int $inid
+ * @return array
+ */
 function _get_define_keys($inid) {
   $portal_defines = [];
   // Get the connections from the Database

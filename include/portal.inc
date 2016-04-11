@@ -4,7 +4,10 @@ require_once 'portal_connection.inc';
 require_once 'portal_define_key.inc';
 require_once 'portal_file_key.inc';
 
-
+/**
+ * Deletes the given portal from the database.
+ * @param string/array $eid
+ */
 function _delete_portal($portal_id) {
   _delete_defines($portal_id);
   _delete_connections($portal_id);
@@ -13,7 +16,13 @@ function _delete_portal($portal_id) {
     ->condition('inid', $portal_id, '=')
     ->execute();
 }
-
+/**
+ * Creates a new portal with the given drupal node id, description, and 3rd party url.
+ * @param string $drupal_nid
+ * @param string $description
+ * @param string $imagenow_url
+ * @return int $eid
+ */
 function _create_portal($drupal_nid, $description, $imagenow_url) {
   $eid = db_insert('uwpimagenow_portals')
     ->fields(
@@ -27,7 +36,14 @@ function _create_portal($drupal_nid, $description, $imagenow_url) {
     ->execute();
   return $eid;
 }
-
+/**
+ * Updates the given portal with the new drupal node id, description, and 3rd party url.
+ * @param int/string $portal_id
+ * @param string $drupal_nid
+ * @param string $description
+ * @param string $imagenow_url
+ * @return int
+ */
 function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {
   $update_portal = db_update('uwpimagenow_portals')
     ->condition('inid', $portal_id, '=')
@@ -41,7 +57,11 @@ function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {
     ->execute();
   return $update_portal;
 }
-
+/**
+ * Checks if the form is an imagenow form.
+ * @param int $nid
+ * @return type
+ */
 function _is_imagenow_form($nid) {
   $dbNids = NULL;
   // Get the portals from the Database
@@ -60,7 +80,12 @@ function _is_imagenow_form($nid) {
   }
   return NULL;
 }
-
+/**
+ * Gets the portal for the portal connection or the drupal node id.
+ * @param string $inid
+ * @param bool $pid_flag
+ * @return array
+ */
 function _get_portal_config($inid, $pid_flag) {
   $portal_config = null;
   $sqlQuery = db_select('uwpimagenow_portals', 'portals')
@@ -87,6 +112,7 @@ function _get_portal_config($inid, $pid_flag) {
 
 /**
  * Get the drupal to imagenow portals.
+ * @return array
  */
 function _get_drupal_to_third_party_portals() {
   $portals = [];
