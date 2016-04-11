@@ -13,7 +13,7 @@ require_once 'include/portal.inc';
  */
 function form_forwarding_menu() {
   $items = [];
-  $items['admin/config/webform/form_forwarding'] = array(
+  $items['admin/config/content/form_forwarding'] = array(
     'title' => 'Webform Forwarding',
     'description' => 'Connect Drupal webforms to a 3rd party form/system.',
     'page callback' => 'drupal_get_form',
@@ -22,7 +22,7 @@ function form_forwarding_menu() {
     'file' => 'form_forwarding.admin.inc',
     'type' => MENU_NORMAL_ITEM,
   );
-  $items['admin/config/webform/form_forwarding/portal'] = array(
+  $items['admin/config/content/form_forwarding/portal'] = array(
     'title' => 'Webform Portal',
     'description' => 'Portal Settings',
     'page callback' => 'drupal_get_form',
