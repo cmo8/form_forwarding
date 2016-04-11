@@ -23,13 +23,14 @@ function _delete_portal($portal_id) {
  * @param string $imagenow_url
  * @return int $eid
  */
-function _create_portal($drupal_nid, $description, $imagenow_url) {
+function _create_portal($drupal_nid, $description, $imagenow_url, $group) {
   $eid = db_insert('uwpimagenow_portals')
     ->fields(
       array(
         'drupal_nid' => $drupal_nid,
         'description' => $description,
         'imagenow_submission_url' => $imagenow_url,
+        'group' => $group,
         'date' => REQUEST_TIME,
       )
     )
@@ -44,7 +45,7 @@ function _create_portal($drupal_nid, $description, $imagenow_url) {
  * @param string $imagenow_url
  * @return int
  */
-function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {
+function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url, $group) {
   $update_portal = db_update('uwpimagenow_portals')
     ->condition('inid', $portal_id, '=')
     ->fields(
@@ -52,6 +53,7 @@ function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {
         'drupal_nid' => $drupal_nid,
         'description' => $description,
         'imagenow_submission_url' => $imagenow_url,
+        'group' => $group,
       )
     )
     ->execute();
