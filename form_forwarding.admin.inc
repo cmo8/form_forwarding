@@ -1,22 +1,23 @@
 <?php
 /**
- * The ImageNow admin file.
+ * The Webform Forwarding admin file.
  * 
  * @author Sean Mogran <morganse@uwplatt.edu>
  */
 require_once 'include/portal.inc';
-/**
- * ImageNow Admin Page. Builds the form for the user to use.
- */
-function uwpimagenow_admin_settings() {
-  $form = array();
-  //$form['#attached']['css'][] = drupal_get_path('module', 'uwpimagenow') . '/css/uwpimagenow-admin.css';
-  $form['#attached']['js'][] = drupal_get_path('module', 'uwpimagenow') . '/js/uwpimagenow_admin.js';
 
-  $form[]['#markup'] = t('<h2>ImageNow Admin Portal</h2>');
-  $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to ImageNow Forms... Do not worry it is all magic..</p>');
+/**
+ * Webform Forwarding Admin Page. Builds the form for the user to use.
+ */
+function form_forwarding_admin_settings() {
+  $form = array();
+  //$form['#attached']['css'][] = drupal_get_path('module', 'form_forwarding') . '/css/form_forwarding_admin.css';
+  $form['#attached']['js'][] = drupal_get_path('module', 'form_forwarding') . '/js/form_forwarding_admin.js';
+
+  $form[]['#markup'] = t('<h2>Webform Forwarding Admin</h2>');
+  $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to 3rd party Webforms.</p>');
   
-  $portals = _get_drupal_to_imagenow_portals();
+  $portals = _get_drupal_to_third_party_portals();
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
   $form[]['#markup'] = t('<th>Index</th>');
@@ -44,7 +45,7 @@ function uwpimagenow_admin_settings() {
       '#value' => t('Edit'),
       '#description' => t('Edit Portal'),
       '#name' => 'edit_portal_' . $portals[$i]['inid'],
-      '#submit' => array('uwpimagenow_admin_save'),
+      '#submit' => array('form_forwarding_admin_save'),
     );
     $form[$row][]['#markup'] = t('</td>');
     $form[$row][]['#markup'] = t('<td class="in-delete">');
@@ -53,7 +54,7 @@ function uwpimagenow_admin_settings() {
       '#value' => t('Delete'),
       '#description' => t('Delete Link'),
       '#name' => 'delete_portal_' . $portals[$i]['inid'],
-      '#submit' => array('uwpimagenow_admin_save'),
+      '#submit' => array('form_forwarding_admin_save'),
     );
     $form[$row][]['#markup'] = t('</td>');
     $form[$row][]['#markup'] = t('</tr>');
@@ -64,39 +65,42 @@ function uwpimagenow_admin_settings() {
     '#type' => 'submit',
     '#value' => t('+ Add'),
     '#description' => t('Add a new Potal'),
-    '#name' => 'add_drupal_to_imagenow_portal',
-    '#submit' => array('uwpimagenow_admin_save'),
+    '#name' => 'add_drupal_to_form_forwarding',
+    '#submit' => array('form_forwarding_admin_save'),
   );
   return $form;
 }
 
 /**
  * Implementation of hook_form_submit.
- * 
- * @param type $form
- * @param type $form_state
+ * @param array $form
+ * @param array $form_state
  */
-function uwpimagenow_admin_save($form, &$form_state) {
-  if ($form_state['clicked_button']['#name'] == 'add_drupal_to_imagenow_portal') {
-    drupal_goto('admin/config/uwplatteville/imagenow/portal/new');
+function form_forwarding_admin_save($form, &$form_state) {
+  if ($form_state['clicked_button']['#name'] == 'add_drupal_to_form_forwarding') {
+    drupal_goto('admin/config/webform/form_forwarding/portal/new');
   }
-  $portals = _get_drupal_to_imagenow_portals();
+  $portals = _get_drupal_to_third_party_portals();
   for($i = 0; $i < count($portals); $i++) {
     if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]['inid']) {
-      drupal_goto('admin/config/uwplatteville/imagenow/portal/' . $portals[$i]['inid']);
+      drupal_goto('admin/config/webform/form_forwarding/portal/' . $portals[$i]['inid']);
     }
     if ($form_state['clicked_button']['#name'] == 'delete_portal_' . $portals[$i]['inid']) {
       _portal_delete($form, $form_state);
-      drupal_set_message(t('Delete Portal ' . $portals[$i]['inid']));
     }
   }
 }
 
+/**
+ * Deletes the selected portal.
+ * @param array $form
+ * @param array $form_state
+ */
 function _portal_delete($form, &$form_state) {
   $tmp = explode('_', $form_state['clicked_button']['#name']);
   $index = count($tmp) - 1;
   $portal_id = $tmp[$index];
-  _delete_connections($portal_id);
+  //_delete_connections($portal_id);
   _delete_portal($portal_id);
-  drupal_set_message(t("Portal had been warped beyond repair"));
+  drupal_set_message(t("Portal had been Deleted"));
 }
