@@ -82,8 +82,8 @@ function form_forwarding_portal_admin() {
         '#default_value' => $portal_config['defines'][$i]['dkid'],
       );
       $form['defines'][$define][]['#markup'] = t('</td>');
-      $form['defines'][$define][]['#markup'] = t('<td class="imagenow-element-key">');
-      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-key'] = array(
+      $form['defines'][$define][]['#markup'] = t('<td class="third-party-element-key">');
+      $form['defines'][$define]['d' . strval($i) . '-third-party-element-key'] = array(
         '#type' => 'textfield',
         '#title' => t('Third Party Element Key'),
         '#title_display' => 'invisible',
@@ -92,7 +92,7 @@ function form_forwarding_portal_admin() {
       );
       $form['defines'][$define][]['#markup'] = t('</td>');
       $form['defines'][$define][]['#markup'] = t('<td>');
-      $form['defines'][$define]['d' . strval($i) . '-imagenow-element-value'] = array(
+      $form['defines'][$define]['d' . strval($i) . '-third-party-element-value'] = array(
         '#type' => 'textfield',
         '#title' => t('Third Party Element Value'),
         '#title_display' => 'invisible',
@@ -116,8 +116,8 @@ function form_forwarding_portal_admin() {
     }
     $form['defines']['new-define'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
     $form['defines']['new-define'][]['#markup'] = t('<td class="id-hide"></td>');
-    $form['defines']['new-define'][]['#markup'] = t('<td class="imagenow-element-key">');
-    $form['defines']['new-define']['imagenow-element-key'] = array(
+    $form['defines']['new-define'][]['#markup'] = t('<td class="third-party-element-key">');
+    $form['defines']['new-define']['third-party-element-key'] = array(
       '#type' => 'textfield',
       '#title' => t('Third Party Element Key'),
       '#title_display' => 'invisible',
@@ -125,7 +125,7 @@ function form_forwarding_portal_admin() {
     );
     $form['defines']['new-define'][]['#markup'] = t('</td>');
     $form['defines']['new-define'][]['#markup'] = t('<td>');
-    $form['defines']['new-define']['imagenow-element-value'] = array(
+    $form['defines']['new-define']['third-party-element-value'] = array(
       '#type' => 'textfield',
       '#title' => t('Third Party Element Value'),
       '#title_display' => 'invisible',
