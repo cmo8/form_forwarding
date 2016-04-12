@@ -26,8 +26,8 @@ function _delete_portal($portal_id) {
  * @return int $eid
  */
 function _create_portal($drupal_nid, $description, $submission_url, $group) {
-  $eid = db_insert('form_forwarding_portals')
-    ->fields(
+  $eid = db_insert('form_forwarding_portals');
+  $eid->fields(
       array(
         'drupal_nid' => $drupal_nid,
         'description' => $description,
@@ -35,8 +35,8 @@ function _create_portal($drupal_nid, $description, $submission_url, $group) {
         'group' => $group,
         'date' => REQUEST_TIME
       )
-    )
-    ->execute();
+    );
+  $eid->execute();
   return $eid;
 }
 
