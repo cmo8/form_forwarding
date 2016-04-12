@@ -22,6 +22,7 @@ function _delete_portal($portal_id) {
  * @param string $drupal_nid
  * @param string $description
  * @param string $submission_url
+ * @param int    $group
  * @return int $eid
  */
 function _create_portal($drupal_nid, $description, $submission_url, $group) {
@@ -44,18 +45,18 @@ function _create_portal($drupal_nid, $description, $submission_url, $group) {
  * @param int/string $portal_id
  * @param string $drupal_nid
  * @param string $description
- * @param string $imagenow_url
+ * @param string $submission_url
  * @return int
  */
-function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {//TODO: Group
+function _update_portal($portal_id, $drupal_nid, $description, $submission_url) {//TODO: Group
   $update_portal = db_update('form_forwarding_portals')
     ->condition('inid', $portal_id, '=')
     ->fields(
       array(
         'drupal_nid' => $drupal_nid,
         'description' => $description,
-        'submission_url' => $imagenow_url,
-      //'group' => $group,
+        'submission_url' => $submission_url,
+        //'group' => $group,
       )
     )
     ->execute();
