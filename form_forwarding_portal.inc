@@ -187,7 +187,7 @@ function form_forwarding_portal_admin() {
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
       $form['connections'][$connection][]['#markup'] = t('<td>');
-      $form['connections'][$connection]['c' . strval($i) . '-imagenow-key'] = array(
+      $form['connections'][$connection]['c' . strval($i) . '-third-party-key'] = array(
         '#type' => 'textfield',
         '#title' => t('Third Party Key'),
         '#title_display' => 'invisible',
@@ -220,7 +220,7 @@ function form_forwarding_portal_admin() {
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('<td>');
-    $form['connections']['new-link']['imagenow-key'] = array(
+    $form['connections']['new-link']['third-party-key'] = array(
       '#title' => t('Third Party Key'),
       '#description' => t('Key as set in Third Party'),
       '#type' => 'textfield',
@@ -280,7 +280,7 @@ function form_forwarding_portal_admin() {
       );
       $form['files'][$file][]['#markup'] = t('</td>');
       $form['files'][$file][]['#markup'] = t('<td>');
-      $form['files'][$file]['f' . strval($i) . '-imagenow-key'] = array(
+      $form['files'][$file]['f' . strval($i) . '-third-party-key'] = array(
         '#type' => 'textfield',
         '#title' => t('Third Party Key'),
         '#title_display' => 'invisible',
@@ -313,7 +313,7 @@ function form_forwarding_portal_admin() {
     );
     $form['files']['new-file'][]['#markup'] = t('</td>');
     $form['files']['new-file'][]['#markup'] = t('<td>');
-    $form['files']['new-file']['file-imagenow-key'] = array(
+    $form['files']['new-file']['file-third-party-key'] = array(
       '#title' => t('Third Party Key'),
       '#description' => t('Key as set in Third Party'),
       '#type' => 'textfield',
@@ -395,6 +395,7 @@ function connection_delete($form, &$form_state) {
  * @param array $form_state
  */
 function connection_add($form, &$form_state) {
+  dpm($form_state);
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
