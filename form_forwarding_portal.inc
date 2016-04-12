@@ -439,7 +439,9 @@ function file_add($form, &$form_state) {
  * @param array $form_state
  */
 function portal_save($form, &$form_state) {
-  $portal_id = end(explode('/', request_path()));
+  $portal_id = request_path();
+  $portal_id = explode('/', $portal_id);
+  $portal_id = end($portal_id);
 
   $drupal_nid = $form_state['values']['drupalnid'];
   $description = $form_state['values']['description'];
