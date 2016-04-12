@@ -33,7 +33,7 @@ function _create_portal($drupal_nid, $description, $submission_url, $group) {
         'description' => $description,
         'submission_url' => $submission_url,
         'group' => $group,
-        'date' => REQUEST_TIME
+        'date' => REQUEST_TIME,
       )
     );
   $eid->execute();
