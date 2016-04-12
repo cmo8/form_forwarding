@@ -26,18 +26,18 @@ function _delete_portal($portal_id) {
  * @return int $eid
  */
 function _create_portal($drupal_nid, $description, $submission_url, $group) {
-  $eid = db_insert('form_forwarding_portals');
-  $eid->fields(
-      array(
-        'drupal_nid' => $drupal_nid,
-        'description' => $description,
-        'submission_url' => $submission_url,
-        'date' => REQUEST_TIME,
-        'group' => $group,
+  $eid = db_insert('form_forwarding_portals')
+    ->fields(array('drupal_nid', 'description', 'submission_url', 'date', 'group',))
+    ->values(
+        array(
+          'drupal_nid' => $drupal_nid,
+          'description' => $description,
+          'submission_url' => $submission_url,
+          'date' => REQUEST_TIME,
+          'group' => $group,
+        )
       )
-    );
-  dpm($eid);
-  $eid->execute();
+    ->execute();
   return $eid;
 }
 
