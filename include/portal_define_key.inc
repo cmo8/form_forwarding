@@ -68,7 +68,7 @@ function _create_define($portal_id, $third_party_key, $third_party_value) {
 function _get_define_keys($inid) {
   $portal_defines = [];
   // Get the connections from the Database
-  $result = db_select('uwpimagenow_define_keys', 'define_keys')
+  $result = db_select('form_forwarding_define_keys', 'define_keys')
     ->fields('define_keys', array('dkid', 'third_party_element_key', 'third_party_element_value'))
     ->condition('inid', $inid, '=')
     ->orderBy('dkid', 'ASC')
