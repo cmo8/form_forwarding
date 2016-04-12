@@ -448,6 +448,7 @@ function portal_save($form, &$form_state) {
   if ($portal_id == 'new') {
     $node = node_load($drupal_nid);
     dpm($node);
+    global $user;
     dpm($user);
     $eid = _create_portal($drupal_nid, $description, $imagenow_url, $node->workbench_access->f); //TODO: change
     drupal_set_message(t("New Portal Saved"));
