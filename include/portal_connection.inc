@@ -19,7 +19,7 @@ function _delete_connection($eid) {
   if(is_array($eid)){
     $tmp = $eid['eid'];
   }
-  db_delete('uwpimagenow_connections')
+  db_delete('form_forwarding_connections')
     ->condition('eid', $tmp, '=')
     ->execute();
 }
@@ -32,12 +32,12 @@ function _delete_connection($eid) {
  * @return int
  */
 function _update_connection($eid, $drupal_form_element, $imagenow_key) {
-  $update_connection = db_update('uwpimagenow_connections')
+  $update_connection = db_update('form_forwarding_connections')
     ->condition('eid', $eid, '=')
     ->fields(
       array(
         'drupal_element_key' => $drupal_form_element,
-        'imagenow_element_key' => $imagenow_key,
+        'third_party_element_key' => $imagenow_key,
       )
     )
     ->execute();
@@ -52,12 +52,12 @@ function _update_connection($eid, $drupal_form_element, $imagenow_key) {
  * @return int
  */
 function _create_connection($inid, $drupal_element_key, $imagenow_element_key) {
-  $eid = db_insert('uwpimagenow_connections')
+  $eid = db_insert('form_forwarding_connections')
     ->fields(
       array(
         'inid' => $inid,
         'drupal_element_key' => $drupal_element_key,
-        'imagenow_element_key' => $imagenow_element_key,
+        'third_party_element_key' => $imagenow_element_key,
       )
     )
     ->execute();
@@ -72,8 +72,8 @@ function _create_connection($inid, $drupal_element_key, $imagenow_element_key) {
 function _get_portal_connections($inid) {
   $portal_connections = [];
   // Get the connections from the Database
-  $result = db_select('uwpimagenow_connections', 'connections')
-    ->fields('connections', array('eid', 'drupal_element_key', 'imagenow_element_key'))
+  $result = db_select('form_forwarding_connections', 'connections')
+    ->fields('connections', array('eid', 'drupal_element_key', 'third_party_element_key'))
     ->condition('inid', $inid, '=')
     ->orderBy('eid', 'ASC')
     ->execute();
@@ -82,7 +82,7 @@ function _get_portal_connections($inid) {
     $row1 = [];
     $row1['eid'] = $row->eid;
     $row1['dek'] = $row->drupal_element_key;
-    $row1['iek'] = $row->imagenow_element_key;
+    $row1['iek'] = $row->third_party_element_key;
     $portal_connections[] = $row1;
   }
   return $portal_connections;

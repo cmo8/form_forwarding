@@ -18,7 +18,7 @@ function _delete_file($filekid) {
   if(is_array($filekid)){
     $tmp = $filekid['filekid'];
   }
-  db_delete('uwpimagenow_file_keys')
+  db_delete('form_forwarding_file_keys')
     ->condition('filekid', $tmp, '=')
     ->execute();
 }
@@ -29,12 +29,12 @@ function _delete_file($filekid) {
  * @param string $drupal_form_element
  * @return int
  */
-function _update_file($filekid, $imagenow_key, $drupal_form_element) {
-  $update_file = db_update('uwpimagenow_file_keys')
+function _update_file($filekid, $third_party_key, $drupal_form_element) {
+  $update_file = db_update('form_forwarding_file_keys')
     ->condition('filekid', $filekid, '=')
     ->fields(
       array(
-        'imagenow_element_key' => $imagenow_key,
+        'third_party_element_key' => $third_party_key,
         'drupal_element_key' => $drupal_form_element,
       )
     )
@@ -48,12 +48,12 @@ function _update_file($filekid, $imagenow_key, $drupal_form_element) {
  * @param string $drupal_element_key
  * @return int $ file
  */
-function _create_file($portal_id, $imagenow_element_key, $drupal_element_key) {
-  $filekid = db_insert('uwpimagenow_file_keys')
+function _create_file($portal_id, $third_party_element_key, $drupal_element_key) {
+  $filekid = db_insert('form_forwarding_file_keys')
     ->fields(
       array(
         'inid' => $portal_id,
-        'imagenow_element_key' => $imagenow_element_key,
+        'form_forwarding_element_key' => $third_party_element_key,
         'drupal_element_key' => $drupal_element_key,
       )
     )
@@ -68,8 +68,8 @@ function _create_file($portal_id, $imagenow_element_key, $drupal_element_key) {
 function _get_file_keys($inid) {
   $portal_files = [];
   // Get the connections from the Database
-  $result = db_select('uwpimagenow_file_keys', 'file_keys')
-    ->fields('file_keys', array('filekid', 'imagenow_element_key', 'drupal_element_key'))
+  $result = db_select('form_forwarding_file_keys', 'file_keys')
+    ->fields('file_keys', array('filekid', 'third_party_element_key', 'drupal_element_key'))
     ->condition('inid', $inid, '=')
     ->orderBy('filekid', 'ASC')
     ->execute();
@@ -77,7 +77,7 @@ function _get_file_keys($inid) {
   foreach ($result as $row) {
     $row1 = [];
     $row1['filekid'] = $row->filekid;
-    $row1['iek'] = $row->imagenow_element_key;
+    $row1['iek'] = $row->third_party_element_key;
     $row1['dek'] = $row->drupal_element_key;
     $portal_files[] = $row1;
   }

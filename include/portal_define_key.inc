@@ -18,7 +18,7 @@ function _delete_define($dkid) {
   if(is_array($dkid)){
     $tmp = $dkid['dkid'];
   }
-  db_delete('uwpimagenow_define_keys')
+  db_delete('form_forwarding_define_keys')
     ->condition('dkid', $tmp, '=')
     ->execute();
 }
@@ -30,12 +30,12 @@ function _delete_define($dkid) {
  * @return int
  */
 function _update_define($dkid, $imagenow_key, $imagenow_value) {
-  $update_define_key = db_update('uwpimagenow_define_keys')
+  $update_define_key = db_update('form_forwarding_define_keys')
     ->condition('dkid', $dkid, '=')
     ->fields(
       array(
-        'imagenow_element_key' => $imagenow_key,
-        'imagenow_element_value' => $imagenow_value,
+        'third_party_element_key' => $imagenow_key,
+        'third_party_element_value' => $imagenow_value,
       )
     )
     ->execute();
@@ -48,13 +48,13 @@ function _update_define($dkid, $imagenow_key, $imagenow_value) {
  * @param string $imagenow_value
  * @return int $dkid
  */
-function _create_define($portal_id, $imagenow_key, $imagenow_value) {
-    $dkid = db_insert('uwpimagenow_define_keys')
+function _create_define($portal_id, $third_party_key, $third_party_value) {
+    $dkid = db_insert('form_forwarding_define_keys')
     ->fields(
       array(
         'inid' => $portal_id,
-        'imagenow_element_key' => $imagenow_key,
-        'imagenow_element_value' => $imagenow_value,
+        'third_party_element_key' => $third_party_key,
+        'third_party_element_value' => $third_party_value,
       )
     )
     ->execute();
@@ -69,7 +69,7 @@ function _get_define_keys($inid) {
   $portal_defines = [];
   // Get the connections from the Database
   $result = db_select('uwpimagenow_define_keys', 'define_keys')
-    ->fields('define_keys', array('dkid', 'imagenow_element_key', 'imagenow_element_value'))
+    ->fields('define_keys', array('dkid', 'third_party_element_key', 'third_party_element_value'))
     ->condition('inid', $inid, '=')
     ->orderBy('dkid', 'ASC')
     ->execute();
@@ -77,8 +77,8 @@ function _get_define_keys($inid) {
   foreach ($result as $row) {
     $row1 = [];
     $row1['dkid'] = $row->dkid;
-    $row1['ikey'] = $row->imagenow_element_key;
-    $row1['ivalue'] = $row->imagenow_element_value;
+    $row1['ikey'] = $row->third_party_element_key;
+    $row1['ivalue'] = $row->third_party_element_value;
     $portal_defines[] = $row1;
   }
   return $portal_defines;

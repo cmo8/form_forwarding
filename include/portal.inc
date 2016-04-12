@@ -12,7 +12,7 @@ function _delete_portal($portal_id) {
   _delete_defines($portal_id);
   _delete_connections($portal_id);
   _delete_files($portal_id);
-  db_delete('uwpimagenow_portals')
+  db_delete('form_forwarding_portals')
     ->condition('inid', $portal_id, '=')
     ->execute();
 }
@@ -24,12 +24,12 @@ function _delete_portal($portal_id) {
  * @return int $eid
  */
 function _create_portal($drupal_nid, $description, $imagenow_url, $group) {
-  $eid = db_insert('uwpimagenow_portals')
+  $eid = db_insert('form_forwarding_portals')
     ->fields(
       array(
         'drupal_nid' => $drupal_nid,
         'description' => $description,
-        'imagenow_submission_url' => $imagenow_url,
+        'submission_url' => $imagenow_url,
         'group' => $group,
         'date' => REQUEST_TIME,
       )
@@ -46,13 +46,13 @@ function _create_portal($drupal_nid, $description, $imagenow_url, $group) {
  * @return int
  */
 function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {//TODO: Group
-  $update_portal = db_update('uwpimagenow_portals')
+  $update_portal = db_update('form_forwarding_portals')
     ->condition('inid', $portal_id, '=')
     ->fields(
       array(
         'drupal_nid' => $drupal_nid,
         'description' => $description,
-        'imagenow_submission_url' => $imagenow_url,
+        'submission_url' => $imagenow_url,
         //'group' => $group,
       )
     )
@@ -67,7 +67,7 @@ function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {/
 function _is_imagenow_form($nid) {
   $dbNids = NULL;
   // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
+  $result = db_select('form_forwarding_portals', 'portals')
     ->fields('portals', array('drupal_nid'))
     ->orderBy('inid', 'ASC')
     ->execute();
@@ -90,8 +90,8 @@ function _is_imagenow_form($nid) {
  */
 function _get_portal_config($inid, $pid_flag) {
   $portal_config = null;
-  $sqlQuery = db_select('uwpimagenow_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description', 'imagenow_submission_url'));
+  $sqlQuery = db_select('form_forwarding_portals', 'portals')
+    ->fields('portals', array('inid', 'drupal_nid', 'description', 'submission_url', 'group'));
   if ($pid_flag === TRUE) {
     $sqlQuery->condition('inid', $inid, '=');
   } else {
@@ -104,7 +104,8 @@ function _get_portal_config($inid, $pid_flag) {
     $portal_config['inid'] = $row->inid;
     $portal_config['fid'] = $row->drupal_nid;
     $portal_config['description'] = $row->description;
-    $portal_config['imagenow_url'] = $row->imagenow_submission_url;
+    $portal_config['submission_url'] = $row->submission_url;
+    $portal_config['group'] = $row->group;
     $portal_config['defines'] = _get_define_keys($row->inid);
     $portal_config['connections'] = _get_portal_connections($row->inid);
     $portal_config['files'] = _get_file_keys($row->inid);
@@ -119,7 +120,7 @@ function _get_portal_config($inid, $pid_flag) {
 function _get_drupal_to_third_party_portals() {
   $portals = [];
   // Get the portals from the Database
-  $result = db_select('uwpimagenow_portals', 'portals')
+  $result = db_select('form_forwarding_portals', 'portals')
     ->fields('portals', array('inid', 'drupal_nid', 'description'))
     ->orderBy('inid', 'ASC')
     ->execute();
