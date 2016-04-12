@@ -16,6 +16,7 @@ function _delete_portal($portal_id) {
     ->condition('inid', $portal_id, '=')
     ->execute();
 }
+
 /**
  * Creates a new portal with the given drupal node id, description, and 3rd party url.
  * @param string $drupal_nid
@@ -37,6 +38,7 @@ function _create_portal($drupal_nid, $description, $imagenow_url, $group) {
     ->execute();
   return $eid;
 }
+
 /**
  * Updates the given portal with the new drupal node id, description, and 3rd party url.
  * @param int/string $portal_id
@@ -53,12 +55,13 @@ function _update_portal($portal_id, $drupal_nid, $description, $imagenow_url) {/
         'drupal_nid' => $drupal_nid,
         'description' => $description,
         'submission_url' => $imagenow_url,
-        //'group' => $group,
+      //'group' => $group,
       )
     )
     ->execute();
   return $update_portal;
 }
+
 /**
  * Checks if the form is an imagenow form.
  * @param int $nid
@@ -82,6 +85,7 @@ function _is_imagenow_form($nid) {
   }
   return NULL;
 }
+
 /**
  * Gets the portal for the portal connection or the drupal node id.
  * @param string $inid
@@ -90,25 +94,28 @@ function _is_imagenow_form($nid) {
  */
 function _get_portal_config($inid, $pid_flag) {
   $portal_config = null;
-  $sqlQuery = db_select('form_forwarding_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description', 'submission_url', 'group'));
-  if ($pid_flag === TRUE) {
-    $sqlQuery->condition('inid', $inid, '=');
-  } else {
-    $sqlQuery->condition('drupal_nid', $inid, '=');
-  }
-  $result = $sqlQuery->orderBy('inid', 'ASC')->execute();
-  // Organize portal elements
+  if (is_numeric($inid)) {
+    $sqlQuery = db_select('form_forwarding_portals', 'portals')
+      ->fields('portals', array('inid', 'drupal_nid', 'description', 'submission_url', 'group'));
+    if ($pid_flag === TRUE) {
+      $sqlQuery->condition('inid', $inid, '=');
+    }
+    else {
+      $sqlQuery->condition('drupal_nid', $inid, '=');
+    }
+    $result = $sqlQuery->orderBy('inid', 'ASC')->execute();
+    // Organize portal elements
 
-  foreach ($result as $row) {
-    $portal_config['inid'] = $row->inid;
-    $portal_config['fid'] = $row->drupal_nid;
-    $portal_config['description'] = $row->description;
-    $portal_config['submission_url'] = $row->submission_url;
-    $portal_config['group'] = $row->group;
-    $portal_config['defines'] = _get_define_keys($row->inid);
-    $portal_config['connections'] = _get_portal_connections($row->inid);
-    $portal_config['files'] = _get_file_keys($row->inid);
+    foreach ($result as $row) {
+      $portal_config['inid'] = $row->inid;
+      $portal_config['fid'] = $row->drupal_nid;
+      $portal_config['description'] = $row->description;
+      $portal_config['submission_url'] = $row->submission_url;
+      $portal_config['group'] = $row->group;
+      $portal_config['defines'] = _get_define_keys($row->inid);
+      $portal_config['connections'] = _get_portal_connections($row->inid);
+      $portal_config['files'] = _get_file_keys($row->inid);
+    }
   }
   return $portal_config;
 }
