@@ -450,7 +450,7 @@ function portal_save($form, &$form_state) {
     dpm($node);
     global $user;
     dpm($user);
-    $eid = _create_portal($drupal_nid, $description, $imagenow_url, $node->workbench_access->f); //TODO: change
+    $eid = _create_portal($drupal_nid, $description, $imagenow_url, reset($node->workbench_access)); //TODO: change
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
   }
