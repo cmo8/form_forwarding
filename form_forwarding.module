@@ -27,7 +27,7 @@ function form_forwarding_menu() {
     'description' => 'Portal Settings',
     'page callback' => 'drupal_get_form',
     'page arguments' => array('form_forwarding_portal_admin'),
-    'access arguments' => array('administer form_forwarding'),
+    'access arguments' => array('administer formforwarding'),
     'file' => 'form_forwarding_portal.inc',
     'type' => MENU_NORMAL_ITEM,
   );
