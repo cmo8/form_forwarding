@@ -446,7 +446,7 @@ function portal_save($form, &$form_state) {
   $imagenow_url = $form_state['values']['submitionurl'];
 
   if ($portal_id == 'new') {
-    $eid = _create_portal($drupal_nid, $description, $imagenow_url, "admin"); //TODO: change
+    $eid = _create_portal($drupal_nid, $description, $imagenow_url, 3); //TODO: change
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
   }
