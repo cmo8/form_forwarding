@@ -22,7 +22,7 @@ function _delete_portal($portal_id) {
  * @param string $drupal_nid
  * @param string $description
  * @param string $submission_url
- * @param int    $group
+ * @param string    $group
  * @return int $eid
  */
 function _create_portal($drupal_nid, $description, $submission_url, $group) {
@@ -32,8 +32,8 @@ function _create_portal($drupal_nid, $description, $submission_url, $group) {
         'drupal_nid' => $drupal_nid,
         'description' => $description,
         'submission_url' => $submission_url,
-        'group' => $group,
         'date' => REQUEST_TIME,
+        'group' => $group,
       )
     );
   $eid->execute();
