@@ -53,7 +53,7 @@ function _create_file($portal_id, $third_party_element_key, $drupal_element_key)
     ->fields(
       array(
         'inid' => $portal_id,
-        'form_forwarding_element_key' => $third_party_element_key,
+        'third_party_element_key' => $third_party_element_key,
         'drupal_element_key' => $drupal_element_key,
       )
     )
