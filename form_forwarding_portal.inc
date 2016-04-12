@@ -22,10 +22,10 @@ function form_forwarding_portal_admin() {
   $form['#attached']['css'][] = drupal_get_path('module', 'form_forwarding') . '/css/form_forwarding_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'form_forwarding') . '/js/form_forwarding_admin.js';
   if ($portal_id != 'new' && $portal_id != 'portal') {
-    $form[]['#markup'] = t('<h2>' . l('Third Party Admin', '/admin/config/webform/form_forwarding') . ' Portal ' . $portal_id . '</h2>');
+    $form[]['#markup'] = t('<h2>' . l('Webform Forwarding Admin', '/admin/config/webform/form_forwarding') . ' Portal ' . $portal_id . '</h2>');
   }
   else {
-    $form[]['#markup'] = t('<h2>' . l('Third Party Admin', '/admin/config/webform/form_forwarding') . ' Portal New</h2>');
+    $form[]['#markup'] = t('<h2>' . l('Webform Forwarding Admin', '/admin/config/webform/form_forwarding') . ' Portal New</h2>');
   }
 
   $form['drupalnid'] = array(
@@ -366,7 +366,6 @@ function define_delete($form, &$form_state) {
  * @param array $form_state
  */
 function define_add($form, &$form_state) {
-  dpm($form_state);
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
@@ -423,7 +422,6 @@ function delete_file($form, &$form_state) {
  * @param array $form_state
  */
 function file_add($form, &$form_state) {
-  dpm($form_state);
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
@@ -454,9 +452,9 @@ function portal_save($form, &$form_state) {
     dpm($node);
     global $user;
     dpm($user);
-    $eid = _create_portal($drupal_nid, $description, $imagenow_url, "admin"/*reset($node->workbench_access)*/); //TODO: change
+    $eid = _create_portal($drupal_nid, $description, $imagenow_url, reset($node->workbench_access)); //TODO: change
     drupal_set_message(t("New Portal Saved"));
-    drupal_goto('/admin/config/uwplatteville/imagenow/portal/' . strval($eid));
+    drupal_goto('/admin/config/content/form_forwarding/portal/' . strval($eid));
   }
   else {
     // Update Portal
