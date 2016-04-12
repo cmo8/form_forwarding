@@ -21,16 +21,16 @@ function _delete_portal($portal_id) {
  * Creates a new portal with the given drupal node id, description, and 3rd party url.
  * @param string $drupal_nid
  * @param string $description
- * @param string $imagenow_url
+ * @param string $submission_url
  * @return int $eid
  */
-function _create_portal($drupal_nid, $description, $imagenow_url, $group) {
+function _create_portal($drupal_nid, $description, $submission_url, $group) {
   $eid = db_insert('form_forwarding_portals')
     ->fields(
       array(
         'drupal_nid' => $drupal_nid,
         'description' => $description,
-        'submission_url' => $imagenow_url,
+        'submission_url' => $submission_url,
         'group' => $group,
         'date' => REQUEST_TIME,
       )
