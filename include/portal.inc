@@ -36,6 +36,7 @@ function _create_portal($drupal_nid, $description, $submission_url, $group) {
         'group' => $group,
       )
     );
+  dpm($eid);
   $eid->execute();
   return $eid;
 }
