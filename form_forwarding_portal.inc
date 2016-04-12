@@ -366,6 +366,7 @@ function define_delete($form, &$form_state) {
  * @param array $form_state
  */
 function define_add($form, &$form_state) {
+  dpm($form_state);
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
