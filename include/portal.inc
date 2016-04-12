@@ -27,14 +27,14 @@ function _delete_portal($portal_id) {
  */
 function _create_portal($drupal_nid, $description, $submission_url, $group) {
   $eid = db_insert('form_forwarding_portals')
-    ->fields(array('drupal_nid', 'description', 'submission_url', 'date', 'group',))
+    ->fields(array('drupal_nid', 'description', 'submission_url', 'date', 'group_id',))
     ->values(
         array(
           'drupal_nid' => $drupal_nid,
           'description' => $description,
           'submission_url' => $submission_url,
           'date' => REQUEST_TIME,
-          'group' => $group,
+          'group_id' => $group,
         )
       )
     ->execute();
@@ -57,7 +57,7 @@ function _update_portal($portal_id, $drupal_nid, $description, $submission_url) 
         'drupal_nid' => $drupal_nid,
         'description' => $description,
         'submission_url' => $submission_url,
-        //'group' => $group,
+        //'group_id' => $group,
       )
     )
     ->execute();
@@ -98,7 +98,7 @@ function _get_portal_config($inid, $pid_flag) {
   $portal_config = null;
   if (is_numeric($inid)) {
     $sqlQuery = db_select('form_forwarding_portals', 'portals')
-      ->fields('portals', array('inid', 'drupal_nid', 'description', 'submission_url', 'group'));
+      ->fields('portals', array('inid', 'drupal_nid', 'description', 'submission_url', 'group_id'));
     if ($pid_flag === TRUE) {
       $sqlQuery->condition('inid', $inid, '=');
     }
@@ -113,7 +113,7 @@ function _get_portal_config($inid, $pid_flag) {
       $portal_config['fid'] = $row->drupal_nid;
       $portal_config['description'] = $row->description;
       $portal_config['submission_url'] = $row->submission_url;
-      $portal_config['group'] = $row->group;
+      $portal_config['group_id'] = $row->group_id;
       $portal_config['defines'] = _get_define_keys($row->inid);
       $portal_config['connections'] = _get_portal_connections($row->inid);
       $portal_config['files'] = _get_file_keys($row->inid);
