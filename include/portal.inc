@@ -122,20 +122,36 @@ function _get_portal_config($inid, $pid_flag) {
   return $portal_config;
 }
 
+function _get_access_roles($group_id){
+  $roles = [];
+  // Get the portals from the Database
+  $result = db_select('workbench_access_role', 'war')
+    ->fields('war', array('access_id'))
+    ->condition('war.rid', $group_id, '=')
+    ->orderBy('access_id', 'ASC')
+    ->execute();
+  // Organize portal elements
+  foreach ($result as $row) {
+      $roles[] = $row->rid;
+  }
+  return $roles;
+}
+
 /**
  * Get the drupal to imagenow portals.
  * @return array
  */
-function _get_drupal_to_third_party_portals($groups) {
+function _get_drupal_to_third_party_portals($user_roles) {
   $portals = [];
   // Get the portals from the Database
   $result = db_select('form_forwarding_portals', 'portals')
-    ->fields('portals', array('inid', 'drupal_nid', 'description'))
+    ->fields('portals', array('inid', 'drupal_nid', 'description', 'group_id'))
     ->orderBy('inid', 'ASC')
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
-    if(array_key_exists(3, $groups) || in_array($row->group, $groups)){
+    $roles_to_campare = _get_access_roles($row->group_id);
+    if(array_key_exists(3, $user_roles) || in_array($row->group_id, $user_roles)){
       $row1 = [];
       $row1['inid'] = $row->inid;
       $row1['fid'] = $row->drupal_nid;
