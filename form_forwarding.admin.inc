@@ -17,7 +17,7 @@ function form_forwarding_admin_settings() {
   $form[]['#markup'] = t('<h2>Webform Forwarding Admin</h2>');
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to 3rd party Webforms.</p>');
   global $user;
-  dsm($user);
+  #dsm($user);
   watchdog("CMO-PHP", "User Roles: ", implode(",", $user->roles));
   $portals = _get_drupal_to_third_party_portals($user->roles);
   $form[]['#markup'] = t('<table id="portal-table">');
@@ -83,7 +83,7 @@ function form_forwarding_admin_save($form, &$form_state) {
     drupal_goto('admin/config/content/form_forwarding/portal/new');
   }
   global $user;
-  dsm($user);
+  #dsm($user);
   $portals = _get_drupal_to_third_party_portals($user->roles);
   for($i = 0; $i < count($portals); $i++) {
     if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]['inid']) {
