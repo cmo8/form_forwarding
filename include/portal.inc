@@ -139,7 +139,7 @@ function _get_access_roles($access_id){
 
 function _does_array_element_equil_in_array($roles_to_campare, $user_roles){
   foreach ($roles_to_campare as $file_role) {
-    watchdog("CMO-PHP", "File role: " . $file_role . ": " . implode(',', $user_roles));
+    //watchdog("CMO-PHP", "File role: " . $file_role . ": " . implode(',', $user_roles));
     foreach ($user_roles as $user_key => $user_role) {
       if($file_role == $user_key){
         return TRUE;
@@ -162,9 +162,9 @@ function _get_drupal_to_third_party_portals($user_roles) {
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
-    watchdog("CMO-PHP", "Portal " . $row->inid);
+    //watchdog("CMO-PHP", "Portal " . $row->inid);
     $roles_to_campare = _get_access_roles($row->group_id);
-    watchdog("CMO-PHP", "Portal " . $row->inid . ": " . $roles_to_campare);
+    //watchdog("CMO-PHP", "Portal " . $row->inid . ": " . $roles_to_campare);
     if(array_key_exists(3, $user_roles) || _does_array_element_equil_in_array($roles_to_campare, $user_roles)){
       $row1 = [];
       $row1['inid'] = $row->inid;
