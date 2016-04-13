@@ -135,7 +135,7 @@ function _get_drupal_to_third_party_portals($groups) {
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
-    if(in_array('administrator', $groups) || in_array($row->group, $groups)){
+    if(array_key_exists(3, $groups) || in_array($row->group, $groups)){
       $row1 = [];
       $row1['inid'] = $row->inid;
       $row1['fid'] = $row->drupal_nid;
