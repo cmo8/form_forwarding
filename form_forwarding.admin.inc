@@ -87,7 +87,7 @@ function form_forwarding_admin_save($form, &$form_state) {
   $portals = _get_drupal_to_third_party_portals($user->roles);
   for($i = 0; $i < count($portals); $i++) {
     if ($form_state['clicked_button']['#name'] == 'edit_portal_' . $portals[$i]['inid']) {
-      watchdog("CMO-PHP", 'admin/config/content/form_forwarding/portal/' . $portals[$i]['inid']);
+      //watchdog("CMO-PHP", 'admin/config/content/form_forwarding/portal/' . $portals[$i]['inid']);
       drupal_goto('admin/config/content/form_forwarding/portal/' . $portals[$i]['inid']);
     }
     if ($form_state['clicked_button']['#name'] == 'delete_portal_' . $portals[$i]['inid']) {
