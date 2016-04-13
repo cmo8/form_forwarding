@@ -126,7 +126,7 @@ function _get_portal_config($inid, $pid_flag) {
  * Get the drupal to imagenow portals.
  * @return array
  */
-function _get_drupal_to_third_party_portals() {
+function _get_drupal_to_third_party_portals($groups) {
   $portals = [];
   // Get the portals from the Database
   $result = db_select('form_forwarding_portals', 'portals')
@@ -135,11 +135,13 @@ function _get_drupal_to_third_party_portals() {
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
-    $row1 = [];
-    $row1['inid'] = $row->inid;
-    $row1['fid'] = $row->drupal_nid;
-    $row1['description'] = $row->description;
-    $portals[] = $row1;
+    if(in_array($row->group, $groups)){
+      $row1 = [];
+      $row1['inid'] = $row->inid;
+      $row1['fid'] = $row->drupal_nid;
+      $row1['description'] = $row->description;
+      $portals[] = $row1;
+    }
   }
   return $portals;
 }

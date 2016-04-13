@@ -22,10 +22,10 @@ function form_forwarding_portal_admin() {
   $form['#attached']['css'][] = drupal_get_path('module', 'form_forwarding') . '/css/form_forwarding_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'form_forwarding') . '/js/form_forwarding_admin.js';
   if ($portal_id != 'new' && $portal_id != 'portal') {
-    $form[]['#markup'] = t('<h2>' . l('Webform Forwarding Admin', '/admin/config/webform/form_forwarding') . ' Portal ' . $portal_id . '</h2>');
+    $form[]['#markup'] = t('<h2>' . l('Webform Forwarding Admin', '/admin/config/content/form_forwarding') . ' Portal ' . $portal_id . '</h2>');
   }
   else {
-    $form[]['#markup'] = t('<h2>' . l('Webform Forwarding Admin', '/admin/config/webform/form_forwarding') . ' Portal New</h2>');
+    $form[]['#markup'] = t('<h2>' . l('Webform Forwarding Admin', '/admin/config/content/form_forwarding') . ' Portal New</h2>');
   }
 
   $form['drupalnid'] = array(
