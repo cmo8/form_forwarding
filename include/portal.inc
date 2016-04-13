@@ -122,19 +122,28 @@ function _get_portal_config($inid, $pid_flag) {
   return $portal_config;
 }
 
-function _get_access_roles($group_id){
+function _get_access_roles($access_id){
   $roles = [];
   // Get the portals from the Database
   $result = db_select('workbench_access_role', 'war')
-    ->fields('war', array('access_id'))
-    ->condition('war.rid', $group_id, '=')
-    ->orderBy('access_id', 'ASC')
+    ->fields('war', array('rid'))
+    ->condition('war.access_id', $access_id, '=')
+    ->orderBy('rid', 'ASC')
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
       $roles[] = $row->rid;
   }
   return $roles;
+}
+
+function _does_array_element_equil_in_array($roles_to_campare, $user_roles){
+  foreach ($roles_to_campare as $file_role) {
+    if(in_array($file_role, $user_roles)) {
+      return TRUE;
+    }
+  }
+  return FALSE;
 }
 
 /**
@@ -151,7 +160,7 @@ function _get_drupal_to_third_party_portals($user_roles) {
   // Organize portal elements
   foreach ($result as $row) {
     $roles_to_campare = _get_access_roles($row->group_id);
-    if(array_key_exists(3, $user_roles) || in_array($row->group_id, $user_roles)){
+    if(array_key_exists(3, $user_roles) || _does_array_element_equil_in_array($roles_to_campare, $user_roles)){
       $row1 = [];
       $row1['inid'] = $row->inid;
       $row1['fid'] = $row->drupal_nid;
