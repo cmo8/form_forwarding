@@ -140,8 +140,10 @@ function _get_access_roles($access_id){
 function _does_array_element_equil_in_array($roles_to_campare, $user_roles){
   foreach ($roles_to_campare as $file_role) {
     watchdog("CMO-PHP", "File role: " . $file_role . ": " . implode(',', $user_roles));
-    if(in_array($file_role, $user_roles)) {
-      return TRUE;
+    foreach ($user_roles as $user_key => $user_role) {
+      if($file_role == $user_key){
+        return TRUE;
+      }
     }
   }
   return FALSE;
