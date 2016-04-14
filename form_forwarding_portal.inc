@@ -48,7 +48,7 @@ function form_forwarding_portal_admin() {
 
   $form['submitionurl'] = array(
     '#type' => 'textfield',
-    '#title' => t('Third Party Submition URL'),
+    '#title' => t('Third Party Submission URL'),
     '#required' => TRUE,
     '#default_value' => $portal_config['submission_url'],
     '#rules' => array(
