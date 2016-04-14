@@ -303,7 +303,7 @@ function form_forwarding_form_validate($form, &$form_state) {
  * Rule to check if a node exists.
  */
 function form_forwarding_validation_is_node($value) {
-  $test_node = node_load(array('nid' => $value));
+  $test_node = node_load($value);
   dsm($test_node);
   if ($test_node == false) {
     return FALSE;
