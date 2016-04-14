@@ -502,7 +502,7 @@ function portal_save($form, &$form_state) {
  * @return array
  */
 function _get_drupal_form_elements(&$nid) {
-  $rtn[];
+  $rtn[] = array();
   $fields['select'] = ' - Select- ';
   $files['select'] = ' - Select- ';
   $result = db_select('webform_component', 'components')
