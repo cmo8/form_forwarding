@@ -516,8 +516,10 @@ function _get_drupal_form_elements(&$nid) {
     if ($element->type != 'markup' && $element->type != 'fieldset'){
       watchdog("Made It", 'Name: ' . $element->form_key);
       if($element->type == 'file' && $element->type == 'multifile') {
+        watchdog("Is File", 'Name: ' . $element->form_key);
         $files[$element->form_key] = $element->form_key;
       } else {
+        watchdog("Is Field", 'Name: ' . $element->form_key);
         $fields[$element->form_key] = $element->form_key;
       }
     }
