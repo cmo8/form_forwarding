@@ -311,6 +311,18 @@ function form_forwarding_validation_is_node($value) {
 }
 
 /**
+ * Implementation of hook_fapi_validation_rules
+ */
+function form_forwarding_fapi_validation_rules() {
+  return array(
+    'is_node' => array(
+      'callback' => 'form_forwarding_validation_is_node',
+      'error_msg' => '%field - Must be a valid Node.'
+    ),
+  );
+}
+
+/**
  * Implements hook_form_alter().
  */
 function form_forwarding_form_alter(&$form, &$form_state, $form_id) {
