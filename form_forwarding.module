@@ -304,7 +304,6 @@ function form_forwarding_form_validate($form, &$form_state) {
  */
 function form_forwarding_validation_is_node($value) {
   $test_node = node_load($value);
-  dsm($test_node);
   if ($test_node == false) {
     return FALSE;
   }
