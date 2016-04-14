@@ -35,6 +35,7 @@ function form_forwarding_portal_admin() {
     '#default_value' => $portal_config['fid'],
     '#rules' => array(
       array('rule' => 'numeric', 'error' => '%field - Must be numeric.'),
+      array('rule' => 'is_node', 'error' => '%field - Must be a valid Node.')
     ),
   );
 
@@ -513,6 +514,8 @@ function _get_drupal_form_elements(&$nid) {
   }
   return $elements;
 }
+
+
 
 ///**
 // * Not Used
