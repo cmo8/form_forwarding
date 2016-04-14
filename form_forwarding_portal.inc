@@ -464,9 +464,9 @@ function portal_save($form, &$form_state) {
     $index = 0;
     $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
     while ($dkid != NULL) {
-      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
-      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
-      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
+      $third_party_key = $form_state['values']['d' . strval($index) . '-third-party-element-key'];
+      $third_party_value = $form_state['values']['d' . strval($index) . '-third-party-element-value'];
+      $update_connection = _update_define($dkid, $third_party_key, $third_party_value);
       $index++;
       $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
     }
@@ -475,8 +475,8 @@ function portal_save($form, &$form_state) {
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
     while ($eid != NULL) {
       $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
-      $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
-      $update_connection = _update_connection($eid, $drupal_form_element, $imagenow_key);
+      $third_party_key = $form_state['values']['c' . strval($index) . '-third-party-key'];
+      $update_connection = _update_connection($eid, $drupal_form_element, $third_party_key);
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
@@ -484,9 +484,9 @@ function portal_save($form, &$form_state) {
     $index = 0;
     $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     while ($filekid != NULL) {
-      $imagenow_key = $form_state['values']['f' . strval($index) . '-imagenow-key'];
+      $third_party_key = $form_state['values']['f' . strval($index) . '-third-party-key'];
       $drupal_form_element = $form_state['values']['f' . strval($index) . '-drupal-form-element'];
-      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
+      $update_connection = _update_file($filekid, $third_party_key, $drupal_form_element);
       $index++;
       $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     }
