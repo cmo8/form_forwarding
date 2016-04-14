@@ -183,7 +183,7 @@ function form_forwarding_portal_admin() {
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
         '#multiple' => false,
-        '#options' => $form_elements, //TODO: Need to set
+        '#options' => $form_elements['fields'], //TODO: Need to set
         '#default_value' => $portal_config['connections'][$i]['dek'],
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
@@ -217,7 +217,7 @@ function form_forwarding_portal_admin() {
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
-      '#options' => $form_elements, //TODO: Need to set
+      '#options' => $form_elements['fields'], //TODO: Need to set
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('<td>');
@@ -276,7 +276,7 @@ function form_forwarding_portal_admin() {
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
         '#multiple' => false,
-        '#options' => $form_elements, //TODO: Need to set
+        '#options' => $form_elements['files'],
         '#default_value' => $portal_config['files'][$i]['dek'],
       );
       $form['files'][$file][]['#markup'] = t('</td>');
@@ -310,7 +310,7 @@ function form_forwarding_portal_admin() {
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
-      '#options' => $form_elements, //TODO: Need to set
+      '#options' => $form_elements['files'],
     );
     $form['files']['new-file'][]['#markup'] = t('</td>');
     $form['files']['new-file'][]['#markup'] = t('<td>');
@@ -502,17 +502,27 @@ function portal_save($form, &$form_state) {
  * @return array
  */
 function _get_drupal_form_elements(&$nid) {
-  $elements['select'] = ' - Select- ';
+  $rtn[];
+  $fields['select'] = ' - Select- ';
+  $files['select'] = ' - Select- ';
   $result = db_select('webform_component', 'components')
-    ->fields('components', array('cid', 'form_key'))
+    ->fields('components', array('cid', 'form_key', 'type'))
     ->condition('nid', $nid, '=')
     ->orderBy('cid', 'ASC')
     ->execute();
   // Organize portal elements
   foreach ($result as $element) {
-    $elements[$element->form_key] = $element->form_key;
+    if ($element->type != 'markup' && $element->type != 'fieldset'){
+      if($element->type == 'file' && $element->type == 'multifile') {
+        $files[$element->form_key] = $element->form_key;
+      } else {
+        $fields[$element->form_key] = $element->form_key;
+      }
+    }
   }
-  return $elements;
+  $rtn['fields'] = $fields;
+  $rtn['files'] = $files;
+  return $rtn;
 }
 
 
