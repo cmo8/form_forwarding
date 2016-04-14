@@ -316,7 +316,7 @@ function form_forwarding_portal_admin() {
     $form['files']['new-file'][]['#markup'] = t('<td>');
     $form['files']['new-file']['file-third-party-key'] = array(
       '#title' => t('Third Party Key'),
-      '#description' => t('Key as set in Third Party'),
+      '#description' => t('Key as set in Third Party System. For multi File uploads "file_sub_/[1-4]" or "file_sub_/[a-g]" or file_/[1,2,3,a,b,cool]/_sub'),
       '#type' => 'textfield',
       '#required' => false,
       //'#rules' => array(
@@ -512,14 +512,14 @@ function _get_drupal_form_elements(&$nid) {
     ->execute();
   // Organize portal elements
   foreach ($result as $element) {
-    watchdog('CMO-PHP', 'Name: ' . $element->form_key  . ' => ' . $element->type);
+    #watchdog('CMO-PHP', 'Name: ' . $element->form_key  . ' => ' . $element->type);
     if ($element->type != 'markup' && $element->type != 'fieldset'){
-      watchdog("Made It", 'Name: ' . $element->form_key);
+      #watchdog("Made It", 'Name: ' . $element->form_key);
       if($element->type == 'file' || $element->type == 'multifile') {
-        watchdog("Is File", 'Name: ' . $element->form_key);
+        #watchdog("Is File", 'Name: ' . $element->form_key);
         $files[$element->form_key] = $element->form_key;
       } else {
-        watchdog("Is Field", 'Name: ' . $element->form_key);
+        #watchdog("Is Field", 'Name: ' . $element->form_key);
         $fields[$element->form_key] = $element->form_key;
       }
     }
