@@ -18,7 +18,6 @@ function form_forwarding_admin_settings() {
   $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to 3rd party Webforms.</p>');
   global $user;
   #dsm($user);
-  //watchdog("CMO-PHP", "User Roles: ", implode(",", $user->roles));
   $portals = _get_drupal_to_third_party_portals($user->roles);
   $form[]['#markup'] = t('<table id="portal-table">');
   $form[]['#markup'] = t('<thead>');
