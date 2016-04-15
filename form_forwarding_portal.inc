@@ -48,7 +48,7 @@ function form_forwarding_portal_admin() {
 
   $form['submitionurl'] = array(
     '#type' => 'textfield',
-    '#title' => t('Third Party Submition URL'),
+    '#title' => t('Third Party Submission URL'),
     '#required' => TRUE,
     '#default_value' => $portal_config['submission_url'],
     '#rules' => array(
@@ -183,7 +183,7 @@ function form_forwarding_portal_admin() {
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
         '#multiple' => false,
-        '#options' => $form_elements, //TODO: Need to set
+        '#options' => $form_elements['fields'], //TODO: Need to set
         '#default_value' => $portal_config['connections'][$i]['dek'],
       );
       $form['connections'][$connection][]['#markup'] = t('</td>');
@@ -217,7 +217,7 @@ function form_forwarding_portal_admin() {
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
-      '#options' => $form_elements, //TODO: Need to set
+      '#options' => $form_elements['fields'], //TODO: Need to set
     );
     $form['connections']['new-link'][]['#markup'] = t('</td>');
     $form['connections']['new-link'][]['#markup'] = t('<td>');
@@ -276,7 +276,7 @@ function form_forwarding_portal_admin() {
         '#title' => t('Drupal Form Select'),
         '#title_display' => 'invisible',
         '#multiple' => false,
-        '#options' => $form_elements, //TODO: Need to set
+        '#options' => $form_elements['files'],
         '#default_value' => $portal_config['files'][$i]['dek'],
       );
       $form['files'][$file][]['#markup'] = t('</td>');
@@ -310,13 +310,13 @@ function form_forwarding_portal_admin() {
       '#type' => 'select',
       '#title' => t('Drupal Form Select'),
       '#multiple' => false,
-      '#options' => $form_elements, //TODO: Need to set
+      '#options' => $form_elements['files'],
     );
     $form['files']['new-file'][]['#markup'] = t('</td>');
     $form['files']['new-file'][]['#markup'] = t('<td>');
     $form['files']['new-file']['file-third-party-key'] = array(
       '#title' => t('Third Party Key'),
-      '#description' => t('Key as set in Third Party'),
+      '#description' => t('Key as set in Third Party System. For multi File uploads "file_sub_/[1-4]" or "file_sub_/[a-g]" or file_/[1,2,3,a,b,cool]/_sub'),
       '#type' => 'textfield',
       '#required' => false,
       //'#rules' => array(
@@ -464,9 +464,9 @@ function portal_save($form, &$form_state) {
     $index = 0;
     $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
     while ($dkid != NULL) {
-      $imagenow_element_key = $form_state['values']['d' . strval($index) . '-imagenow-element-key'];
-      $imagenow_element_value = $form_state['values']['d' . strval($index) . '-imagenow-element-value'];
-      $update_connection = _update_define($dkid, $imagenow_element_key, $imagenow_element_value);
+      $third_party_key = $form_state['values']['d' . strval($index) . '-third-party-element-key'];
+      $third_party_value = $form_state['values']['d' . strval($index) . '-third-party-element-value'];
+      $update_connection = _update_define($dkid, $third_party_key, $third_party_value);
       $index++;
       $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
     }
@@ -475,8 +475,8 @@ function portal_save($form, &$form_state) {
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
     while ($eid != NULL) {
       $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
-      $imagenow_key = $form_state['values']['c' . strval($index) . '-imagenow-key'];
-      $update_connection = _update_connection($eid, $drupal_form_element, $imagenow_key);
+      $third_party_key = $form_state['values']['c' . strval($index) . '-third-party-key'];
+      $update_connection = _update_connection($eid, $drupal_form_element, $third_party_key);
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
@@ -484,9 +484,9 @@ function portal_save($form, &$form_state) {
     $index = 0;
     $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     while ($filekid != NULL) {
-      $imagenow_key = $form_state['values']['f' . strval($index) . '-imagenow-key'];
+      $third_party_key = $form_state['values']['f' . strval($index) . '-third-party-key'];
       $drupal_form_element = $form_state['values']['f' . strval($index) . '-drupal-form-element'];
-      $update_connection = _update_file($filekid, $imagenow_key, $drupal_form_element);
+      $update_connection = _update_file($filekid, $third_party_key, $drupal_form_element);
       $index++;
       $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     }
@@ -502,17 +502,31 @@ function portal_save($form, &$form_state) {
  * @return array
  */
 function _get_drupal_form_elements(&$nid) {
-  $elements['select'] = ' - Select- ';
+  $rtn = array();
+  $fields['select'] = ' - Select- ';
+  $files['select'] = ' - Select- ';
   $result = db_select('webform_component', 'components')
-    ->fields('components', array('cid', 'form_key'))
+    ->fields('components', array('cid', 'form_key', 'type'))
     ->condition('nid', $nid, '=')
     ->orderBy('cid', 'ASC')
     ->execute();
   // Organize portal elements
   foreach ($result as $element) {
-    $elements[$element->form_key] = $element->form_key;
+    #watchdog('CMO-PHP', 'Name: ' . $element->form_key  . ' => ' . $element->type);
+    if ($element->type != 'markup' && $element->type != 'fieldset'){
+      #watchdog("Made It", 'Name: ' . $element->form_key);
+      if($element->type == 'file' || $element->type == 'multifile') {
+        #watchdog("Is File", 'Name: ' . $element->form_key);
+        $files[$element->form_key] = $element->form_key;
+      } else {
+        #watchdog("Is Field", 'Name: ' . $element->form_key);
+        $fields[$element->form_key] = $element->form_key;
+      }
+    }
   }
-  return $elements;
+  $rtn['fields'] = $fields;
+  $rtn['files'] = $files;
+  return $rtn;
 }
 
 
