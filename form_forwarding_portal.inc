@@ -69,7 +69,7 @@ function form_forwarding_portal_admin() {
       'method' => 'replace',
     ),
   );
-  $form['pingTest']['results']['#markup'] = t('<div id="ping-test-result>Not Tested</div>');
+  $form[]['#markup'] = t('<div id="ping-test-result>Not Tested</div>');
 
 
 
