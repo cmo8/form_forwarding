@@ -373,9 +373,9 @@ function pingTest($form, &$form_state){
   $file_headers = @get_headers($url);
   $test = '';
   if (strpos($file_headers[0], "200 OK") > 0) {
-     $test = '<div id="ping-test-result-a>Success</div>';
+     $test = '<p>Success</p>';
   } else {
-    $test = '<div id="ping-test-result-a>Failed</div>';
+    $test = '<p>Failed</p>';
   }
   $roo = array(
     '#type' => 'button',
@@ -392,6 +392,7 @@ function pingTest($form, &$form_state){
       'method' => 'replace',
     ),
   );
+  return $roo;
 }
 
 /**
