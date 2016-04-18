@@ -375,7 +375,6 @@ function pingTest($form, &$form_state){
   } else {
     return array('<div id="ping-test-result>Failed</div>');
   }
-  return $form['pingTest']['results'];
 }
 
 /**
