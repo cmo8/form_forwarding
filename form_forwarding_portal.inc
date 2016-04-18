@@ -55,6 +55,21 @@ function form_forwarding_portal_admin() {
       'url',
     ),
   );
+  
+  $form['pingTest'] = array(
+    '#type' => 'button',
+    '#value' => t('Test URL'),
+    '#description' => t('Tests if the URL is valid'),
+    '#ajax' => array(
+      'event' => 'click',
+      'callback' => 'pingTest',
+      'wrapper' => 'ping-test-result',
+      'method' => 'replace',
+    ),
+  );
+  $form['pingTest'][]['#markup'] = t('<div id="ping-test-result></div>');
+
+
 
   if ($portal_id != 'new' && $portal_id != 'portal') {
     $form_elements = _get_drupal_form_elements($portal_config['fid']);
@@ -350,6 +365,16 @@ function form_forwarding_portal_admin() {
   return $form;
 }
 
+function pingTest($form, &$form_state){
+  $url = $form_state['values']['submitionurl'];
+  $file_headers = @get_headers($url);
+  if (strpos($file_headers[0], "200 OK") > 0) {
+     return '<div id="ping-test-result>Success</div>';
+  } else {
+    return '<div id="ping-test-result>Failed</div>';
+  }
+}
+
 /**
  * Handler for deleting a define
  * @param array $form
@@ -470,6 +495,8 @@ function portal_save($form, &$form_state) {
       $index++;
       $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
     }
+    // Add Define
+    define_add($form, $form_state);
     // Update Connections
     $index = 0;
     $eid = $form_state['values']['c' . strval($index) . '-eid'];
@@ -480,6 +507,8 @@ function portal_save($form, &$form_state) {
       $index++;
       $eid = $form_state['values']['c' . strval($index) . '-eid'];
     }
+    //Add Connection
+    connection_add($form, $form_state);
     // Update files
     $index = 0;
     $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
@@ -490,6 +519,8 @@ function portal_save($form, &$form_state) {
       $index++;
       $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
     }
+    //Add File
+    file_add($form, $form_state);
     drupal_set_message(t("Portal had been reconfigured"));
   }
   // redirect to the specific portal
