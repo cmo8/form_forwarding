@@ -371,9 +371,9 @@ function pingTest($form, &$form_state){
   $url = $form_state['values']['submitionurl'];
   $file_headers = @get_headers($url);
   if (strpos($file_headers[0], "200 OK") > 0) {
-     return '<div id="ping-test-result>Success</div>';
+     return array('<div id="ping-test-result>Success</div>');
   } else {
-    return '<div id="ping-test-result>Failed</div>';
+    return array('<div id="ping-test-result>Failed</div>');
   }
   return $form['pingTest']['results'];
 }
