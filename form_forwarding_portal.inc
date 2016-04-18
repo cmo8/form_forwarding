@@ -61,6 +61,7 @@ function form_forwarding_portal_admin() {
     '#value' => t('Test URL'),
     '#description' => t('Tests if the URL is valid'),
     '#button_type' => 'submit ajax-trigger',
+    '#suffix' => '<div id="ping-test-result">Not Tested</div>',
     '#ajax' => array(
       'submitter' => FALSE,
       'event' => 'mousedown',
@@ -69,7 +70,6 @@ function form_forwarding_portal_admin() {
       'method' => 'replace',
     ),
   );
-  $form[]['#markup'] = t('<div id="ping-test-result">Not Tested</div>');
 
 
 
