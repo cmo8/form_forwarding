@@ -67,7 +67,7 @@ function form_forwarding_portal_admin() {
       'method' => 'replace',
     ),
   );
-  $form['pingTest'][]['#markup'] = t('<div id="ping-test-result></div>');
+  $form['pingTest']['results']['#markup'] = t('<div id="ping-test-result></div>');
 
 
 
@@ -369,10 +369,11 @@ function pingTest($form, &$form_state){
   $url = $form_state['values']['submitionurl'];
   $file_headers = @get_headers($url);
   if (strpos($file_headers[0], "200 OK") > 0) {
-     return '<div id="ping-test-result>Success</div>';
+     $form['pingTest']['results'] = '<div id="ping-test-result>Success</div>';
   } else {
-    return '<div id="ping-test-result>Failed</div>';
+    $form['pingTest']['results'] = '<div id="ping-test-result>Failed</div>';
   }
+  return $form['pingTest']['results'];
 }
 
 /**
