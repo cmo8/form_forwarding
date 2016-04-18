@@ -61,7 +61,8 @@ function form_forwarding_portal_admin() {
     '#value' => t('Test URL'),
     '#description' => t('Tests if the URL is valid'),
     '#button_type' => 'submit ajax-trigger',
-    '#suffix' => '<div id="ping-test-result">Not Tested</div>',
+    '#prefix' => '<div id="ping-test-result">',
+    '#suffix' => '</div>',
     '#ajax' => array(
       'submitter' => FALSE,
       'event' => 'mousedown',
@@ -370,11 +371,27 @@ function form_forwarding_portal_admin() {
 function pingTest($form, &$form_state){
   $url = $form_state['values']['submitionurl'];
   $file_headers = @get_headers($url);
+  $test = '';
   if (strpos($file_headers[0], "200 OK") > 0) {
-     return array('<div id="ping-test-result>Success</div>');
+     $test = '<div id="ping-test-result-a>Success</div>';
   } else {
-    return array('<div id="ping-test-result>Failed</div>');
+    $test = '<div id="ping-test-result-a>Failed</div>';
   }
+  $roo = array(
+    '#type' => 'button',
+    '#value' => t('Test URL'),
+    '#description' => t('Tests if the URL is valid'),
+    '#button_type' => 'submit ajax-trigger',
+    '#prefix' => '<div id="ping-test-result">',
+    '#suffix' => $test . '</div>',
+    '#ajax' => array(
+      'submitter' => FALSE,
+      'event' => 'mousedown',
+      'callback' => 'pingTest',
+      'wrapper' => 'ping-test-result',
+      'method' => 'replace',
+    ),
+  );
 }
 
 /**
