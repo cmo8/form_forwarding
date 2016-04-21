@@ -322,10 +322,10 @@ function _submit_to_third_party(&$form_values) {
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
   #dpm("_get_subbmitted_values");
   #dpm($submitted_values);
-  if (endwith($portal['submission_url'], '.php')) {
+  if (endWith($portal['submission_url'], '.php')) {
     _post_to_php($portal, $submitted_values);
     drupal_set_message(t("The form was forwarded"));
-  } else if (endwith($portal['submission_url'], '.aspx')) {
+  } else if (endWith($portal['submission_url'], '.aspx')) {
     _post_to_aspx($portal, $submitted_values);
     drupal_set_message(t("The form was forwarded to ASP.NET"));
   } else {
