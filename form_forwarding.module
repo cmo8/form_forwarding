@@ -213,13 +213,17 @@ function _submit_to_third_party(&$form_values) {
         $inowKeys = _gen_file_keys($portal['files'][$i]['iek']);
 
         foreach ($files as $key => $file) {
-          $post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
+          if(drupal_realpath(file_load($file)->uri) != "") {
+            $post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
+          }
         }
       }
       else {
         #dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
         #dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
-        $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+        if(drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri) != ""){
+          $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+        }
       }
     }
     else {
