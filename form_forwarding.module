@@ -58,7 +58,7 @@ function _inc_gen_file_keys_to($thirdPartyKeys, $value) {
   $thirdPartyKeysRtn = array();
   //if the array is NOT empty and the range is numeric add each number in the array to each element in the array.
   if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
-    count($thirdPartyKeys) > 0) {
+      count($thirdPartyKeys) > 0) {
     foreach ($thirdPartyKeys as $thirdPartyKey) {
       for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
         $thirdPartyKeysRtn[] = $thirdPartyKey . strval($i);
@@ -67,7 +67,7 @@ function _inc_gen_file_keys_to($thirdPartyKeys, $value) {
   }
   //if the array is empty and the range is numeric add each number in the array
   else if (is_numeric($elements[0]) && is_numeric($elements[1]) &&
-    count($thirdPartyKeys) == 0) {
+      count($thirdPartyKeys) == 0) {
     for ($i = intval($elements[0]); $i <= intval($elements[1]); $i++) {
       $thirdPartyKeysRtn[] = strval($i);
     }
@@ -92,6 +92,7 @@ function _inc_gen_file_keys_to($thirdPartyKeys, $value) {
   }
   return $thirdPartyKeysRtn;
 }
+
 /**
  * Appends the values in the exploded string to the end of each element in the $inowKeys.
  * @param array $thirdPartyKeys
@@ -108,6 +109,7 @@ function _inc_gen_file_keys_through_list($thirdPartyKeys, $value) {
   }
   return $inowKeysRtn;
 }
+
 /**
  * The value is a Expretion that is ex: [1-5], [a-g], [1,2,3,5,6], or [asd,qwe,zxc]
  * Removes the "[", "]" and then figures out if it is a to "-", or through list ",".
@@ -121,8 +123,7 @@ function _inc_gen_file_keys($thirdPartyKeys, $value) {
   $value[strlen($value) - 1] = "";
   if (strpos($value, "-")) {
     $thirdPartyKeysRtn = _inc_gen_file_keys_to($thirdPartyKeys, trim($value));
-  }
-  else if (strpos($value, ",")) {
+  } else if (strpos($value, ",")) {
     $thirdPartyKeysRtn = _inc_gen_file_keys_through_list($thirdPartyKeys, $value);
   }
   return $thirdPartyKeysRtn;
@@ -139,14 +140,12 @@ function _gen_file_keys($thirdPartyKey) {
   foreach ($thirdPartyKeyArray as $value) {
     if ($value[0] == '[') {
       $thirdPartyKeys = _inc_gen_file_keys($thirdPartyKeys, $value);
-    }
-    else {
+    } else {
       if (count($thirdPartyKeys) > 0) {
         foreach ($thirdPartyKeys as $key => $element) {
           $thirdPartyKeys[$key] = $element . $value;
         }
-      }
-      else {
+      } else {
         $thirdPartyKeys[] = $value;
       }
     }
@@ -177,29 +176,16 @@ function _gen_file_keys($thirdPartyKey) {
 //$regx = "file_/[a-f]/_new";
 //_print_file_keys($regx);
 
-/**
- * Maps the defined vales to there defined keys.
- * Maps the Forms submitted data to the 3rd party form key.
- * Maps the Files submitted to the 3rd party form keys for files.
- * Then submits the information to the 3rd party form.
- * @param array $form_values
- */
-function _submit_to_third_party(&$form_values) {
-  $portal = _get_portal_config($form_values['details']['nid'], FALSE);
-  #dpm($portal);
-//create array of data to be posted
+function _format_submission_data($portal, $submitted_values, $delimiter) {
+  //create array of data to be posted
   $post_data = NULL;
 //Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
     $post_data[$portal['defines'][$i]['ikey']] = $portal['defines'][$i]['ivalue'];
   }
-//Add the connection.
-  $submitted_values = array();
-  _get_subbmitted_values($submitted_values, $form_values['submitted']);
-  #dpm("_get_subbmitted_values");
-  #dpm($submitted_values);
+
   for ($i = 0; $i < count($portal['connections']); $i++) {
-    if($submitted_values[$portal['connections'][$i]['dek']] != ""){
+    if ($submitted_values[$portal['connections'][$i]['dek']] != "") {
       $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
     }
   }
@@ -215,59 +201,137 @@ function _submit_to_third_party(&$form_values) {
         foreach ($files as $key => $file) {
           $post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
         }
-      }
-      else {
+      } else {
         #dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
         #dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
       }
-    }
-    else {
+    } else {
       #dpm("No File Submission...");
     }
   }
 //traverse array and prepare data for posting (key1=value1)
   foreach ($post_data as $key => $value) {
-    $post_items[] = $key . '=' . $value;
+    $post_items[] = filter_var($key . '=' . $value, FILTER_SANITIZE_STRING);
   }
 //create the final string to be posted using implode()
-  $post_string = implode(' --form ', $post_items);
-  
+  $post_string = implode($delimiter, $post_items);
+  watchdog("CMO_PHP", "FORM STRING: " . $post_string);
+  return $post_string;
+}
 
-
-  ////we also need to add a question mark at the beginning of the string
-  //  $post_string = '?' . $post_string;
-  //  watchdog("CMO_PHP", "Args:" . $post_string);
-  #dpm("Arg String:");
-  #dpm($post_string);
-  //we are going to need the length of the data string
-  //  $data_length = strlen($post_string);
-  //  
-###############################################################################
-//TODO: Try to get the module to submit through PHP vs. a System Call
+/**
+ * Posts the data to a php script
+ * @param type $portal
+ * @param type $submitted_values
+ */
+function _post_to_php($portal, $submitted_values) {
+  $post_string = _format_submission_data($portal, $submitted_values, ' --form ');
+  //TODO: Try to get the module to submit through PHP vs. a System Call
   //This is using a system aplication to submit the data.
   $curl = 'curl --form ' . $post_string . ' ' . $portal['submission_url'];
-//$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
   watchdog("CMO_PHP", $curl);
   exec($curl);
+}
 
+/**
+ * Post the data to an ASPX form
+ * @param type $portal
+ * @param type $submitted_values
+ */
+function _post_to_aspx($portal, $submitted_values) {
+  $post_string = _format_submission_data($portal, $submitted_values, '&');
+
+  $ch = curl_init($portal['submission_url']);
+  /**
+   * Return the response as a string instead of outputting it to the screen
+   */
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+  $resultaps = curl_exec($ch);
+  /**
+   * Check for errors
+   */
+  if (curl_errno($ch)) {
+    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
+    die(curl_error($ch));
+  } else {
+    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    switch ($returnCode) {
+      case 200:
+        break;
+      default:
+        $resultaps = 'HTTP ERROR -> ' . $returnCode;
+        break;
+    }
+  }
+  //Read the view state value
+  preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
+  $viewstate = urlencode($arr_viewstate[1][0]);
+  //Read the event validation value
+  preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
+  $eventvalidation = urlencode($arr_validation[1][0]);
+
+
+  /**
+   * Now you can setup the post data and submit the form
+   * For example, submit the ItemID = 6
+   */
+  $options = array(
+    CURLOPT_RETURNTRANSFER => true, // return web page
+    CURLOPT_HEADER => true, // don't return headers
+    CURLOPT_FOLLOWLOCATION => true, // follow redirects
+    CURLOPT_ENCODING => "", // handle all encodings
+    CURLOPT_USERAGENT => "spider", // who am i
+    CURLOPT_AUTOREFERER => true, // set referer on redirect
+    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+    CURLOPT_TIMEOUT => 120, // timeout on response
+    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+    CURLOPT_POST => true,
+    CURLOPT_POSTFIELDS => '__EVENTTARGET=' . urlencode('ItemID') . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
+  );
+  $ch = curl_init($url);
+  curl_setopt_array($ch, $options);
+  $resultaps = curl_exec($ch);
+
+  /**
+   *  Parse the data example
+   * Read a number 1220
+   *  <td class="WorksManageTableContent">1220</td>
+   */
+  preg_match_all("/\<td class=\"WorksManageTableContent\"\>(.*?)\<\/td\>/", $resultaps, $curCount);
+  $preCount = $curCount[1][0];
+  curl_close($ch);
+}
+
+/**
+ * Maps the defined vales to there defined keys.
+ * Maps the Forms submitted data to the 3rd party form key.
+ * Maps the Files submitted to the 3rd party form keys for files.
+ * Then submits the information to the 3rd party form.
+ * @param array $form_values
+ */
+function _submit_to_third_party(&$form_values) {
+  $portal = _get_portal_config($form_values['details']['nid'], FALSE);
+  #dpm($portal);
+  //get the submitted values.
+  $submitted_values = array();
+  _get_subbmitted_values($submitted_values, $form_values['submitted']);
+  #dpm("_get_subbmitted_values");
+  #dpm($submitted_values);
+  if (endwith($portal['submission_url'], '.php')) {
+    _post_to_php($portal, $submitted_values);
+    drupal_set_message(t("The form was forwarded"));
+  } else if (endwith($portal['submission_url'], '.aspx')) {
+    _post_to_aspx($portal, $submitted_values);
+    drupal_set_message(t("The form was forwarded to ASP.NET"));
+  } else {
+    drupal_set_error(t("Error in forwarding"));
+  }
 ###############################################################################
-//  //let's open the connection
-//  $connection = fsockopen("104.131.178.250", 80);
+//$useragent = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2';
 //
-////sending the data
-//  fputs($connection, "POST  /cmo.php  HTTP/1.1\r\n");
-//  fputs($connection, "Host:  " . "104.131.178.250" . " \r\n");
-//  fputs($connection, "Content-Type: application/x-www-form-urlencoded\r\n");
-//  fputs($connection, "Content-Length: $data_length\r\n");
-//  fputs($connection, "Connection: close\r\n\r\n");
-//  fputs($connection, $post_string);
-//
-////closing the connection
-//  fclose($connection);
-###############################################################################
 //  //create cURL connection
-//  $curl_connection = curl_init($portal['imagenow_url']);
+//  $curl_connection = curl_init($portal['submission_url']);
 //
 ////set options
 //  curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
@@ -349,8 +413,7 @@ function _get_subbmitted_values(&$flat_array, $array_in) {
   foreach ($array_in as $key => $value) {
     if (is_array($value) == false) {
       $flat_array[$key] = $value;
-    }
-    else {
+    } else {
       _get_subbmitted_values($flat_array, $value);
     }
   }
