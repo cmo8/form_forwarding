@@ -244,7 +244,7 @@ function _submit_to_third_party(&$form_values) {
 ###############################################################################
 //TODO: Try to get the module to submit through PHP vs. a System Call
   //This is using a system aplication to submit the data.
-  $curl = 'curl --form ' . $post_string . ' ' . $portal['imagenow_url'];
+  $curl = 'curl --form ' . $post_string . ' ' . $portal['submission_url'];
 //$curl = 'curl --data "' . $post_string . '" --form '. $file_string . $portal['imagenow_url'];
   #watchdog("CMO_PHP", $curl);
   exec($curl);
