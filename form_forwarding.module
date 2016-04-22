@@ -239,8 +239,10 @@ function _post_to_php($portal, $submitted_values) {
   //exec($curl);
 
   //create cURL connection
-  $curl_connection = curl_init($portal['submission_url']);
+  $curl_connection = curl_init();
   //set options
+  curl_setopt($curl_connection, CURLOPT_URL, $portal['submission_url']);
+  curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
   curl_setopt($curl_connection, CURLOPT_USERAGENT, $useragent);
   curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
