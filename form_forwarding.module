@@ -216,7 +216,7 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
   }
 //traverse array and prepare data for posting (key1=value1)
   foreach ($post_data as $key => $value) {
-    $post_items[] = filter_var($key . '=' . $value, FILTER_SANITIZE_STRING);
+    $post_items[] = $key . '=' . urlencode($value);
   }
 //create the final string to be posted using implode()
   $post_string = implode($delimiter, $post_items);
@@ -307,7 +307,7 @@ function _post_to_aspx($portal, $submitted_values) {
     CURLOPT_TIMEOUT => 120, // timeout on response
     CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => '__EVENTTARGET=' . urlencode('ItemID') . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
+    CURLOPT_POSTFIELDS => $post_string, //'__EVENTTARGET=' . urlencode('ItemID') . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
   );
   $ch = curl_init($url);
   curl_setopt_array($ch, $options);
@@ -315,7 +315,7 @@ function _post_to_aspx($portal, $submitted_values) {
 
   /**
    *  Parse the data example
-   * Read a number 1220
+   *  Read a number 1220
    *  <td class="WorksManageTableContent">1220</td>
    */
   preg_match_all("/\<td class=\"WorksManageTableContent\"\>(.*?)\<\/td\>/", $resultaps, $curCount);
