@@ -255,7 +255,7 @@ function _post_to_php($portal, $submitted_values, $form_values) {
   curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
   //perform our request
   $result = curl_exec($curl_connection);
-  dpm($result);
+  dpm($curl_connection);
   //close the connection
   curl_close($curl_connection);
 }
