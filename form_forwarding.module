@@ -217,13 +217,13 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
     }
   }
 //traverse array and prepare data for posting (key1=value1)
-  foreach ($post_data as $key => $value) {
-    $post_items[] = $key . '=' . $value;
-  }
+//  foreach ($post_data as $key => $value) {
+//    $post_items[] = $key . '=' . $value;
+//  }
 //create the final string to be posted using implode()
   //$post_string = implode($delimiter, $post_items);
   //watchdog("CMO_PHP", "FORM STRING: " . $post_string);
-  return $post_items;
+  return $post_data;
 }
 
 /**
