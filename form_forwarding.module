@@ -230,12 +230,28 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
  * @param type $submitted_values
  */
 function _post_to_php($portal, $submitted_values) {
+  $useragent = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2';
   $post_string = _format_submission_data($portal, $submitted_values, ' --form ');
   //TODO: Try to get the module to submit through PHP vs. a System Call
   //This is using a system aplication to submit the data.
   $curl = 'curl --form ' . $post_string . ' ' . $portal['submission_url'];
   watchdog("CMO_PHP", $curl);
   exec($curl);
+
+  //create cURL connection
+  $curl_connection = curl_init($portal['submission_url']);
+  //set options
+  curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
+  curl_setopt($curl_connection, CURLOPT_USERAGENT, $useragent);
+  curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
+  curl_setopt($curl_connection, CURLOPT_SSL_VERIFYPEER, true);
+  curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
+  //set data to be posted
+  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
+  //perform our request
+  $result = curl_exec($curl_connection);
+  //close the connection
+  curl_close($curl_connection);
 }
 
 /**
@@ -322,35 +338,16 @@ function _submit_to_third_party(&$form_values) {
   _get_subbmitted_values($submitted_values, $form_values['submitted']);
   #dpm("_get_subbmitted_values");
   #dpm($submitted_values);
-  if (preg_match( '/*.php$/', $portal['submission_url'])) {
+  $tmp = explode('.', $portal['submission_url']);
+  if (strcmp( 'php', $tmp[count($tmp) - 1]) == 0 ) {
     _post_to_php($portal, $submitted_values);
     drupal_set_message(t("The form was forwarded"));
-  } else if (preg_match( '/*.aspx/', $portal['submission_url'])) {
+  } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
     _post_to_aspx($portal, $submitted_values);
     drupal_set_message(t("The form was forwarded to ASP.NET"));
   } else {
-    drupal_set_error(t("Error in forwarding"));
+    drupal_set_error(t("Error in forwarding to " . $portal['submission_url']));
   }
-###############################################################################
-//$useragent = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2';
-//
-//  //create cURL connection
-//  $curl_connection = curl_init($portal['submission_url']);
-//
-////set options
-//  curl_setopt($curl_connection, CURLOPT_CONNECTTIMEOUT, 30);
-//  curl_setopt($curl_connection, CURLOPT_USERAGENT, "Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)");
-//  curl_setopt($curl_connection, CURLOPT_RETURNTRANSFER, true);
-//  curl_setopt($curl_connection, CURLOPT_SSL_VERIFYPEER, false);
-//  curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
-//
-////set data to be posted
-//  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
-//
-////perform our request
-//  $result = curl_exec($curl_connection);
-////close the connection
-//  curl_close($curl_connection);
 }
 
 /**
