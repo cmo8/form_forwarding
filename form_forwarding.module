@@ -184,7 +184,7 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
   for ($i = 0; $i < count($portal['defines']); $i++) {
     $post_data[$portal['defines'][$i]['ikey']] = urlencode($portal['defines'][$i]['ivalue']);
   }
-
+  //Add the connections to the URL params
   for ($i = 0; $i < count($portal['connections']); $i++) {
     if ($submitted_values[$portal['connections'][$i]['dek']] != "") {
       $post_data[$portal['connections'][$i]['iek']] = urlencode($submitted_values[$portal['connections'][$i]['dek']]);
@@ -193,6 +193,7 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
 //FILE handle
   #dpm("Temp: " . file_directory_temp());
   for ($i = 0; $i < count($portal['files']); $i++) {
+    dpm(array_key_exists($portal['files'][$i]['dek'], $form_values['submitted']));
     if (array_key_exists($portal['files'][$i]['dek'], $form_values['submitted'])) {
       if (is_array($form_values['submitted'][$portal['files'][$i]['dek']])) {
         dpm("Multi File...");
