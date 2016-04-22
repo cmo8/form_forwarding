@@ -176,7 +176,7 @@ function _gen_file_keys($thirdPartyKey) {
 //$regx = "file_/[a-f]/_new";
 //_print_file_keys($regx);
 
-function _format_submission_data($portal, $submitted_values, $delimiter) {
+function _format_submission_data($portal, $submitted_values, $form_values, $delimiter) {
   dpm($portal);
   //create array of data to be posted
   $post_data = NULL;
@@ -193,11 +193,11 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
 //FILE handle
   #dpm("Temp: " . file_directory_temp());
   for ($i = 0; $i < count($portal['files']); $i++) {
-    dpm(array_key_exists($portal['files'][$i]['dek'], $form_values['submitted']));
-    if (array_key_exists($portal['files'][$i]['dek'], $form_values['submitted'])) {
-      if (is_array($form_values['submitted'][$portal['files'][$i]['dek']])) {
+    dpm($portal['files'][$i]['dek']);
+    if (array_key_exists($portal['files'][$i]['dek'], $form_values)) {
+      if (is_array($form_values[$portal['files'][$i]['dek']])) {
         dpm("Multi File...");
-        $files = $form_values['submitted'][$portal['files'][$i]['dek']]["_fids"];
+        $files = $form_values[$portal['files'][$i]['dek']]["_fids"];
         $inowKeys = _gen_file_keys($portal['files'][$i]['iek']);
 
         foreach ($files as $key => $file) {
@@ -206,7 +206,7 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
           }
         }
       } else {
-        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
+        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values[$portal['files'][$i]['dek']])->uri));
         dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         if(drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri) != ""){
           $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
@@ -231,9 +231,9 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
  * @param type $portal
  * @param type $submitted_values
  */
-function _post_to_php($portal, $submitted_values) {
+function _post_to_php($portal, $submitted_values, $form_values) {
   $useragent = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2';
-  $post_string = _format_submission_data($portal, $submitted_values, '&');
+  $post_string = _format_submission_data($portal, $submitted_values, $form_values, '&');
   //TODO: Try to get the module to submit through PHP vs. a System Call
   //This is using a system aplication to submit the data.
   //$curl = 'curl --form ' . $post_string . ' ' . $portal['submission_url'];
@@ -265,8 +265,8 @@ function _post_to_php($portal, $submitted_values) {
  * @param type $portal
  * @param type $submitted_values
  */
-function _post_to_aspx($portal, $submitted_values) {
-  $post_string = _format_submission_data($portal, $submitted_values, '&');
+function _post_to_aspx($portal, $submitted_values, $form_values) {
+  $post_string = _format_submission_data($portal, $submitted_values, $form_values, '&');
 
   $ch = curl_init($portal['submission_url']);
   /**
@@ -346,10 +346,10 @@ function _submit_to_third_party(&$form_values) {
   #dpm($submitted_values);
   $tmp = explode('.', $portal['submission_url']);
   if (strcmp( 'php', $tmp[count($tmp) - 1]) == 0 ) {
-    _post_to_php($portal, $submitted_values);
+    _post_to_php($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded"));
   } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
-    _post_to_aspx($portal, $submitted_values);
+    _post_to_aspx($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded to ASP.NET"));
   } else {
     drupal_set_error(t("Error in forwarding to " . $portal['submission_url']));
