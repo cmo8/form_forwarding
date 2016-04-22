@@ -176,7 +176,7 @@ function _gen_file_keys($thirdPartyKey) {
 //$regx = "file_/[a-f]/_new";
 //_print_file_keys($regx);
 
-function _format_submission_data($portal, $submitted_values, $form_values, $delimiter) {
+function _format_submission_data($portal, $submitted_values, $form_values) {
   dpm($portal);
   //create array of data to be posted
   $post_data = NULL;
@@ -221,9 +221,9 @@ function _format_submission_data($portal, $submitted_values, $form_values, $deli
     $post_items[] = $key . '=' . $value;
   }
 //create the final string to be posted using implode()
-  $post_string = implode($delimiter, $post_items);
-  watchdog("CMO_PHP", "FORM STRING: " . $post_string);
-  return $post_string;
+  //$post_string = implode($delimiter, $post_items);
+  //watchdog("CMO_PHP", "FORM STRING: " . $post_string);
+  return $post_items;
 }
 
 /**
@@ -233,7 +233,7 @@ function _format_submission_data($portal, $submitted_values, $form_values, $deli
  */
 function _post_to_php($portal, $submitted_values, $form_values) {
   $useragent = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2';
-  $post_string = _format_submission_data($portal, $submitted_values, $form_values, '&');
+  $post_string = _format_submission_data($portal, $submitted_values, $form_values);
   //TODO: Try to get the module to submit through PHP vs. a System Call
   //This is using a system aplication to submit the data.
   //$curl = 'curl --form ' . $post_string . ' ' . $portal['submission_url'];
