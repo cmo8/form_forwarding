@@ -177,9 +177,10 @@ function _gen_file_keys($thirdPartyKey) {
 //_print_file_keys($regx);
 
 function _format_submission_data($portal, $submitted_values, $delimiter) {
+  dpm($portal);
   //create array of data to be posted
   $post_data = NULL;
-//Add the Defines to the URL params
+  //Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
     $post_data[$portal['defines'][$i]['ikey']] = urlencode($portal['defines'][$i]['ivalue']);
   }
