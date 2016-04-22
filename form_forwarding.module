@@ -253,6 +253,7 @@ function _post_to_php($portal, $submitted_values) {
   curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
   //perform our request
   $result = curl_exec($curl_connection);
+  drupal_set_message($result);
   //close the connection
   curl_close($curl_connection);
 }
