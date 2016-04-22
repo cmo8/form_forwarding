@@ -194,7 +194,7 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
   for ($i = 0; $i < count($portal['files']); $i++) {
     if (array_key_exists($portal['files'][$i]['dek'], $form_values['submitted'])) {
       if (is_array($form_values['submitted'][$portal['files'][$i]['dek']])) {
-        #dpm("Multi File...");
+        dpm("Multi File...");
         $files = $form_values['submitted'][$portal['files'][$i]['dek']]["_fids"];
         $inowKeys = _gen_file_keys($portal['files'][$i]['iek']);
 
@@ -204,8 +204,8 @@ function _format_submission_data($portal, $submitted_values, $delimiter) {
           }
         }
       } else {
-        #dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
-        #dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
+        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values['submitted'][$portal['files'][$i]['dek']])->uri));
+        dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         if(drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri) != ""){
           $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         }
