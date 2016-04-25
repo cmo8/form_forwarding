@@ -328,7 +328,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $ch = curl_init($url);
   curl_setopt_array($ch, $options);
   $resultaps = curl_exec($ch);
-
+  dom($resultaps);
   /**
    *  Parse the data example
    *  Read a number 1220
