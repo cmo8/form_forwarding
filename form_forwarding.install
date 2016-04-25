@@ -160,3 +160,15 @@ function form_forwarding_schema() {
   );
   return $schema;
 }
+
+/**
+ * Implements hook_install().
+ */
+//function form_forwarding_install() {
+//  $new_vocab = (object) array(
+//    'name' => 'Webform Forwarding Groups',
+//    'description' => 'Groups webform forwarding portals ',
+//    'machine_name' => 'my_custom_vocab',
+// );  
+//taxonomy_vocabulary_save($new_vocab);
+//}
