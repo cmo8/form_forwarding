@@ -212,13 +212,13 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
           }
         }
       } else {
+        $my_file = file_load($submitted_values[$portal['files'][$i]['dek']]);
         dpm("Single file...");
-        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values[$portal['files'][$i]['dek']])->uri));
-        dpm(file_load($submitted_values[$portal['files'][$i]['dek']]));
-        //dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
-        if(drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri) != ""){
+        dpm('File ' . $i . ' : ' . drupal_realpath($my_file->uri));
+        dpm($my_file);
+        if(drupal_realpath($my_file->uri) != ""){
           dpm("File added...");
-          $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri) . ";filename=Foo.pdf";
+          $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath($my_file->uri) . ";filename=" . $my_file->filename;
         }
       }
     } else {
