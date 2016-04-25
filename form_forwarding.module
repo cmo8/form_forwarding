@@ -193,25 +193,30 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
   }
 //FILE handle
   #dpm("Temp: " . file_directory_temp());
+  dpm("Adding Files.");
+  dpm($_FILES);
   for ($i = 0; $i < count($portal['files']); $i++) {
     //dpm($portal['files'][$i]['dek']);
     if (array_key_exists($portal['files'][$i]['dek'], $form_values)) {
+      dpm("Checking for Multi file");
       if (is_array($form_values[$portal['files'][$i]['dek']])) {
-        //dpm("Multi File...");
+        dpm("Multi File...");
         $files = $form_values[$portal['files'][$i]['dek']]["_fids"];
         $inowKeys = _gen_file_keys($portal['files'][$i]['iek']);
 
         foreach ($files as $key => $file) {
           dsm("File path: " . drupal_realpath(file_load($file)->uri));
           if(drupal_realpath(file_load($file)->uri) != "") {
-            dpm("File added...");
+            dpm("File M added...");
             $post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
           }
         }
       } else {
-        //dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values[$portal['files'][$i]['dek']])->uri));
+        dpm("Single file...");
+        dpm('File ' . $i . ' : ' . drupal_realpath(file_load($form_values[$portal['files'][$i]['dek']])->uri));
         //dpm(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         if(drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri) != ""){
+          dpm("File added...");
           $post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath(file_load($submitted_values[$portal['files'][$i]['dek']])->uri);
         }
       }
