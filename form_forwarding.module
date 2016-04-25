@@ -264,11 +264,10 @@ function _post_to_php($portal, $submitted_values, $form_values) {
   curl_setopt($curl_connection, CURLOPT_SSL_VERIFYPEER, true);
   curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
   //set data to be posted
-  dpm($post_string);
+  //dpm($post_string);
   curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
   //perform our request
   $result = curl_exec($curl_connection);
-  dpm($curl_connection);
   //close the connection
   curl_close($curl_connection);
 }
@@ -331,7 +330,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $ch = curl_init($url);
   curl_setopt_array($ch, $options);
   $resultaps = curl_exec($ch);
-  dpm($resultaps);
+  //dpm($resultaps);
   /**
    *  Parse the data example
    *  Read a number 1220
@@ -360,7 +359,7 @@ function _submit_to_third_party(&$form_values) {
   $tmp = explode('.', $portal['submission_url']);
   if (strcmp( 'php', $tmp[count($tmp) - 1]) == 0 ) {
     _post_to_php($portal, $submitted_values, $form_values['submitted']);
-    drupal_set_message(t("The form was forwarded"));
+    drupal_set_message(t("The form was forwarded to PHP Script"));
   } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
     _post_to_aspx($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded to ASP.NET"));
