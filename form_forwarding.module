@@ -321,7 +321,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
   $eventvalidation = urlencode($arr_validation[1][0]);
   
-  $data_array['__EVENTTARGET'] = urlencode('ItemID');
+  $data_array['__EVENTTARGET'] = urlencode('');
   $data_array['__EVENTARGUMENT'] = urlencode('');
   $data_array['__VIEWSTATE'] = $viewstate;
   $data_array['__EVENTVALIDATION'] = $eventvalidation;
