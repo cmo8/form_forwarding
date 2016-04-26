@@ -330,6 +330,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $ch = curl_init($portal['submission_url']);
   curl_setopt_array($ch, $options);
   $resultaps = curl_exec($ch);
+  dpm($resultaps);
   //dpm($resultaps);
   /**
    *  Parse the data example
