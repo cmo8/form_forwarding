@@ -339,9 +339,11 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $data_array['__VIEWSTATE'] = $viewstate;
   $data_array['__EVENTVALIDATION'] = $eventvalidation;
   dpm($data_array);
+  dsm(mb_internal_encoding());
   //encode to base64
   $data_array_64 = array();
   foreach($data_array as $key => $val){
+    
     $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
   }
   dsm($data_array_64);
