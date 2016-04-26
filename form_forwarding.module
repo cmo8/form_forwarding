@@ -255,7 +255,11 @@ function _post_to_php($portal, $submitted_values, $form_values) {
   //encode to url
   $data_array_urlencoded = array();
   foreach($data_array as $key => $val){
+    if(is_string($val)){
     $data_array_urlencoded[urlencode($key)] = urlencode($val);
+    } else {
+      $data_array_urlencoded[urlencode($key)] = $val;
+    }
   }
   dsm($data_array_urlencoded);
 
