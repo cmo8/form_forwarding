@@ -183,12 +183,12 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
   $post_data = NULL;
   //Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
-    $post_data[urlencode($portal['defines'][$i]['ikey'])] = urlencode($portal['defines'][$i]['ivalue']);
+    $post_data[$portal['defines'][$i]['ikey']] = $portal['defines'][$i]['ivalue'];
   }
   //Add the connections to the URL params
   for ($i = 0; $i < count($portal['connections']); $i++) {
     if ($submitted_values[$portal['connections'][$i]['dek']] != "") {
-      $post_data[urlencode($portal['connections'][$i]['iek'])] = urlencode($submitted_values[$portal['connections'][$i]['dek']]);
+      $post_data[$portal['connections'][$i]['iek']] = $submitted_values[$portal['connections'][$i]['dek']];
     }
   }
 //FILE handle
@@ -209,7 +209,7 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
           //dsm("File path: " . drupal_realpath($my_m_file->uri));
           if(drupal_realpath($my_m_file->uri) != "") {
             //dpm("File M added...");
-            $post_data[urlencode($inowKeys[$key])] = new CURLFile(drupal_realpath($my_m_file->uri), $my_m_file->filemime, $my_m_file->filename);
+            $post_data[$inowKeys[$key]] = new CURLFile(drupal_realpath($my_m_file->uri), $my_m_file->filemime, $my_m_file->filename);
             //$post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
           }
         }
@@ -220,7 +220,7 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
 //        dpm($my_file);
         if(drupal_realpath($my_file->uri) != ""){
 //          dpm("File added...");
-          $post_data[urlencode($portal['files'][$i]['iek'])] = new CURLFile(drupal_realpath($my_file->uri), $my_file->filemime, $my_file->filename);
+          $post_data[$portal['files'][$i]['iek']] = new CURLFile(drupal_realpath($my_file->uri), $my_file->filemime, $my_file->filename);
           //$post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath($my_file->uri) . ';filename=' . $my_file->filename . ';type=' . $my_file->filemime;
         }
       }
@@ -245,12 +245,19 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
  */
 function _post_to_php($portal, $submitted_values, $form_values) {
   $useragent = 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US) AppleWebKit/533.2 (KHTML, like Gecko) Chrome/5.0.342.3 Safari/533.2';
-  $post_string = _format_submission_data($portal, $submitted_values, $form_values);
+  $data_array = _format_submission_data($portal, $submitted_values, $form_values);
   //TODO: Try to get the module to submit through PHP vs. a System Call
   //This is using a system aplication to submit the data.
   //$curl = 'curl --form ' . $post_string . ' ' . $portal['submission_url'];
   //watchdog("CMO_PHP", $curl);
   //exec($curl);
+  
+  //encode to url
+  $data_array_urlencoded = array();
+  foreach($data_array as $key => $val){
+    $data_array_urlencoded[urlencode($key)] = urlencode($val);
+  }
+  dsm($data_array_urlencoded);
 
   //create cURL connection
   $curl_connection = curl_init();
@@ -265,7 +272,7 @@ function _post_to_php($portal, $submitted_values, $form_values) {
   curl_setopt($curl_connection, CURLOPT_FOLLOWLOCATION, 1);
   //set data to be posted
   //dpm($post_string);
-  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $post_string);
+  curl_setopt($curl_connection, CURLOPT_POSTFIELDS, $data_array_urlencoded);
   //perform our request
   $result = curl_exec($curl_connection);
   //close the connection
@@ -323,11 +330,18 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
   $eventvalidation = urlencode($arr_validation[1][0]);
   
-  $data_array[urlencode('__EVENTTARGET')] = urlencode('');
-  $data_array[urlencode('__EVENTARGUMENT')] = urlencode('');
-  $data_array[urlencode('__VIEWSTATE')] = $viewstate;
-  $data_array[urlencode('__EVENTVALIDATION')] = $eventvalidation;
+  $data_array['__EVENTTARGET'] = '';
+  $data_array['__EVENTARGUMENT'] = '';
+  $data_array['__VIEWSTATE'] = $viewstate;
+  $data_array['__EVENTVALIDATION'] = $eventvalidation;
   dpm($data_array);
+  //encode to base64
+  $data_array_64 = array();
+  foreach($data_array as $key => $val){
+    $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
+  }
+  dsm($data_array_64);
+  
   /**
    * Now you can setup the post data and submit the form
    * For example, submit the ItemID = 6
@@ -343,7 +357,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
     CURLOPT_TIMEOUT => 120, // timeout on response
     CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $data_array, //'__EVENTTARGET=' . urlencode('ItemID') . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
+    CURLOPT_POSTFIELDS => $data_array, //'__EVENTTARGET=' . urlencode('ItemID'urlencode) . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
   );
   $ch = curl_init($portal['submission_url']);
   curl_setopt_array($ch, $options);
