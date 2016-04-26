@@ -297,7 +297,9 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $ch = curl_init($portal['submission_url']);
   curl_setopt_array($ch, $options);
   $resultaps = curl_exec($ch);
-  dpm($resultaps);
+  $tmp = array();
+  $tmp[] = $resultaps;
+  dpm($tmp);
   /**
    * Check for errors
    */
@@ -346,7 +348,9 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $ch = curl_init($portal['submission_url']);
   curl_setopt_array($ch, $options);
   $resultaps = curl_exec($ch);
-  dpm($resultaps);
+  $temp = array();
+  $temp[] = $resultaps;
+  dpm($temp);
   //dpm($resultaps);
   /**
    *  Parse the data example
