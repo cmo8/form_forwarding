@@ -6,5 +6,5 @@ version = 7.x-1.0
 dependencies[] = fapi_validation
 dependencies[] = webform
 dependencies[] = file
-dependencies[] = workbench_access
+dependencies[] = taxonomy
 configure = admin/config/content/form_forwarding
