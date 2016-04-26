@@ -183,12 +183,12 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
   $post_data = NULL;
   //Add the Defines to the URL params
   for ($i = 0; $i < count($portal['defines']); $i++) {
-    $post_data[$portal['defines'][$i]['ikey']] = urlencode($portal['defines'][$i]['ivalue']);
+    $post_data[urlencode($portal['defines'][$i]['ikey'])] = urlencode($portal['defines'][$i]['ivalue']);
   }
   //Add the connections to the URL params
   for ($i = 0; $i < count($portal['connections']); $i++) {
     if ($submitted_values[$portal['connections'][$i]['dek']] != "") {
-      $post_data[$portal['connections'][$i]['iek']] = urlencode($submitted_values[$portal['connections'][$i]['dek']]);
+      $post_data[urlencode($portal['connections'][$i]['iek'])] = urlencode($submitted_values[$portal['connections'][$i]['dek']]);
     }
   }
 //FILE handle
@@ -209,7 +209,7 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
           //dsm("File path: " . drupal_realpath($my_m_file->uri));
           if(drupal_realpath($my_m_file->uri) != "") {
             //dpm("File M added...");
-            $post_data[$inowKeys[$key]] = new CURLFile(drupal_realpath($my_m_file->uri), $my_m_file->filemime, $my_m_file->filename);
+            $post_data[urlencode($inowKeys[$key])] = new CURLFile(drupal_realpath($my_m_file->uri), $my_m_file->filemime, $my_m_file->filename);
             //$post_data[$inowKeys[$key]] = '@' . drupal_realpath(file_load($file)->uri);
           }
         }
@@ -220,7 +220,7 @@ function _format_submission_data($portal, $submitted_values, $form_values) {
 //        dpm($my_file);
         if(drupal_realpath($my_file->uri) != ""){
 //          dpm("File added...");
-          $post_data[$portal['files'][$i]['iek']] = new CURLFile(drupal_realpath($my_file->uri), $my_file->filemime, $my_file->filename);
+          $post_data[urlencode($portal['files'][$i]['iek'])] = new CURLFile(drupal_realpath($my_file->uri), $my_file->filemime, $my_file->filename);
           //$post_data[$portal['files'][$i]['iek']] = '@' . drupal_realpath($my_file->uri) . ';filename=' . $my_file->filename . ';type=' . $my_file->filemime;
         }
       }

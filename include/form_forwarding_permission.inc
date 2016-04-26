@@ -65,25 +65,21 @@ function _create_file($rid, $tid) {
 }
 /**
  * Gets the files for the given portal.
- * @param int $inid
+ * @param int $uid
  * @return array
  */
 function _get_user_terms($uid) {
   dpm($uid);
-  $portal_files = [];
-//  // Get the connections from the Database
-//  $result = db_select('form_forwarding_file_keys', 'file_keys')
-//    ->fields('file_keys', array('filekid', 'third_party_element_key', 'drupal_element_key'))
-//    ->condition('inid', $inid, '=')
-//    ->orderBy('filekid', 'ASC')
-//    ->execute();
-//  // Organize connection elements
-//  foreach ($result as $row) {
-//    $row1 = [];
-//    $row1['filekid'] = $row->filekid;
-//    $row1['iek'] = $row->third_party_element_key;
-//    $row1['dek'] = $row->drupal_element_key;
-//    $portal_files[] = $row1;
-//  }
-  return $portal_files;
+  $access_control = [];
+  // Get the connections from the Database
+  $result = db_select('form_forwarding_permission', 'ffp')
+    ->fields('ffp', array('fid', 'rid'))
+    ->execute();
+  // Organize connection elements
+  foreach ($result as $row) {
+    if(array_key_exists($row->rid,$uid->roles)){
+      $access_control[] = $row1->fid;
+    }
+  }
+  return $access_control;
 }
