@@ -375,7 +375,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $resultaps = curl_exec($ch);
   $temp = array();
   $temp[] = $resultaps;
-  dpm($temp);
+  //dpm($temp);
   //dpm($resultaps);
   /**
    *  Parse the data example
@@ -385,7 +385,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   preg_match_all("/\<td class=\"WorksManageTableContent\"\>(.*?)\<\/td\>/", $resultaps, $curCount);
   $preCount = $curCount[1][0];
   curl_close($ch);
-  echo $resultaps;
+  return $resultaps;
 }
 
 /**
@@ -422,11 +422,12 @@ function _submit_to_third_party(&$form_values) {
     _post_to_php($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded to PHP Script"));
   } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
-    _post_to_aspx($portal, $submitted_values, $form_values['submitted']);
+    $foo = _post_to_aspx($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded to ASP.NET"));
   } else {
     drupal_set_error(t("Error in forwarding to " . $portal['submission_url']));
   }
+  return $foo;
 }
 
 /**
@@ -442,7 +443,7 @@ function form_forwarding_form_validate($form, &$form_state) {
   if (form_get_errors()) {
     return;
   }
-  _submit_to_third_party($form_state['values']);
+  return _submit_to_third_party($form_state['values']);
 }
 
 /**
