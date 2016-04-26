@@ -299,7 +299,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
     CURLOPT_HEADER => true, // don't return headers
     CURLOPT_FOLLOWLOCATION => true, // follow redirects
     CURLOPT_ENCODING => "", // handle all encodings
-    CURLOPT_USERAGENT => "", // who am i"",
+    CURLOPT_USERAGENT => "", // who am i
     CURLOPT_AUTOREFERER => true, // set referer on redirect
     CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
     CURLOPT_TIMEOUT => 120, // timeout on response
@@ -339,14 +339,14 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $data_array['__VIEWSTATE'] = $viewstate;
   $data_array['__EVENTVALIDATION'] = $eventvalidation;
   dpm($data_array);
-//  dsm(mb_internal_encoding());
-//  //encode to base64
-//  $data_array_64 = array();
-//  foreach($data_array as $key => $val){
-//    
-//    $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
-//  }
-//  dsm($data_array_64);
+  dsm(mb_internal_encoding());
+  //encode to base64
+  $data_array_64 = array();
+  foreach($data_array as $key => $val){
+    
+    $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
+  }
+  dsm($data_array_64);
   
   /**
    * Now you can setup the post data and submit the form
@@ -356,14 +356,14 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
     CURLOPT_RETURNTRANSFER => true, // return web page
     CURLOPT_HEADER => true, // don't return headers
     CURLOPT_FOLLOWLOCATION => true, // follow redirects
-    CURLOPT_ENCODING => 'UTF-8', // handle all encodings
+    CURLOPT_ENCODING => "", // handle all encodings
     CURLOPT_USERAGENT => "", // who am i
     CURLOPT_AUTOREFERER => true, // set referer on redirect
     CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
     CURLOPT_TIMEOUT => 120, // timeout on response
     CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
     CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $data_array, //'__EVENTTARGET=' . urlencode('ItemID'urlencode) . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
+    CURLOPT_POSTFIELDS => $data_array_64, //'__EVENTTARGET=' . urlencode('ItemID'urlencode) . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
   );
   $ch = curl_init($portal['submission_url']);
   curl_setopt_array($ch, $options);
