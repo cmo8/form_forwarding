@@ -280,11 +280,22 @@ function _post_to_php($portal, $submitted_values, $form_values) {
 function _post_to_aspx($portal, $submitted_values, $form_values) {
   $data_array = _format_submission_data($portal, $submitted_values, $form_values, '&');
 
-  $ch = curl_init($portal['submission_url']);
   /**
    * Return the response as a string instead of outputting it to the screen
    */
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+   $options = array(
+    CURLOPT_RETURNTRANSFER => true, // return web page
+    CURLOPT_HEADER => true, // don't return headers
+    CURLOPT_FOLLOWLOCATION => true, // follow redirects
+    CURLOPT_ENCODING => "", // handle all encodings
+    CURLOPT_USERAGENT => "", // who am i
+    CURLOPT_AUTOREFERER => true, // set referer on redirect
+    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+    CURLOPT_TIMEOUT => 120, // timeout on response
+    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+  );
+  $ch = curl_init($portal['submission_url']);
+  curl_setopt_array($ch, $options);
   $resultaps = curl_exec($ch);
   dpm($resultaps);
   /**
