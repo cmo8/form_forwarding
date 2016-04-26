@@ -314,6 +314,7 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $data_array['__EVENTARGUMENT'] = urlencode('');
   $data_array['__VIEWSTATE'] = $viewstate;
   $data_array['__EVENTVALIDATION'] = $eventvalidation;
+  dpm($data_array);
   /**
    * Now you can setup the post data and submit the form
    * For example, submit the ItemID = 6
