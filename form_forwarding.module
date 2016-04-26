@@ -342,9 +342,14 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   dsm(mb_internal_encoding());
   //encode to base64
   $data_array_64 = array();
+  //$filecount = 0;
   foreach($data_array as $key => $val){
-    
-    $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
+    if(is_string($val)){
+      $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
+    } else {
+      $data_array_64[urlencode(base64_encode($key))] = base64_encode($val);
+      //$filecount++;
+    }
   }
   dsm($data_array_64);
   
@@ -380,7 +385,22 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   preg_match_all("/\<td class=\"WorksManageTableContent\"\>(.*?)\<\/td\>/", $resultaps, $curCount);
   $preCount = $curCount[1][0];
   curl_close($ch);
+  echo $resultaps;
 }
+
+/**
+ * Post the data to an soap web service
+ * @param type $portal
+ * @param type $submitted_values
+ */
+//function _post_to_soap($portal, $submitted_values, $form_values) {
+//  $data_array = _format_submission_data($portal, $submitted_values, $form_values, '&');
+//
+//  $client = new SoapClient($portal['submission_url']);
+//  $client->SoapFunction($data_array);
+//  
+//
+//}
 
 /**
  * Maps the defined vales to there defined keys.
