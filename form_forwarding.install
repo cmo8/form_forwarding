@@ -159,39 +159,39 @@ function form_forwarding_schema() {
     ),
   );
 
-//  $schema['form_forwarding_permissions'] = array(
-//    'description' => 'Permissions to view form forwarding portals',
-//    'fields' => array(
-//      'ffpid' => array(
-//        'type' => 'serial',
-//        'unsigned' => TRUE,
-//        'not null' => TRUE,
-//      ),
-//      'rid' => array(
-//        'description' => 'Role id.',
-//        'type' => 'int',
-//        'unsigned' => TRUE,
-//        'not null' => TRUE,
-//      ),
-//      'tid' => array(
-//        'description' => 'the turm they have access to ',
-//        'type' => 'int',
-//        'unsigned' => TRUE,
-//        'not null' => TRUE,
-//      ),
-//    ),
-//    'primary key' => array('ffpid'),
-//    'foreign keys' => array(
-//      'rid' => array(
-//        'table' => 'role',
-//        'columns' => array('rid' => 'rid'),
-//      ),
-//      'tid' => array(
-//        'table' => 'taxonomy_term_data',
-//        'columns' => array('tid' => 'tid'),
-//      ),
-//    ),
-//  );
+  $schema['form_forwarding_permissions'] = array(
+    'description' => 'Permissions to view form forwarding portals',
+    'fields' => array(
+      'ffpid' => array(
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'rid' => array(
+        'description' => 'Role id.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'tid' => array(
+        'description' => 'the turm they have access to ',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+    ),
+    'primary key' => array('ffpid'),
+    'foreign keys' => array(
+      'rid' => array(
+        'table' => 'role',
+        'columns' => array('rid' => 'rid'),
+      ),
+      'tid' => array(
+        'table' => 'taxonomy_term_data',
+        'columns' => array('tid' => 'tid'),
+      ),
+    ),
+  );
   return $schema;
 }
 
