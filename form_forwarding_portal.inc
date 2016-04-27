@@ -45,6 +45,14 @@ function form_forwarding_portal_admin() {
     '#required' => TRUE,
     '#default_value' => $portal_config['description'],
   );
+  dsm(taxonomy_vocabulary_machine_name_load('webform_forwarding_groups'));
+  $form['group'] = array(
+    '#type' => 'select',
+    '#title' => t('Portal Group'),
+    '#multiple' => false,
+    //'#options' => taxonomy_get_tree(taxonomy_vocabulary_machine_name_load($name)),
+    '#default_value' => $portal_config['group'],
+  );
 
   $form['submitionurl'] = array(
     '#type' => 'textfield',

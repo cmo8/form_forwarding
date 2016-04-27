@@ -198,22 +198,22 @@ function form_forwarding_schema() {
 /**
  * Implements hook_install().
  */
-//function form_forwarding_install() {
-//  $new_vocab = (object) array(
-//        'name' => 'Webform Forwarding Groups',
-//        'description' => 'Groups webform forwarding portals into groups',
-//        'machine_name' => 'webform_forwarding_groups',
-//  );
-//  taxonomy_vocabulary_save($new_vocab);
-//  $vid = taxonomy_vocabulary_get_name('webform_forwarding_groups');
-//  $new_term_admin = (object) array(
-//        'name' => 'Admin',
-//        'vid' => $vid,
-//  );
-//  taxonomy_term_save($new_term_admin);
-//  $new_term_auth_user = (object) array(
-//        'name' => 'Admin',
-//        'vid' => $vid,
-//  );
-//  taxonomy_term_save($new_term_auth_user);
-//}
+function form_forwarding_install() {
+  $new_vocab = (object) array(
+        'name' => 'Webform Forwarding Groups',
+        'description' => 'Groups webform forwarding portals into groups',
+        'machine_name' => 'webform_forwarding_groups',
+  );
+  taxonomy_vocabulary_save($new_vocab);
+  $vid = taxonomy_vocabulary_get_name('webform_forwarding_groups');
+  $new_term_admin = (object) array(
+        'name' => 'Admin',
+        'vid' => $vid,
+  );
+  taxonomy_term_save($new_term_admin);
+  $new_term_auth_user = (object) array(
+        'name' => 'Admin',
+        'vid' => $vid,
+  );
+  taxonomy_term_save($new_term_auth_user);
+}

@@ -465,20 +465,6 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
 }
 
 /**
- * Post the data to an soap web service
- * @param type $portal
- * @param type $submitted_values
- */
-//function _post_to_soap($portal, $submitted_values, $form_values) {
-//  $data_array = _format_submission_data($portal, $submitted_values, $form_values, '&');
-//
-//  $client = new SoapClient($portal['submission_url']);
-//  $client->SoapFunction($data_array);
-//  
-//
-//}
-
-/**
  * Maps the defined vales to there defined keys.
  * Maps the Forms submitted data to the 3rd party form key.
  * Maps the Files submitted to the 3rd party form keys for files.

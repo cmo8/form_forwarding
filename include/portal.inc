@@ -3,6 +3,7 @@
 require_once 'portal_connection.inc';
 require_once 'portal_define_key.inc';
 require_once 'portal_file_key.inc';
+require_once 'form_forwarding_permission.inc';
 
 /**
  * Deletes the given portal from the database.
@@ -44,20 +45,20 @@ function _create_portal($drupal_nid, $description, $submission_url, $group) {
 /**
  * Updates the given portal with the new drupal node id, description, and 3rd party url.
  * @param int/string $portal_id
- * @param string $drupal_nid
  * @param string $description
  * @param string $submission_url
+ * @param string $group
  * @return int
  */
-function _update_portal($portal_id, $drupal_nid, $description, $submission_url) {//TODO: Group
+function _update_portal($portal_id, /*$drupal_nid,*/ $description, $submission_url, $group) {//TODO: Group
   $update_portal = db_update('form_forwarding_portals')
     ->condition('inid', $portal_id, '=')
     ->fields(
       array(
-        'drupal_nid' => $drupal_nid,
+        //'drupal_nid' => $drupal_nid,
         'description' => $description,
         'submission_url' => $submission_url,
-        //'group_id' => $group,
+        'group_id' => $group,
       )
     )
     ->execute();
@@ -137,17 +138,17 @@ function _get_access_roles($access_id){
   return $roles;
 }
 
-function _does_array_element_equil_in_array($roles_to_campare, $user_roles){
-  foreach ($roles_to_campare as $file_role) {
-    //watchdog("CMO-PHP", "File role: " . $file_role . ": " . implode(',', $user_roles));
-    foreach ($user_roles as $key => $value) {
-      if($file_role == $key){
-        return TRUE;
-      }
-    }
-  }
-  return FALSE;
-}
+//function _does_array_element_equil_in_array($roles_to_campare, $user_roles){
+//  foreach ($roles_to_campare as $file_role) {
+//    //watchdog("CMO-PHP", "File role: " . $file_role . ": " . implode(',', $user_roles));
+//    foreach ($user_roles as $key => $value) {
+//      if($file_role == $key){
+//        return TRUE;
+//      }
+//    }
+//  }
+//  return FALSE;
+//}
 
 /**
  * Get the drupal to imagenow portals.
@@ -162,14 +163,16 @@ function _get_drupal_to_third_party_portals($user_roles) {
     ->execute();
   // Organize portal elements
   foreach ($result as $row) {
-    //watchdog("CMO-PHP", "Portal " . $row->inid);
-    $roles_to_campare = _get_access_roles($row->group_id);
-    //watchdog("CMO-PHP", "User Roles: " . implode(",", $user_roles));
-    if(array_key_exists(3, $user_roles) || _does_array_element_equil_in_array($roles_to_campare, $user_roles)){
+    watchdog("CMO-PHP", "Portal: " . $row->inid);
+    watchdog("CMO-PHP", "Group ID: " . $row->group_id);
+    $roles_to_campare = _get_user_terms($user_roles);//_get_access_roles($row->group_id);
+    watchdog("CMO-PHP", "User Roles: " . implode(",", $user_roles));
+    if(array_key_exists(3, $user_roles) || in_array(group_id, $roles_to_campare)){//_does_array_element_equil_in_array($roles_to_campare, $user_roles)){
       $row1 = [];
       $row1['inid'] = $row->inid;
       $row1['fid'] = $row->drupal_nid;
       $row1['description'] = $row->description;
+      $row1['group'] = $row->group_id;
       $portals[] = $row1;
     }
   }

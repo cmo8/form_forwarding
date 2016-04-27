@@ -65,10 +65,10 @@ function _create_file($rid, $tid) {
 }
 /**
  * Gets the files for the given portal.
- * @param int $uid
+ * @param int $uroles
  * @return array
  */
-function _get_user_terms($uid) {
+function _get_user_terms($uroles) {
   dpm($uid);
   $access_control = [];
   // Get the connections from the Database
@@ -77,8 +77,8 @@ function _get_user_terms($uid) {
     ->execute();
   // Organize connection elements
   foreach ($result as $row) {
-    if(array_key_exists($row->rid,$uid->roles)){
-      $access_control[] = $row1->fid;
+    if(array_key_exists($row->rid, $uroles)){
+      $access_control[] = $row->fid;
     }
   }
   return $access_control;
