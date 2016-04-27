@@ -34,7 +34,7 @@ function _delete_permission($rid, $tid) {
  * @param string $tid
  * @return int
  */
-function _update_file($ffpid, $rid, $tid) {
+function _update_permission($ffpid, $rid, $tid) {
   $update_file = db_update('form_forwarding_permission')
     ->condition('ffpid', $ffpid, '=')
     ->fields(
@@ -52,7 +52,7 @@ function _update_file($ffpid, $rid, $tid) {
  * @param string $tid
  * @return int $ file
  */
-function _create_file($rid, $tid) {
+function _create_permission($rid, $tid) {
   $ffid = db_insert('form_forwarding_permission')
     ->fields(
       array(
