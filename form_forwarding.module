@@ -481,7 +481,7 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
   $resultaps = curl_exec($ch);
   $temp = array();
   $temp[] = $resultaps;
-  //dpm($temp);
+  dpm($temp);
   //dpm($resultaps);
   /**
    *  Parse the data example
