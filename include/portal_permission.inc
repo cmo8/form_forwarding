@@ -53,7 +53,7 @@ function _update_permission($ffpid, $rid, $tid) {
  * @return int $ file
  */
 function _create_permission($rid, $tid) {
-  $ffid = db_insert('form_forwarding_permission')
+  $ffpid = db_insert('form_forwarding_permission')
     ->fields(
       array(
         'rid' => $rid,
@@ -61,7 +61,7 @@ function _create_permission($rid, $tid) {
       )
     )
     ->execute();
-  return $ffid;
+  return $ffpid;
 }
 
 /**

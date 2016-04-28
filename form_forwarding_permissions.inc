@@ -142,6 +142,8 @@ function permission_add($form, &$form_state){
   
   $tid = $form_state['values']['tid'];
   $rid = $form_state['values']['rid'];
+  dsm("TID: " . $tid);
+  dsm("RID: " . $rid);
   _create_permission($rid, $tid);
   
   drupal_set_message(t("New Permission Added"));
