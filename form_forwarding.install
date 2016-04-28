@@ -198,22 +198,49 @@ function form_forwarding_schema() {
 /**
  * Implements hook_install().
  */
-//function form_forwarding_install() {
+function form_forwarding_install() {
+  $new_vocab = (object) array(
+        'name' => 'Webform Forwarding Groups',
+        'description' => 'Groups webform forwarding portals into groups',
+        'machine_name' => 'webform_forwarding_groups',
+  );
+  taxonomy_vocabulary_save($new_vocab);
+  $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
+  $new_term_admin = (object) array(
+        'name' => 'Admin',
+        'vid' => $vocabulary->vid,
+  );
+  taxonomy_term_save($new_term_admin);
+  $new_term_auth_user = (object) array(
+        'name' => 'Authenticated User',
+        'vid' => $vocabulary->vid,
+  );
+  taxonomy_term_save($new_term_auth_user);
+//  $rid_admin = array_search('administrator', user_roles());
+//  _create_permission($rid_admin, $new_term_admin->tid);
+//  $rid_auth_user = array_search('authenticated user', user_roles());
+//  _create_permission($rid_auth_user, $new_term_auth_user->tid);
+}
+
+/**
+ * Implements hook_enable().
+ */
+//function form_forwarding_enable() {
 //  $new_vocab = (object) array(
-//        'name' => 'Webform Forwarding Groups',
-//        'description' => 'Groups webform forwarding portals into groups',
-//        'machine_name' => 'webform_forwarding_groups',
+//    'name' => 'Webform Forwarding Groups',
+//    'description' => 'Groups webform forwarding portals into groups',
+//    'machine_name' => 'webform_forwarding_groups',
 //  );
 //  taxonomy_vocabulary_save($new_vocab);
 //  $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
 //  $new_term_admin = (object) array(
-//        'name' => 'Admin',
-//        'vid' => $vocabulary->vid,
+//    'name' => 'Admin',
+//    'vid' => $vocabulary->vid,
 //  );
 //  taxonomy_term_save($new_term_admin);
 //  $new_term_auth_user = (object) array(
-//        'name' => 'Authenticated User',
-//        'vid' => $vocabulary->vid,
+//    'name' => 'Authenticated User',
+//    'vid' => $vocabulary->vid,
 //  );
 //  taxonomy_term_save($new_term_auth_user);
 //  $rid_admin = array_search('administrator', user_roles());
@@ -221,33 +248,6 @@ function form_forwarding_schema() {
 //  $rid_auth_user = array_search('authenticated user', user_roles());
 //  _create_permission($rid_auth_user, $new_term_auth_user->tid);
 //}
-
-/**
- * Implements hook_enable().
- */
-function form_forwarding_enable() {
-  $new_vocab = (object) array(
-    'name' => 'Webform Forwarding Groups',
-    'description' => 'Groups webform forwarding portals into groups',
-    'machine_name' => 'webform_forwarding_groups',
-  );
-  taxonomy_vocabulary_save($new_vocab);
-  $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
-  $new_term_admin = (object) array(
-    'name' => 'Admin',
-    'vid' => $vocabulary->vid,
-  );
-  taxonomy_term_save($new_term_admin);
-  $new_term_auth_user = (object) array(
-    'name' => 'Authenticated User',
-    'vid' => $vocabulary->vid,
-  );
-  taxonomy_term_save($new_term_auth_user);
-  $rid_admin = array_search('administrator', user_roles());
-  _create_permission($rid_admin, $new_term_admin->tid);
-  $rid_auth_user = array_search('authenticated user', user_roles());
-  _create_permission($rid_auth_user, $new_term_auth_user->tid);
-}
 
 /**
  * Implements hook_uninstall().
