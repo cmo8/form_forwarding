@@ -206,6 +206,7 @@ function form_forwarding_install() {
   );
   taxonomy_vocabulary_save($new_vocab);
   $vid = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
+  dpm($vid);
   $new_term_admin = (object) array(
         'name' => 'Admin',
         'vid' => $vid,
