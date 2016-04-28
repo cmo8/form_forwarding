@@ -19,9 +19,9 @@ function form_forwarding_permissions_admin() {
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
     $opt[$term->tid] = $term->name;
   }
-  $opt['-select-'] = '- Select -';
+  $opt = array('-select-' => '- Select -') + $opt;
   $roles = user_roles();
-  $roles['-select-'] = '- Select -';
+  $roles = array('-select-' => '- Select -') + $opt;
   $permissions = _get_permissions();
 ################################################################################
   $form[]['#markup'] = t('<div id="roles">');
@@ -90,6 +90,7 @@ function form_forwarding_permissions_admin() {
     '#required' => false,
     '#multiple' => false,
     '#options' => $opt,
+    '#default_value' => '-select-',
   );
   $form['new-permission'][]['#markup'] = t('</td>');
   $form['new-permission'][]['#markup'] = t('<td>');
@@ -100,7 +101,7 @@ function form_forwarding_permissions_admin() {
     '#required' => false,
     '#multiple' => false,
     '#options' => user_roles(),
-    '#default_value' => $permissions[$i]['rid'],
+    '#default_value' => '-select-',
   );
   $form['new-permission'][]['#markup'] = t('</td>');
   $form['new-permission'][]['#markup'] = t('<td>');

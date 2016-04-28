@@ -47,7 +47,7 @@ function form_forwarding_portal_admin() {
   );
   $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
   $opt = array();
-  $opt['-select-'] = '- Select -';
+  $opt = array('-select-' => '- Select -') + $opt;
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
     $opt[$term->tid] = $term->name;
   }
