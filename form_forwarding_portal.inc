@@ -45,7 +45,6 @@ function form_forwarding_portal_admin() {
     '#required' => TRUE,
     '#default_value' => $portal_config['description'],
   );
-  dsm(taxonomy_vocabulary_machine_name_load('webform_forwarding_groups'));
   $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
   $opt = array();
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
@@ -501,7 +500,7 @@ function portal_save($form, &$form_state) {
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
-
+  dsm($form_state);
   $drupal_nid = $form_state['values']['drupalnid'];
   $description = $form_state['values']['description'];
   $imagenow_url = $form_state['values']['submitionurl'];
