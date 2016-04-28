@@ -166,11 +166,12 @@ function _get_drupal_to_third_party_portals($user_roles) {
     watchdog("CMO-PHP", "Portal: " . $row->inid);
     watchdog("CMO-PHP", "Group ID: " . $row->group_id);
     $roles_to_campare = _get_user_terms($user_roles);//_get_access_roles($row->group_id);
+    $temp_var = implode(",", $roles_to_campare);
     watchdog("CMO-PHP", "User Roles: " . implode(",", $user_roles));
-    watchdog("CMO-PHP", "User Groups: " . implode(",", $roles_to_campare));
+    watchdog("CMO-PHP", "User Groups: " . $temp_var);
     
     watchdog("CMO-PHP", "User Groups: " . implode("============================================"));
-    watchdog("CMO-PHP", "User Groups: " . implode(",", $roles_to_campare) . " :: " . $row->group_id);
+    watchdog("CMO-PHP", "User Groups: " . $temp_var . " :: " . $row->group_id);
     watchdog("CMO-PHP", "User Groups: " . implode("============================================"));
     if(array_key_exists(3, $user_roles) || in_array($row->group_id, $roles_to_campare)){//_does_array_element_equil_in_array($roles_to_campare, $user_roles)){
       $row1 = [];
