@@ -161,7 +161,6 @@ function permission_add($form, &$form_state){
  * @param array $form_state
  */
 function permission_save($form, &$form_state) {
-  dsm($form_state);
   $index = 0;
   $ffpid = $form_state['values']['p' . strval($index) . '-ffpid'];
   while ($ffpid != NULL) {
