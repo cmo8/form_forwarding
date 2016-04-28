@@ -61,6 +61,7 @@ function _create_permission($rid, $tid) {
       )
     )
     ->execute();
+  dsm("FFPID: " . $ffpid);
   return $ffpid;
 }
 
