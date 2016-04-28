@@ -54,12 +54,13 @@ function _update_permission($ffpid, $rid, $tid) {
  */
 function _create_permission($rid, $tid) {
   $ffpid = db_insert('form_forwarding_permission')
-    ->fields(
-      array(
-        'rid' => $rid,
-        'tid' => $tid,
+    ->fields(array('rid', 'tid',))
+    ->values(
+        array(
+          'rid' => $rid,
+          'tid' => $tid,
+        )
       )
-    )
     ->execute();
   dsm("FFPID: " . $ffpid);
   return $ffpid;
