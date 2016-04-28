@@ -15,7 +15,7 @@ function form_forwarding_admin_settings() {
   $form['#attached']['js'][] = drupal_get_path('module', 'form_forwarding') . '/js/form_forwarding_admin.js';
 
   $form[]['#markup'] = t('<h2>Webform Forwarding Admin</h2>');
-$form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to 3rd party Webforms. '. l('Edit Permissions', '/admin/config/content/form_forwarding/permissions') . '</p>');
+  $form[]['#markup'] = t('<p>I allow you to connect Drupal webforms to 3rd party Webforms. '. l('Edit Permissions', '/admin/config/content/form_forwarding/permissions') . '</p>');
   global $user;
   #dsm($user);
   $portals = _get_drupal_to_third_party_portals($user->roles);
