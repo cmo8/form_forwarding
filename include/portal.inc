@@ -3,7 +3,7 @@
 require_once 'portal_connection.inc';
 require_once 'portal_define_key.inc';
 require_once 'portal_file_key.inc';
-require_once 'form_forwarding_permission.inc';
+require_once 'portal_permission.inc';
 
 /**
  * Deletes the given portal from the database.
