@@ -155,7 +155,7 @@ function permission_add($form, &$form_state){
     _create_permission($rid, $tid);
     drupal_set_message(t("New Permission Added"));
   } else {
-    drupal_set_message(t("Permission Already Exists"), 'error');
+    drupal_set_message(t("The permission already exists"), 'error');
   }
 }
 
