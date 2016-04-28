@@ -28,6 +28,15 @@ function _delete_permission($rid, $tid) {
     ->execute();
 }
 /**
+ * Deletes the given role from the database.
+ * @param string/array $filekid
+ */
+function _delete_permission_ffpid($ffpid) {
+  db_delete('form_forwarding_permission')
+    ->condition('ffpid', $ffpid, '=')
+    ->execute();
+}
+/**
  * Updates the given permission.
  * @param int $ffpid
  * @param string $rid

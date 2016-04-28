@@ -132,9 +132,7 @@ function define_permission($form, &$form_state){
   $index = $form_state['clicked_button']['#name'][0];
   $ffpid = $form_state['values']['p' . strval($index) . '-ffpid'];
   
-  $tid = $form_state['values']['tid'];
-  $rid = $form_state['values']['rid'];
-  _delete_permission($rid, $tid);
+  _delete_permission_ffpid($ffpid);
   
   drupal_set_message(t("Permission Deleted"));
 }
