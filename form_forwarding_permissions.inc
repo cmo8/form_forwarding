@@ -85,7 +85,7 @@ function form_forwarding_permissions_admin() {
     '#type' => 'select',
     '#title' => t('Term ID'),
     '#title_display' => 'invisible',
-    '#required' => true,
+    '#required' => false,
     '#multiple' => false,
     '#options' => $opt,
   );
@@ -95,7 +95,7 @@ function form_forwarding_permissions_admin() {
     '#type' => 'select',
     '#title' => t('Role ID'),
     '#title_display' => 'invisible',
-    '#required' => true,
+    '#required' => false,
     '#multiple' => false,
     '#options' => user_roles(),
     '#default_value' => $permissions[$i]['rid'],
