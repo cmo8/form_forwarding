@@ -19,8 +19,8 @@ function form_forwarding_permissions_admin() {
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
     $opt[$term->tid] = $term->name;
   }
-  $opt = array('-select-' => '- Select -') + sort($opt);
-  $roles = sort(user_roles());
+  $opt = array('-select-' => '- Select -') + asort($opt);
+  $roles = asort(user_roles());
   $roles = array('-select-' => '- Select -') + $roles;
   $permissions = _get_permissions();
 ################################################################################
