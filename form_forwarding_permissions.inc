@@ -151,8 +151,12 @@ function define_permission($form, &$form_state){
 function permission_add($form, &$form_state){
   $tid = $form_state['values']['tid'];
   $rid = $form_state['values']['rid'];
-  _create_permission($rid, $tid);
-  drupal_set_message(t("New Permission Added"));
+  if($rid != '-select-' && $tid != '-select-' && _check_permission($rid, $tid)){
+    _create_permission($rid, $tid);
+    drupal_set_message(t("New Permission Added"));
+  } else {
+    drupal_set_message(t("Permission Already Exists"), 'error');
+  }
 }
 
 

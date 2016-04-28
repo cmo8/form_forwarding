@@ -71,8 +71,25 @@ function _create_permission($rid, $tid) {
         )
       )
     ->execute();
-  dsm("FFPID: " . $ffpid);
   return $ffpid;
+}
+
+/**
+ * Gets the files for the given portal.
+ * @return array
+ */
+function _check_permission($rid, $tid) {
+  // Get the connections from the Database
+  $result = db_select('form_forwarding_permission', 'ffp')
+    ->fields('ffp', array('tid', 'rid'))
+    ->execute();
+  // Organize connection elements
+  foreach ($result as $row) {
+    if($rid == $row->rid && $tid == $row->tid){
+      return false;
+    }
+  }
+  return true;
 }
 
 /**
