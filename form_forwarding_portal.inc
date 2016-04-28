@@ -505,19 +505,19 @@ function portal_save($form, &$form_state) {
   $drupal_nid = $form_state['values']['drupalnid'];
   $description = $form_state['values']['description'];
   $imagenow_url = $form_state['values']['submitionurl'];
-
+  $group = $form_state['values']['group'];
   if ($portal_id == 'new') {
     $node = node_load($drupal_nid);
     #dpm($node);
     global $user;
     #dpm($user);
-    $eid = _create_portal($drupal_nid, $description, $imagenow_url, reset($node->workbench_access)); //TODO: change
+    $eid = _create_portal($description, $imagenow_url, $group); //TODO: change
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/content/form_forwarding/portal/' . strval($eid));
   }
   else {
     // Update Portal
-    $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url);
+    $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url, $group);
     // Update defines
     $index = 0;
     $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
