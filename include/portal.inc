@@ -151,7 +151,7 @@ function _get_access_roles($access_id){
 //}
 
 /**
- * Get the drupal to imagenow portals.
+ * Get the drupal to imagenow portals for the user.
  * @return array
  */
 function _get_drupal_to_third_party_portals($user_roles) {
