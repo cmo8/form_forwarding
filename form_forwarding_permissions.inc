@@ -128,7 +128,7 @@ function form_forwarding_permissions_admin() {
 }
 
 function define_permission($form, &$form_state){
-  dsm($form_state['values']);
+  dsm($form_state);
   
   $tid = $form_state['values']['tid'];
   $rid = $form_state['values']['rid'];
