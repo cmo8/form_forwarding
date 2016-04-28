@@ -20,6 +20,7 @@ function form_forwarding_permissions_admin() {
     $opt[$term->tid] = $term->name;
   }
   $permissions = _get_permissions();
+  dsm($permissions);
 ################################################################################
   $form[]['#markup'] = t('<div id="roles">');
   $form[]['#markup'] = t('<h3>Permissions</h3>');

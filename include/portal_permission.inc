@@ -78,13 +78,11 @@ function _get_permissions() {
     ->execute();
   // Organize connection elements
   foreach ($result as $row) {
-    if(array_key_exists($row->rid, $uroles)){
-      $row1 = array();
-      $row1['ffpid'] = $row->ffid;
-      $row1['tid'] = $row->tid;
-      $row1['rid'] = $row->rid;
-      $access_control[] = $row1;
-    }
+    $row1 = array();
+    $row1['ffpid'] = $row->ffid;
+    $row1['tid'] = $row->tid;
+    $row1['rid'] = $row->rid;
+    $access_control[] = $row1;
   }
   return $access_control;
 }
