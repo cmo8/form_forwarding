@@ -3,7 +3,7 @@
 /*
  * UWP Webform Forwarding install file
  */
-require_once 'include/form_forwarding_permission.inc';
+require_once 'include/portal_permission.inc';
 /**
  * Implements hook_schema().
  */

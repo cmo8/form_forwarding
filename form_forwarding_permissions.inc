@@ -1,6 +1,6 @@
 <?php
 
-require_once 'include/form_forwarding_permission.inc';
+require_once 'include/portal_permission.inc';
 /**
  * The Third Party Portal Details file.
  * 
@@ -14,7 +14,11 @@ function form_forwarding_permissions_admin() {
   $form = array();
   $form['#attached']['css'][] = drupal_get_path('module', 'form_forwarding') . '/css/form_forwarding_admin.css';
   //$form['#attached']['js'][] = drupal_get_path('module', 'form_forwarding') . '/js/form_forwarding_admin.js';
-
+  $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
+  $opt = array();
+  foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
+    $opt[$term->tid] = $term->name;
+  }
   $permissions = _get_permissions();
 ################################################################################
   $form[]['#markup'] = t('<div id="roles">');
