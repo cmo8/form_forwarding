@@ -72,13 +72,13 @@ function _get_permissions() {
   $access_control = [];
   // Get the connections from the Database
   $result = db_select('form_forwarding_permission', 'ffp')
-    ->fields('ffp', array('ffid', 'tid', 'rid'))
+    ->fields('ffp', array('ffpid', 'tid', 'rid'))
     ->execute();
   // Organize connection elements
   foreach ($result as $row) {
     if(array_key_exists($row->rid, $uroles)){
       $row1 = array();
-      $row1['ffid'] = $row->ffid;
+      $row1['ffpid'] = $row->ffid;
       $row1['tid'] = $row->tid;
       $row1['rid'] = $row->rid;
       $access_control[] = $row1;
