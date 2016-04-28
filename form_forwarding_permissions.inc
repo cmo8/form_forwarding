@@ -100,7 +100,7 @@ function form_forwarding_permissions_admin() {
     '#title_display' => 'invisible',
     '#required' => false,
     '#multiple' => false,
-    '#options' => user_roles(),
+    '#options' => $roles,
     '#default_value' => '-select-',
   );
   $form['new-permission'][]['#markup'] = t('</td>');
