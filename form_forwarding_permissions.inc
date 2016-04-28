@@ -41,7 +41,7 @@ function form_forwarding_permissions_admin() {
       '#title_display' => 'invisible',
       '#required' => true,
       '#disabled' => true,
-      '#default_value' => $permissions[$i]['ffid'],
+      '#default_value' => $permissions[$i]['ffpid'],
     );
     $form['permission'][$i][]['#markup'] = t('</td>');
     $form['permission'][$i][]['#markup'] = t('<td class="term-id">');
@@ -65,7 +65,6 @@ function form_forwarding_permissions_admin() {
       '#options' => user_roles(),
       '#default_value' => $permissions[$i]['rid'],
     );
-    dsm(user_roles());
     $form['permission'][$i][]['#markup'] = t('</td>');
     $form['permission'][$i][]['#markup'] = t('<td>');
     $form['permission'][$i]['d' . strval($i) . '-btndelete'] = array(
@@ -92,13 +91,13 @@ function form_forwarding_permissions_admin() {
   $form['new-permission'][]['#markup'] = t('</td>');
   $form['new-permission'][]['#markup'] = t('<td>');
   $form['new-permission']['third-party-element-value'] = array(
-    '#type' => 'textfield',
-    '#title' => t('Third Party Element Value'),
+    '#type' => 'select',
+    '#title' => t('Role ID'),
     '#title_display' => 'invisible',
-    '#required' => false,
-    //'#rules' => array(
-    //  array('rule' => 'regexp[/^[a-z-A-Z,\' ]*$/]', 'error' => '%field, can only have alpha characters.'),
-    //),
+    '#required' => true,
+    '#multiple' => false,
+    '#options' => user_roles(),
+    '#default_value' => $permissions[$i]['rid'],
   );
   $form['new-permission'][]['#markup'] = t('</td>');
   $form['new-permission'][]['#markup'] = t('<td>');
