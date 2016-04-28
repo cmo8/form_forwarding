@@ -3,7 +3,7 @@
 /*
  * UWP Webform Forwarding install file
  */
-
+require_once 'form_forwarding_permission.inc';
 /**
  * Implements hook_schema().
  */
@@ -205,17 +205,21 @@ function form_forwarding_install() {
         'machine_name' => 'webform_forwarding_groups',
   );
   taxonomy_vocabulary_save($new_vocab);
-  $vid = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
+  $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
   $new_term_admin = (object) array(
         'name' => 'Admin',
-        'vid' => $vid->vid,
+        'vid' => $vocabulary->vid,
   );
   taxonomy_term_save($new_term_admin);
   $new_term_auth_user = (object) array(
         'name' => 'Authenticated User',
-        'vid' => $vid->vid,
+        'vid' => $vocabulary->vid,
   );
   taxonomy_term_save($new_term_auth_user);
+  $rid_admin = array_search('administrator', user_roles());
+  _create_permission($rid_admin, $new_term_admin->tid);
+  $rid_auth_user = array_search('authenticated user', user_roles());
+  _create_permission($rid_auth_user, $new_term_auth_user->tid);
 }
 
 /**

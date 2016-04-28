@@ -510,13 +510,13 @@ function portal_save($form, &$form_state) {
     #dpm($node);
     global $user;
     #dpm($user);
-    $eid = _create_portal($description, $imagenow_url, $group); //TODO: change
+    $eid = _create_portal($drupal_nid, $description, $imagenow_url, $group); //TODO: change
     drupal_set_message(t("New Portal Saved"));
     drupal_goto('/admin/config/content/form_forwarding/portal/' . strval($eid));
   }
   else {
     // Update Portal
-    $update_portal = _update_portal($portal_id, $drupal_nid, $description, $imagenow_url, $group);
+    $update_portal = _update_portal($portal_id, /*$drupal_nid,*/ $description, $imagenow_url, $group);
     // Update defines
     $index = 0;
     $dkid = $form_state['values']['d' . strval($index) . '-dkid'];

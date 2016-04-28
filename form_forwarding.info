@@ -7,4 +7,5 @@ dependencies[] = fapi_validation
 dependencies[] = webform
 dependencies[] = file
 dependencies[] = taxonomy
+dependencies[] = role
 configure = admin/config/content/form_forwarding
