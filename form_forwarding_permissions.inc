@@ -35,7 +35,7 @@ function form_forwarding_permissions_admin() {
   for ($i = 0; $i < count($permissions); $i++) {
     $form['permission'][$i][]['#markup'] = t('<tr id=permission-row-"' . $permissions[$i]['ffid'] . '" class="odd">');
     $form['permission'][$i][]['#markup'] = t('<td class="id-hide">');
-    $form['permission'][$i]['p' . strval($i) . '-ffid'] = array(
+    $form['permission'][$i]['p' . strval($i) . '-ffpid'] = array(
       '#type' => 'textfield',
       '#title' => t('Permission ID'),
       '#title_display' => 'invisible',
@@ -45,7 +45,7 @@ function form_forwarding_permissions_admin() {
     );
     $form['permission'][$i][]['#markup'] = t('</td>');
     $form['permission'][$i][]['#markup'] = t('<td class="term-id">');
-    $form['permission'][$i]['d' . strval($i) . '-third-party-element-key'] = array(
+    $form['permission'][$i]['p' . strval($i) . '-tid'] = array(
       '#type' => 'select',
       '#title' => t('Term ID'),
       '#title_display' => 'invisible',
@@ -56,7 +56,7 @@ function form_forwarding_permissions_admin() {
     );
     $form['permission'][$i][]['#markup'] = t('</td>');
     $form['permission'][$i][]['#markup'] = t('<td>');
-    $form['permission'][$i]['d' . strval($i) . 'role-id'] = array(
+    $form['permission'][$i]['p' . strval($i) . '-rid'] = array(
       '#type' => 'select',
       '#title' => t('Role ID'),
       '#title_display' => 'invisible',
@@ -67,7 +67,7 @@ function form_forwarding_permissions_admin() {
     );
     $form['permission'][$i][]['#markup'] = t('</td>');
     $form['permission'][$i][]['#markup'] = t('<td>');
-    $form['permission'][$i]['d' . strval($i) . '-btndelete'] = array(
+    $form['permission'][$i]['p' . strval($i) . '-btndelete'] = array(
       '#type' => 'submit',
       '#value' => t('Delete'),
       '#description' => t('Delete Permission'),
@@ -129,6 +129,8 @@ function form_forwarding_permissions_admin() {
 
 function define_permission($form, &$form_state){
   dsm($form_state);
+  $index = $form_state['clicked_button']['#name'][0];
+  $ffpid = $form_state['values']['p' . strval($index) . '-ffpid'];
   
   $tid = $form_state['values']['tid'];
   $rid = $form_state['values']['rid'];
