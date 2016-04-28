@@ -116,16 +116,27 @@ function form_forwarding_permissions_admin() {
 
   $form[]['#markup'] = t('</div>');
 
-  $form['btnSavePortal'] = array(
+  $form['btnSavePermission'] = array(
     '#type' => 'submit',
     '#value' => t('Save'),
-    '#description' => t('Save Potal'),
-    '#name' => 'save_portal',
-    '#submit' => array('portal_save'),
+    '#description' => t('Save Permission'),
+    '#name' => 'permission_save',
+    '#submit' => array('permission_save'),
   );
 
   return $form;
 }
+
+function define_permission($form, &$form_state){
+  dsm($form_state['values']);
+  drupal_set_message(t("Permission Deleted"));
+}
+
+function permission_add($form, &$form_state){
+  dsm($form_state['values']);
+  drupal_set_message(t("New Permission Added"));
+}
+
 
 /**
  * Handler that saves all the elements in the portal
@@ -133,9 +144,6 @@ function form_forwarding_permissions_admin() {
  * @param array $form_state
  */
 function permission_save($form, &$form_state) {
-  $portal_id = request_path();
-  $portal_id = explode('/', $portal_id);
-  $portal_id = end($portal_id);
   dsm($form_state);
   $drupal_nid = $form_state['values']['drupalnid'];
   $description = $form_state['values']['description'];
