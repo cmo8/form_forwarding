@@ -21,7 +21,7 @@ function form_forwarding_permissions_admin() {
   }
   $opt = array('-select-' => '- Select -') + $opt;
   $roles = user_roles();
-  $roles = array('-select-' => '- Select -') + $opt;
+  $roles = array('-select-' => '- Select -') + $roles;
   $permissions = _get_permissions();
 ################################################################################
   $form[]['#markup'] = t('<div id="roles">');
