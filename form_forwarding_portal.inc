@@ -47,6 +47,7 @@ function form_forwarding_portal_admin() {
   );
   $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
   $opt = array();
+  $opt['-select-'] = '- Select -';
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
     $opt[$term->tid] = $term->name;
   }
@@ -500,7 +501,7 @@ function portal_save($form, &$form_state) {
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
-  dsm($form_state);
+  #dsm($form_state);
   $drupal_nid = $form_state['values']['drupalnid'];
   $description = $form_state['values']['description'];
   $imagenow_url = $form_state['values']['submitionurl'];
@@ -591,22 +592,3 @@ function _get_drupal_form_elements(&$nid) {
   $rtn['files'] = $files;
   return $rtn;
 }
-
-
-
-///**
-// * Not Used
-// */
-//function _get_drupal_form_element_cid(&$nid, &$form_key) {
-//  $result = db_select('webform_component', 'components')
-//    ->fields('components', array('cid'))
-//    ->condition('nid', $nid, '=')
-//    ->condition('form_key', $form_key, '=')
-//    ->orderBy('cid', 'ASC')
-//    ->execute();
-//  // Organize portal elements
-//  foreach ($result as $element) {
-//    return $element->cid;
-//  }
-//  return null;
-//}
