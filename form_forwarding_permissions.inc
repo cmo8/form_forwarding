@@ -80,7 +80,7 @@ function form_forwarding_permissions_admin() {
   $form['new-permission'][]['#markup'] = t('<tr id="define-row-new" class="odd">');
   $form['new-permission'][]['#markup'] = t('<td class="id-hide"></td>');
   $form['new-permission'][]['#markup'] = t('<td class="third-party-element-key">');
-  $form['new-permission']['third-party-element-key'] = array(
+  $form['new-permission']['tid'] = array(
     '#type' => 'select',
     '#title' => t('Term ID'),
     '#title_display' => 'invisible',
@@ -90,7 +90,7 @@ function form_forwarding_permissions_admin() {
   );
   $form['new-permission'][]['#markup'] = t('</td>');
   $form['new-permission'][]['#markup'] = t('<td>');
-  $form['new-permission']['third-party-element-value'] = array(
+  $form['new-permission']['rid'] = array(
     '#type' => 'select',
     '#title' => t('Role ID'),
     '#title_display' => 'invisible',
@@ -129,11 +129,21 @@ function form_forwarding_permissions_admin() {
 
 function define_permission($form, &$form_state){
   dsm($form_state['values']);
+  
+  $tid = $form_state['values']['tid'];
+  $rid = $form_state['values']['rid'];
+  _delete_permission($rid, $tid);
+  
   drupal_set_message(t("Permission Deleted"));
 }
 
 function permission_add($form, &$form_state){
   dsm($form_state['values']);
+  
+  $tid = $form_state['values']['tid'];
+  $rid = $form_state['values']['rid'];
+  _create_permission($rid, $tid);
+  
   drupal_set_message(t("New Permission Added"));
 }
 
@@ -145,59 +155,60 @@ function permission_add($form, &$form_state){
  */
 function permission_save($form, &$form_state) {
   dsm($form_state);
-  $drupal_nid = $form_state['values']['drupalnid'];
-  $description = $form_state['values']['description'];
-  $imagenow_url = $form_state['values']['submitionurl'];
-  $group = $form_state['values']['group'];
-  if ($portal_id == 'new') {
-    $node = node_load($drupal_nid);
-    #dpm($node);
-    global $user;
-    #dpm($user);
-    $eid = _create_portal($drupal_nid, $description, $imagenow_url, $group); //TODO: change
-    drupal_set_message(t("New Portal Saved"));
-    drupal_goto('/admin/config/content/form_forwarding/portal/' . strval($eid));
-  }
-  else {
-    // Update Portal
-    $update_portal = _update_portal($portal_id, /* $drupal_nid, */ $description, $imagenow_url, $group);
-    // Update defines
-    $index = 0;
-    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-    while ($dkid != NULL) {
-      $third_party_key = $form_state['values']['d' . strval($index) . '-third-party-element-key'];
-      $third_party_value = $form_state['values']['d' . strval($index) . '-third-party-element-value'];
-      $update_connection = _update_define($dkid, $third_party_key, $third_party_value);
-      $index++;
-      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
-    }
-    // Add Define
-    define_add($form, $form_state);
-    // Update Connections
-    $index = 0;
-    $eid = $form_state['values']['c' . strval($index) . '-eid'];
-    while ($eid != NULL) {
-      $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
-      $third_party_key = $form_state['values']['c' . strval($index) . '-third-party-key'];
-      $update_connection = _update_connection($eid, $drupal_form_element, $third_party_key);
-      $index++;
-      $eid = $form_state['values']['c' . strval($index) . '-eid'];
-    }
-    //Add Connection
-    connection_add($form, $form_state);
-    // Update files
-    $index = 0;
-    $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
-    while ($filekid != NULL) {
-      $third_party_key = $form_state['values']['f' . strval($index) . '-third-party-key'];
-      $drupal_form_element = $form_state['values']['f' . strval($index) . '-drupal-form-element'];
-      $update_connection = _update_file($filekid, $third_party_key, $drupal_form_element);
-      $index++;
-      $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
-    }
-    //Add File
-    file_add($form, $form_state);
-    drupal_set_message(t("Portal had been reconfigured"));
-  }
+//  $drupal_nid = $form_state['values']['drupalnid'];
+//  $description = $form_state['values']['description'];
+//  $imagenow_url = $form_state['values']['submitionurl'];
+//  $group = $form_state['values']['group'];
+//  if ($portal_id == 'new') {
+//    $node = node_load($drupal_nid);
+//    #dpm($node);
+//    global $user;
+//    #dpm($user);
+//    $eid = _create_portal($drupal_nid, $description, $imagenow_url, $group); //TODO: change
+//    drupal_set_message(t("New Portal Saved"));
+//    drupal_goto('/admin/config/content/form_forwarding/portal/' . strval($eid));
+//  }
+//  else {
+//    // Update Portal
+//    $update_portal = _update_portal($portal_id, /* $drupal_nid, */ $description, $imagenow_url, $group);
+//    // Update defines
+//    $index = 0;
+//    $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+//    while ($dkid != NULL) {
+//      $third_party_key = $form_state['values']['d' . strval($index) . '-third-party-element-key'];
+//      $third_party_value = $form_state['values']['d' . strval($index) . '-third-party-element-value'];
+//      $update_connection = _update_define($dkid, $third_party_key, $third_party_value);
+//      $index++;
+//      $dkid = $form_state['values']['d' . strval($index) . '-dkid'];
+//    }
+//    // Add Define
+//    define_add($form, $form_state);
+//    // Update Connections
+//    $index = 0;
+//    $eid = $form_state['values']['c' . strval($index) . '-eid'];
+//    while ($eid != NULL) {
+//      $drupal_form_element = $form_state['values']['c' . strval($index) . '-drupal-form-element'];
+//      $third_party_key = $form_state['values']['c' . strval($index) . '-third-party-key'];
+//      $update_connection = _update_connection($eid, $drupal_form_element, $third_party_key);
+//      $index++;
+//      $eid = $form_state['values']['c' . strval($index) . '-eid'];
+//    }
+//    //Add Connection
+//    connection_add($form, $form_state);
+//    // Update files
+//    $index = 0;
+//    $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
+//    while ($filekid != NULL) {
+//      $third_party_key = $form_state['values']['f' . strval($index) . '-third-party-key'];
+//      $drupal_form_element = $form_state['values']['f' . strval($index) . '-drupal-form-element'];
+//      $update_connection = _update_file($filekid, $third_party_key, $drupal_form_element);
+//      $index++;
+//      $filekid = $form_state['values']['f' . strval($index) . '-filekid'];
+//    }
+//    //Add File
+//    file_add($form, $form_state);
+//    drupal_set_message(t("Portal had been reconfigured"));
+//  }
   // redirect to the specific portal
+  drupal_set_message(t("Portal had been reconfigured"));
 }
