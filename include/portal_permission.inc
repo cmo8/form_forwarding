@@ -79,7 +79,7 @@ function _get_permissions() {
   // Organize connection elements
   foreach ($result as $row) {
     $row1 = array();
-    $row1['ffpid'] = $row->ffid;
+    $row1['ffpid'] = $row->ffpid;
     $row1['tid'] = $row->tid;
     $row1['rid'] = $row->rid;
     $access_control[] = $row1;
