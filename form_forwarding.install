@@ -206,15 +206,14 @@ function form_forwarding_install() {
   );
   taxonomy_vocabulary_save($new_vocab);
   $vid = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
-  dpm($vid);
   $new_term_admin = (object) array(
         'name' => 'Admin',
-        'vid' => $vid,
+        'vid' => $vid->vid,
   );
   taxonomy_term_save($new_term_admin);
   $new_term_auth_user = (object) array(
-        'name' => 'Admin',
-        'vid' => $vid,
+        'name' => 'Authenticated User',
+        'vid' => $vid->vid,
   );
   taxonomy_term_save($new_term_auth_user);
 }

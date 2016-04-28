@@ -46,11 +46,16 @@ function form_forwarding_portal_admin() {
     '#default_value' => $portal_config['description'],
   );
   dsm(taxonomy_vocabulary_machine_name_load('webform_forwarding_groups'));
+  $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
+  $opt = array();
+  foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
+    $opt[$term->tid] = $term->name;
+  }
   $form['group'] = array(
     '#type' => 'select',
     '#title' => t('Portal Group'),
     '#multiple' => false,
-    //'#options' => taxonomy_get_tree(taxonomy_vocabulary_machine_name_load($name)),
+    '#options' => $opt,
     '#default_value' => $portal_config['group'],
   );
 
