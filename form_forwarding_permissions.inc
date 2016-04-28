@@ -21,7 +21,7 @@ function form_forwarding_permissions_admin() {
   }
   asort($opt);
   $opt = array('-select-' => '- Select -') + $opt;
-  $roles = asort(user_roles());
+  $roles = user_roles();
   asort($roles);
   $roles = array('-select-' => '- Select -') + $roles;
   $permissions = _get_permissions();
