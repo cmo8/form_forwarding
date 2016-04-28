@@ -31,6 +31,15 @@ function form_forwarding_menu() {
     'file' => 'form_forwarding_portal.inc',
     'type' => MENU_NORMAL_ITEM,
   );
+  $items['admin/config/content/form_forwarding/permissions'] = array(
+    'title' => 'Webform Portal Permissions',
+    'description' => 'Portal Permissions Settings',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('form_forwarding_permissions_admin'),
+    'access arguments' => array('administer formforwarding permissions'),
+    'file' => 'form_forwarding_permissions.inc',
+    'type' => MENU_NORMAL_ITEM,
+  );
   return $items;
 }
 
@@ -42,6 +51,10 @@ function form_forwarding_permission() {
     'administer formforwarding' => array(
       'title' => t('Administer Webform Forward Portal Control'),
       'description' => t('Access to Webform Forward configuration'),
+    ),
+    'administer formforwarding permissions' => array(
+      'title' => t('Administer Webform Forward Permissions'),
+      'description' => t('Access to Webform Forward Permissions configuration'),
     ),
   );
 }

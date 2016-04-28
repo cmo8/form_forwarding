@@ -63,22 +63,45 @@ function _create_permission($rid, $tid) {
     ->execute();
   return $ffid;
 }
+
+/**
+ * Gets the files for the given portal.
+ * @return array
+ */
+function _get_permissions() {
+  $access_control = [];
+  // Get the connections from the Database
+  $result = db_select('form_forwarding_permission', 'ffp')
+    ->fields('ffp', array('ffid', 'tid', 'rid'))
+    ->execute();
+  // Organize connection elements
+  foreach ($result as $row) {
+    if(array_key_exists($row->rid, $uroles)){
+      $row1 = array();
+      $row1['ffid'] = $row->ffid;
+      $row1['tid'] = $row->tid;
+      $row1['rid'] = $row->rid;
+      $access_control[] = $row1;
+    }
+  }
+  return $access_control;
+}
+
 /**
  * Gets the files for the given portal.
  * @param int $uroles
  * @return array
  */
 function _get_user_terms($uroles) {
-  dpm($uid);
   $access_control = [];
   // Get the connections from the Database
   $result = db_select('form_forwarding_permission', 'ffp')
-    ->fields('ffp', array('fid', 'rid'))
+    ->fields('ffp', array('tid', 'rid'))
     ->execute();
   // Organize connection elements
   foreach ($result as $row) {
     if(array_key_exists($row->rid, $uroles)){
-      $access_control[] = $row->fid;
+      $access_control[] = $row->tid;
     }
   }
   return $access_control;
