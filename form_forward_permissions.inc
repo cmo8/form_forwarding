@@ -129,7 +129,7 @@ function form_forwarding_permissions_admin() {
  * @param array $form
  * @param array $form_state
  */
-function portal_save($form, &$form_state) {
+function permission_save($form, &$form_state) {
   $portal_id = request_path();
   $portal_id = explode('/', $portal_id);
   $portal_id = end($portal_id);
