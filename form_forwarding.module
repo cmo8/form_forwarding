@@ -473,7 +473,9 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
   $data_array_64[urlencode('ctl00$cnt$filecountddl')] = urlencode(base64_encode($filecount));
   //dsm($data_array_64);
   
-  $headers = array('Content-Type:multipart/form-data');
+  //$headers = array('Content-Type:multipart/form-data');
+  $headers = array('Content-Type:application/x-www-form-urlencoded');
+  //x-www-form-urlencoded
   $r = drupal_http_request($portal['submission_url'], $headers, 'POST',  $data_array_64);
   dpm($r);
 }
