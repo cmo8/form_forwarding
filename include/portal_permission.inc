@@ -126,19 +126,11 @@ function _get_user_terms($uroles) {
     ->execute();
   // Organize connection elements
   $user_roles = array();
-  $roles = user_roles();
   dsm($uroles);
-  dsm($roles);
-  foreach($uroles as $value){
-    foreach($roles as $key => $role){
-      if($value == $role){
-        $user_roles[] = $key; 
-      }
-    }
-  }
+  dsm($result);
   
   foreach ($result as $row) {
-    if(array_key_exists($row->rid, $user_roles)){
+    if(array_key_exists($row->rid, $uroles)){
       $access_control[] = $row->tid;
     }
   }
