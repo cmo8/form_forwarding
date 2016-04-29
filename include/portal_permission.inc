@@ -130,6 +130,7 @@ function _get_user_terms($uroles) {
   dsm($result);
   
   foreach ($result as $row) {
+    dsm($row->rid);
     if(array_key_exists($row->rid, $uroles)){
       $access_control[] = $row->tid;
     }
