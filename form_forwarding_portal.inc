@@ -57,7 +57,7 @@ function form_forwarding_portal_admin() {
     '#title' => t('Portal Group'),
     '#multiple' => false,
     '#options' => $opt,
-    '#default_value' => $portal_config['group'],
+    '#default_value' => $portal_config['group_id'],
   );
 
   $form['submitionurl'] = array(
