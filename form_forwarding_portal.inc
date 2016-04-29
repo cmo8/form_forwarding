@@ -31,6 +31,7 @@ function form_forwarding_portal_admin() {
   $form['drupalnid'] = array(
     '#type' => 'textfield',
     '#title' => t('Drupal Node ID'),
+    '#description' => t('The Node ID can be found in the url of the page the form is on when you are in the webform tab. The URL will look like "uwplatt.edu/node/[The Node ID]/webform'),
     '#required' => TRUE,
     '#default_value' => $portal_config['fid'],
     '#rules' => array(
