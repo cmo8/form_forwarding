@@ -324,22 +324,22 @@ function _post_to_aspx($portal, $submitted_values, $form_values) {
   $tmp = array();
   $tmp[] = $resultaps;
   dpm($tmp);
-  /**
-   * Check for errors
-   */
-  if (curl_errno($ch)) {
-    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
-    die(curl_error($ch));
-  } else {
-    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    switch ($returnCode) {
-      case 200:
-        break;
-      default:
-        $resultaps = 'HTTP ERROR -> ' . $returnCode;
-        break;
-    }
-  }
+//  /**
+//   * Check for errors
+//   */
+//  if (curl_errno($ch)) {
+//    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
+//    die(curl_error($ch));
+//  } else {
+//    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//    switch ($returnCode) {
+//      case 200:
+//        break;
+//      default:
+//        $resultaps = 'HTTP ERROR -> ' . $returnCode;
+//        break;
+//    }
+//  }
   //Read the view state value
   preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
   $viewstate = urlencode($arr_viewstate[1][0]);
@@ -429,22 +429,22 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
   $tmp = array();
   $tmp[] = $resultaps;
   //dpm($tmp);
-  /**
-   * Check for errors
-   */
-  if (curl_errno($ch)) {
-    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
-    die(curl_error($ch));
-  } else {
-    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-    switch ($returnCode) {
-      case 200:
-        break;
-      default:
-        $resultaps = 'HTTP ERROR -> ' . $returnCode;
-        break;
-    }
-  }
+//  /**
+//   * Check for errors
+//   */
+//  if (curl_errno($ch)) {
+//    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
+//    die(curl_error($ch));
+//  } else {
+//    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+//    switch ($returnCode) {
+//      case 200:
+//        break;
+//      default:
+//        $resultaps = 'HTTP ERROR -> ' . $returnCode;
+//        break;
+//    }
+//  }
   
   //Read the view state value
   preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
