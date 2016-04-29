@@ -474,7 +474,8 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
   //dsm($data_array_64);
   
   $headers = array('Content-Type:multipart/form-data');
-  drupal_http_request($portal['submission_url'], $headers, 'POST',  $data_array_64);
+  $r = drupal_http_request($portal['submission_url'], $headers, 'POST',  $data_array_64);
+  dpm($r);
 }
 
 /**
