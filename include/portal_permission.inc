@@ -126,9 +126,8 @@ function _get_user_terms($uroles) {
     ->execute();
   // Organize connection elements
   $user_roles = array();
-  dsm($uroles);
-  dsm($result);
-  
+  #dsm($uroles);
+  #dsm($result);
   foreach ($result as $row) {
     dsm($row->rid);
     if(array_key_exists($row->rid, $uroles)){
