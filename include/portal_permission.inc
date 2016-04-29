@@ -127,6 +127,8 @@ function _get_user_terms($uroles) {
   // Organize connection elements
   $user_roles = array();
   $roles = user_roles();
+  dsm($uroles);
+  dsm($roles);
   foreach($uroles as $value){
     foreach($roles as $key => $role){
       if($value == $role){
