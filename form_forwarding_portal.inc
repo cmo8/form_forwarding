@@ -47,11 +47,11 @@ function form_forwarding_portal_admin() {
   );
   $vocabulary = taxonomy_vocabulary_machine_name_load('webform_forwarding_groups');
   $opt = array();
-  asort($opt);
-  $opt = array('-select-' => '- Select -') + $opt;
+  $opt['-select-'] = '- Select -';
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
     $opt[$term->tid] = $term->name;
   }
+  dsm($opt);
   $form['group'] = array(
     '#type' => 'select',
     '#title' => t('Portal Group'),
