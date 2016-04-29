@@ -52,7 +52,7 @@ function form_forwarding_portal_admin() {
   foreach (taxonomy_get_tree($vocabulary->vid) as $term) {
     $opt[$term->tid] = $term->name;
   }
-  dsm($opt);
+  #dsm($opt);
   $form['group'] = array(
     '#type' => 'select',
     '#title' => t('Portal Group'),
