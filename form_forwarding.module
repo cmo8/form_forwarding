@@ -510,7 +510,8 @@ function _submit_to_third_party(&$form_values) {
   #dpm($submitted_values);
   $tmp = explode('.', $portal['submission_url']);
   if (strcmp( 'php', $tmp[count($tmp) - 1]) == 0 ) {
-    _post_to_php($portal, $submitted_values, $form_values['submitted']);
+    _post_to_inow_aspx($portal, $submitted_values, $form_values);
+    //_post_to_php($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded to PHP Script"));
   } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
     //_post_to_aspx($portal, $submitted_values, $form_values['submitted']);
