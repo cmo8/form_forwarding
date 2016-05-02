@@ -436,6 +436,19 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
 //    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
 //    die(curl_error($ch));
 //  } else {
+  
+  //Read the view state value
+  preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
+  $viewstate = urlencode($arr_viewstate[1][0]);
+  //Read the event validation value
+  preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
+  $eventvalidation = urlencode($arr_validation[1][0]);
+  
+  $data_array['__EVENTTARGET'] = '';
+  $data_array['__EVENTARGUMENT'] = '';
+  $data_array['__VIEWSTATE'] = $viewstate;
+  $data_array['__EVENTVALIDATION'] = $eventvalidation;
+  //dpm($data_array);
 //    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
 //    switch ($returnCode) {
 //      case 200:
@@ -473,8 +486,8 @@ function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
   $data_array_64[urlencode('ctl00$cnt$filecountddl')] = urlencode(base64_encode($filecount));
   //dsm($data_array_64);
   
-  //$headers = array('Content-Type:multipart/form-data');
-  $headers = array('Content-Type:application/x-www-form-urlencoded');
+  $headers = array('Content-Type:multipart/form-data');
+  //$headers = array('Content-Type:application/x-www-form-urlencoded');
   //x-www-form-urlencoded
   $r = drupal_http_request($portal['submission_url'], $headers, 'POST',  $data_array_64);
   dpm($r);
