@@ -301,197 +301,105 @@ function _post_to_php($portal, $submitted_values, $form_values) {
  * @param type $portal
  * @param type $submitted_values
  */
-function _post_to_aspx($portal, $submitted_values, $form_values) {
-  $data_array = _format_submission_data($portal, $submitted_values, $form_values, '&');
-
-  /**
-   * Return the response as a string instead of outputting it to the screen
-   */
-   $options = array(
-    CURLOPT_RETURNTRANSFER => true, // return web page
-    CURLOPT_HEADER => true, // don't return headers
-    CURLOPT_FOLLOWLOCATION => true, // follow redirects
-    CURLOPT_ENCODING => "", // handle all encodings
-    CURLOPT_USERAGENT => "", // who am i
-    CURLOPT_AUTOREFERER => true, // set referer on redirect
-    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
-    CURLOPT_TIMEOUT => 120, // timeout on response
-    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
-  );
-  $ch = curl_init($portal['submission_url']);
-  curl_setopt_array($ch, $options);
-  $resultaps = curl_exec($ch);
-  $tmp = array();
-  $tmp[] = $resultaps;
-  dpm($tmp);
+//function _post_to_aspx($portal, $submitted_values, $form_values) {
+//  $data_array = _format_submission_data($portal, $submitted_values, $form_values, '&');
+//
 //  /**
-//   * Check for errors
+//   * Return the response as a string instead of outputting it to the screen
 //   */
-//  if (curl_errno($ch)) {
-//    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
-//    die(curl_error($ch));
-//  } else {
-//    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//    switch ($returnCode) {
-//      case 200:
-//        break;
-//      default:
-//        $resultaps = 'HTTP ERROR -> ' . $returnCode;
-//        break;
+//   $options = array(
+//    CURLOPT_RETURNTRANSFER => true, // return web page
+//    CURLOPT_HEADER => true, // don't return headers
+//    CURLOPT_FOLLOWLOCATION => true, // follow redirects
+//    CURLOPT_ENCODING => "", // handle all encodings
+//    CURLOPT_USERAGENT => "", // who am i
+//    CURLOPT_AUTOREFERER => true, // set referer on redirect
+//    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+//    CURLOPT_TIMEOUT => 120, // timeout on response
+//    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+//  );
+//  $ch = curl_init($portal['submission_url']);
+//  curl_setopt_array($ch, $options);
+//  $resultaps = curl_exec($ch);
+//  $tmp = array();
+//  $tmp[] = $resultaps;
+//  dpm($tmp);
+////  /**
+////   * Check for errors
+////   */
+////  if (curl_errno($ch)) {
+////    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
+////    die(curl_error($ch));
+////  } else {
+////    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
+////    switch ($returnCode) {
+////      case 200:
+////        break;
+////      default:
+////        $resultaps = 'HTTP ERROR -> ' . $returnCode;
+////        break;
+////    }
+////  }
+//  //Read the view state value
+//  preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
+//  $viewstate = urlencode($arr_viewstate[1][0]);
+//  //Read the event validation value
+//  preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
+//  $eventvalidation = urlencode($arr_validation[1][0]);
+//  
+//  $data_array['__EVENTTARGET'] = '';
+//  $data_array['__EVENTARGUMENT'] = '';
+//  $data_array['__VIEWSTATE'] = $viewstate;
+//  $data_array['__EVENTVALIDATION'] = $eventvalidation;
+//  dpm($data_array);
+//  dsm(mb_internal_encoding());
+//  //encode to base64
+//  $data_array_64 = array();
+//  //$filecount = 0;
+//  foreach($data_array as $key => $val){
+//    if(is_string($val)){
+//      $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
+//    } else {
+//      $data_array_64[urlencode(base64_encode($key))] = base64_encode($val);
+//      //$filecount++;
 //    }
 //  }
-  //Read the view state value
-  preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
-  $viewstate = urlencode($arr_viewstate[1][0]);
-  //Read the event validation value
-  preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
-  $eventvalidation = urlencode($arr_validation[1][0]);
-  
-  $data_array['__EVENTTARGET'] = '';
-  $data_array['__EVENTARGUMENT'] = '';
-  $data_array['__VIEWSTATE'] = $viewstate;
-  $data_array['__EVENTVALIDATION'] = $eventvalidation;
-  dpm($data_array);
-  dsm(mb_internal_encoding());
-  //encode to base64
-  $data_array_64 = array();
-  //$filecount = 0;
-  foreach($data_array as $key => $val){
-    if(is_string($val)){
-      $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
-    } else {
-      $data_array_64[urlencode(base64_encode($key))] = base64_encode($val);
-      //$filecount++;
-    }
-  }
-  dsm($data_array_64);
-  
-  /**
-   * Now you can setup the post data and submit the form
-   * For example, submit the ItemID = 6
-   */
-  $options = array(
-    CURLOPT_RETURNTRANSFER => true, // return web page
-    CURLOPT_HEADER => true, // don't return headers
-    CURLOPT_FOLLOWLOCATION => true, // follow redirects
-    CURLOPT_ENCODING => "", // handle all encodings
-    CURLOPT_USERAGENT => "", // who am i
-    CURLOPT_AUTOREFERER => true, // set referer on redirect
-    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
-    CURLOPT_TIMEOUT => 120, // timeout on response
-    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
-    CURLOPT_POST => true,
-    CURLOPT_POSTFIELDS => $data_array_64, //'__EVENTTARGET=' . urlencode('ItemID'urlencode) . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
-  );
-  $ch = curl_init($portal['submission_url']);
-  curl_setopt_array($ch, $options);
-  $resultaps = curl_exec($ch);
-  $temp = array();
-  $temp[] = $resultaps;
-  //dpm($temp);
-  //dpm($resultaps);
-  /**
-   *  Parse the data example
-   *  Read a number 1220
-   *  <td class="WorksManageTableContent">1220</td>
-   */
-  preg_match_all("/\<td class=\"WorksManageTableContent\"\>(.*?)\<\/td\>/", $resultaps, $curCount);
-  $preCount = $curCount[1][0];
-  curl_close($ch);
-}
-
-/**
- * Post the data to an ASPX form
- * @param type $portal
- * @param type $submitted_values
- */
-function _post_to_inow_aspx($portal, $submitted_values, $form_values) {
-  $data_array = _format_submission_data($portal, $submitted_values, $form_values, '&');
-
-  /**
-   * Return the response as a string instead of outputting it to the screen
-   */
-   $options = array(
-    CURLOPT_RETURNTRANSFER => true, // return web page
-    CURLOPT_HEADER => true, // don't return headers
-    CURLOPT_FOLLOWLOCATION => true, // follow redirects
-    CURLOPT_ENCODING => "", // handle all encodings
-    CURLOPT_USERAGENT => "", // who am i
-    CURLOPT_AUTOREFERER => true, // set referer on redirect
-    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
-    CURLOPT_TIMEOUT => 120, // timeout on response
-    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
-  );
-  $ch = curl_init($portal['submission_url']);
-  curl_setopt_array($ch, $options);
-  $resultaps = curl_exec($ch);
-  curl_close($ch);
-  $tmp = array();
-  $tmp[] = $resultaps;
-  //dpm($tmp);
+//  dsm($data_array_64);
+//  
 //  /**
-//   * Check for errors
+//   * Now you can setup the post data and submit the form
+//   * For example, submit the ItemID = 6
 //   */
-//  if (curl_errno($ch)) {
-//    $resultaps = 'cURL ERROR -> ' . curl_errno($ch) . ': ' . curl_error($ch);
-//    die(curl_error($ch));
-//  } else {
-  
-  //Read the view state value
-  preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
-  $viewstate = urlencode($arr_viewstate[1][0]);
-  //Read the event validation value
-  preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
-  $eventvalidation = urlencode($arr_validation[1][0]);
-  
-  $data_array['__EVENTTARGET'] = '';
-  $data_array['__EVENTARGUMENT'] = '';
-  $data_array['__VIEWSTATE'] = $viewstate;
-  $data_array['__EVENTVALIDATION'] = $eventvalidation;
-  //dpm($data_array);
-//    $returnCode = (int) curl_getinfo($ch, CURLINFO_HTTP_CODE);
-//    switch ($returnCode) {
-//      case 200:
-//        break;
-//      default:
-//        $resultaps = 'HTTP ERROR -> ' . $returnCode;
-//        break;
-//    }
-//  }
-  
-  //Read the view state value
-  preg_match_all("/id=\"__VIEWSTATE\" value=\"(.*?)\"/", $resultaps, $arr_viewstate);
-  $viewstate = urlencode($arr_viewstate[1][0]);
-  //Read the event validation value
-  preg_match_all("/id=\"__EVENTVALIDATION\" value=\"(.*?)\"/", $resultaps, $arr_validation);
-  $eventvalidation = urlencode($arr_validation[1][0]);
-  
-  $data_array['__EVENTTARGET'] = '';
-  $data_array['__EVENTARGUMENT'] = '';
-  $data_array['__VIEWSTATE'] = $viewstate;
-  $data_array['__EVENTVALIDATION'] = $eventvalidation;
-  //dpm($data_array);
-  //dsm(mb_internal_encoding());
-  //encode to base64
-  $data_array_64 = array();
-  $filecount = 0;
-  foreach($data_array as $key => $val){
-    if(is_string($val)){
-      $data_array_64[urlencode(base64_encode($key))] = urlencode(base64_encode($val));
-    } else {
-      $data_array_64[urlencode(base64_encode($key))] = base64_encode($val);
-      $filecount++;
-    }
-  }
-  $data_array_64[urlencode('ctl00$cnt$filecountddl')] = urlencode(base64_encode($filecount));
-  //dsm($data_array_64);
-  
-  $headers = array('Content-Type:multipart/form-data');
-  //$headers = array('Content-Type:application/x-www-form-urlencoded');
-  //x-www-form-urlencoded
-  $r = drupal_http_request($portal['submission_url'], $headers, 'POST',  $data_array_64);
-  dpm($r);
-}
+//  $options = array(
+//    CURLOPT_RETURNTRANSFER => true, // return web page
+//    CURLOPT_HEADER => true, // don't return headers
+//    CURLOPT_FOLLOWLOCATION => true, // follow redirects
+//    CURLOPT_ENCODING => "", // handle all encodings
+//    CURLOPT_USERAGENT => "", // who am i
+//    CURLOPT_AUTOREFERER => true, // set referer on redirect
+//    CURLOPT_CONNECTTIMEOUT => 120, // timeout on connect
+//    CURLOPT_TIMEOUT => 120, // timeout on response
+//    CURLOPT_MAXREDIRS => 10, // stop after 10 redirects
+//    CURLOPT_POST => true,
+//    CURLOPT_POSTFIELDS => $data_array_64, //'__EVENTTARGET=' . urlencode('ItemID'urlencode) . '&__EVENTARGUMENT=' . urlencode('') . '&__VIEWSTATE=' . $viewstate . '&__EVENTVALIDATION=' . $eventvalidation . '&ItemID=5'
+//  );
+//  $ch = curl_init($portal['submission_url']);
+//  curl_setopt_array($ch, $options);
+//  $resultaps = curl_exec($ch);
+//  $temp = array();
+//  $temp[] = $resultaps;
+//  //dpm($temp);
+//  //dpm($resultaps);
+//  /**
+//   *  Parse the data example
+//   *  Read a number 1220
+//   *  <td class="WorksManageTableContent">1220</td>
+//   */
+//  preg_match_all("/\<td class=\"WorksManageTableContent\"\>(.*?)\<\/td\>/", $resultaps, $curCount);
+//  $preCount = $curCount[1][0];
+//  curl_close($ch);
+//}
+//
 
 /**
  * Maps the defined vales to there defined keys.
@@ -510,13 +418,11 @@ function _submit_to_third_party(&$form_values) {
   #dpm($submitted_values);
   $tmp = explode('.', $portal['submission_url']);
   if (strcmp( 'php', $tmp[count($tmp) - 1]) == 0 ) {
-    _post_to_inow_aspx($portal, $submitted_values, $form_values);
-    //_post_to_php($portal, $submitted_values, $form_values['submitted']);
+    _post_to_php($portal, $submitted_values, $form_values['submitted']);
     drupal_set_message(t("The form was forwarded to PHP Script"));
-  } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
-    //_post_to_aspx($portal, $submitted_values, $form_values['submitted']);
-    _post_to_inow_aspx($portal, $submitted_values, $form_values);
-    drupal_set_message(t("The form was forwarded to ASP.NET"));
+//  } else if (strcmp( 'aspx', $tmp[count($tmp) - 1]) == 0 ) {
+//    _post_to_aspx($portal, $submitted_values, $form_values['submitted']);
+//    drupal_set_message(t("The form was forwarded to ASP.NET"));
   } else {
     drupal_set_error(t("Error in forwarding to " . $portal['submission_url']));
   }
